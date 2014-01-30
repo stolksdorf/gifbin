@@ -79,15 +79,21 @@ GifbinEdit = xo.view.extend({
 
 	saveGif : function(){
 		var self = this;
-		this.model.link = this.dom.linkField.val();
+
 		this.model.category_id = this.dom.category.val();
 		this.model.category = this.dom.category.find('option:selected').text();
 		this.model.tags = utils.map(this.dom.tags.val().split(','), function(tag){
 			return tag.trim();
 		});
-		this.model.user = this.dom.uploaderField.val();
+
+
 		//Save User in Cookie
-		if(!this.editMode) util.cookie.set('gifbin-user', this.dom.uploaderField.val());
+		if(!this.editMode){
+			util.cookie.set('gifbin-user', this.dom.uploaderField.val());
+			this.model.user = this.dom.uploaderField.val();
+			this.model.link = this.dom.linkField.val();
+		}
+
 		//Redirect on Save
 		this.model.save(function(){
 			window.location.href = '/edit/' + self.model.id;
@@ -104,6 +110,8 @@ GifbinEdit = xo.view.extend({
 
 		this.dom.uploader.show();
 		this.dom.uploaderField.hide();
+
+		console.log(util.cookie.get('gifbin-user'));
 
 		document.title = "gifbin.edit";
 

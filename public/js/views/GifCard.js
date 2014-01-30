@@ -31,7 +31,6 @@ GifCard = xo.view.extend({
 		this.copyLinkBtn.dom.view.addClass('card__copyButton');
 
 		this.copyLinkBtn.on('mouseover', function(){
-			console.log('hovering');
 			self.dom.view.addClass('hovered');
 		});
 		this.copyLinkBtn.on('mouseout', function(){
