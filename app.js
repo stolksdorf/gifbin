@@ -36,7 +36,7 @@ app.get('/', [mw.getCategories], function (req, res) {
 	console.log(res.categories);
 
 	Gif.find({}, function(err, gifs){
-		if(err || !gifs) return res.send(500, 'whoops');
+		if(err || !gifs) return res.render('oops.html');
 		res.render('home.html', {
 			categories : JSON.stringify(res.categories),
 			gifs : JSON.stringify(xo.clean(gifs))
@@ -45,7 +45,7 @@ app.get('/', [mw.getCategories], function (req, res) {
 });
 app.get('/categories', [mw.getCategories],function (req, res) {
 	Gif.find({}, function(err, gifs){
-		if(err || !gifs) return res.send(500, 'whoops');
+		if(err || !gifs) return res.render('oops.html');
 		res.render('home.html', {
 			categories : JSON.stringify(res.categories),
 			gifs : JSON.stringify(xo.clean(gifs))
@@ -61,7 +61,7 @@ app.get('/edit/:gif_id', [mw.getCategories], function (req, res) {
 	//return res.render('edit.html');
 
 	Gif.findById(req.params.gif_id, function(err, gif){
-		if(err || !gif) return res.send('sad');
+		if(err || !gif) return res.render('oops.html');;
 		return res.render('edit.html', {
 			categories : JSON.stringify(res.categories),
 			gif : JSON.stringify(xo.clean(gif))
@@ -84,7 +84,7 @@ app.get('/category/:categoryName', function (req, res) {
 			category : req.params.categoryName,
 		};
 		Gif.find(r, function(err, gifs){
-			if(err || !gifs) return res.send(500, 'whoops');
+			if(err || !gifs) return res.render('oops.html');
 			res.render('category.html', {
 				gifs : JSON.stringify(xo.clean(gifs)),
 				categoryName : req.params.categoryName,
@@ -98,7 +98,7 @@ app.get('/user/:userName', function (req, res) {
 		user : req.params.userName,
 	};
 	Gif.find(r, function(err, gifs){
-		if(err || !gifs) return res.send(500, 'whoops');
+		if(err || !gifs) return res.render('oops.html');
 		res.render('category.html', {
 			gifs : JSON.stringify(xo.clean(gifs)),
 			categoryName : req.params.userName || 'Misc',
@@ -124,9 +124,14 @@ app.get('/search/:attr/:val', function(req,res){
 	var r = {};
 	r[req.params.attr] = req.params.val;
 	Gif.find(r , function(err, result){
-		if(err) return res.send(500, 'whoops');
+		if(err) return res.render('oops.html');
 		res.send(result);
 	});
+});
+
+
+app.get('*', function(req,res){
+	res.render('oops.html');
 });
 
 
