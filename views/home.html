@@ -35,6 +35,7 @@
 
 	<script type="text/javascript" src="../js/models/GifModel.js"></script>
 	<script type="text/javascript" src="../js/models/GifCollection.js"></script>
+	<script type="text/javascript" src="../js/models/Categories.js"></script>
 </head>
 <body>
 	<title>gifbin.</title>
@@ -44,14 +45,6 @@
 		<div class='categoryContainer'>
 			<div class='title'>
 				Categories
-
-				<div style='float:right;margin-top: -10px;margin-right: -5px;'>
-					<input id='categoryName' style='font-size:0.4em' type='text'  placeholder='AwesomeTown'></input>
-					<div id='addCategory' style='font-size:0.5em' class='btn green hint--bottom' data-hint='Add Category'>
-						<i class='icon-plus-sign'></i>
-					</div>
-				</div>
-
 			</div>
 		</div>
 		<div class='searchContainer'></div>
@@ -60,34 +53,13 @@
 
 	<script>
 
-	var GifCategories = <%- categories %>;
+	GifCategories.set(<%- categories %>);
 	var gifs = GifCollection.create(<%- gifs %>);
 
-
-
 	//Create Category view
-	util.map(gifs.getCategoryBest(), function(bestObj){
+	util.map(gifs.getCategoryBest(GifCategories), function(bestObj){
 		CategoryView.create(bestObj).injectInto($('.categoryContainer'));
 	});
-
-
-	$('#addCategory').click(function(){
-		if($('#categoryName').val().trim() !== ''){
-			$.ajax({
-				url : '/api/category',
-				type : 'POST',
-				data : {name : $('#categoryName').val().trim()},
-				success : function(){
-					location.reload();
-				},
-				error : function(){
-					location.reload();
-				}
-			});
-		}
-	});
-
-
 
 	var searchBar = Searchbar.create().injectInto($('.main'), true);
 	var searchResults = SearchResults.create(gifs);

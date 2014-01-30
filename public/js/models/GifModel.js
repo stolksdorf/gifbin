@@ -2,6 +2,18 @@ GifModel = xo.model.extend({
 	URL : function(){
 		return "/api/gif"
 	},
+
+	initialize : function(){
+		var self = this;
+		/*this.onChange('category_id', function(c_id){
+			if(c_id){
+				var name = GifCategories.get(c_id).name;
+				if(name) self.category = name;
+			}
+		});*/
+		return this;
+	},
+
 	linkCount : 0,
 
 	increaseLinkCount : function(){

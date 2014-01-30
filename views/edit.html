@@ -28,6 +28,7 @@
 	<script type="text/javascript" src="../js/views/LinkBtn.js"></script>
 
 	<script type="text/javascript" src="../js/models/GifModel.js"></script>
+	<script type="text/javascript" src="../js/models/Categories.js"></script>
 </head>
 <body>
 	<title>gifbin.add</title>
@@ -44,7 +45,7 @@
 					<div class='form__item__field'>
 						<input type='text' placeholder='http://i.imgur.com/6SAiyP2.gif' xo-element='linkField'></input>
 						<div xo-element='link' style='display:none'>
-							<span xo-element='linkText'></span>
+							<div style='display:inline-block;width:274px;' xo-element='linkText'></div>
 						</div>
 					</div>
 				</div>
@@ -52,6 +53,9 @@
 					<div class='form__item__title'>Category</div>
 					<div class='form__item__field'>
 						<select xo-element='category'></select>
+						<div xo-element='addCategoryBtn'class='btn teal hint--bottom' data-hint='Add New Category'>
+							<i class='icon-plus-sign'></i>
+						</div>
 					</div>
 				</div>
 				<div class='form__item'>
@@ -83,7 +87,7 @@
 	<div class='footer'></div>
 
 	<script>
-		var GifCategories = <%- categories %>;
+		GifCategories.set(<%- categories %>);
 		var newGif = GifModel.create(<%- gif %>);
 
 		GifbinEdit.create(newGif);

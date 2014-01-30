@@ -22,7 +22,7 @@ Footer = xo.view.extend({
 		DOM.p({},
 			"I made gifbin to share my love of gifs."
 		),
-		DOM.p({}, "There is no moderation on the site. No accounts, no passwords. I wanted to keep the expereicne as smooth as possible. Please be midful and respect that :)"),
+		DOM.p({}, "There is no moderation on the site. No accounts, no passwords. I wanted to keep the experience as smooth as possible. Please be mindful and respect that :)"),
 		DOM.p({},
 			DOM.a({ target:'_blank', href:'http://i.imgur.com/guoze.gif'}, "I hope you like this as much as I do.")
 		)

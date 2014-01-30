@@ -12,23 +12,22 @@ GifCollection = xo.collection.extend({
 		return result;
 	},
 
-	getCategoryBest : function(){
-		var result = {};
-		this.each(function(gif){
-			if(!result[gif.category]){
-				result[gif.category] = {
-					category : gif.category,
-					link : gif.link,
-					count : gif.linkCount || 0
-				}
-				return;
+	getCategoryBest : function(gifCats){
+		var result = {}
+		gifCats.each(function(gifCat){
+			result[gifCat.id] = {
+				category : gifCat.name,
+				count : 0
 			}
-
-			if(result[gif.category].count < gif.linkCount){
-				result[gif.category] = {
-					category : gif.category,
-					link : gif.link,
-					count : gif.linkCount
+		});
+		this.each(function(gif){
+			if(result[gif.category_id]){
+				if(result[gif.category_id].count <= gif.linkCount){
+					result[gif.category_id] = {
+						category : gif.category,
+						link : gif.link,
+						count : gif.linkCount
+					}
 				}
 			}
 		})

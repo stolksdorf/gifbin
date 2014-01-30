@@ -8,10 +8,14 @@ exports.loadGif = function(req,res,next){
 };
 
 exports.getCategories = function(req,res,next){
-	Category.find({}, 'name', function(err, categories){
+	/*Category.find({}, 'name', function(err, categories){
 		res.categories = _.map(categories, function(category){
 			return category.name;
 		});
+		next();
+	});*/
+	Category.find({}, function(err, categories){
+		res.categories = xo.clean(categories);
 		next();
 	});
 };

@@ -20,10 +20,14 @@ GifbinEdit = xo.view.extend({
 
 		this.copyLinkBtn = Gifbin_LinkBtn.create(self.model).injectInto(this.dom.link);
 
-		//Build Categories
-		utils.map(GifCategories, function(category){
-			self.dom.category.append('<option value="' + category + '">' +category+'</option>');
+		GifCategories.each(function(category){
+			self.dom.category.append('<option value="' + category.id + '">' +category.name+'</option>');
 		});
+
+		//Build Categories
+		GifCategories.on('add', function(category){
+			self.dom.category.append('<option value="' + category.id + '">' +category.name+'</option>');
+		})
 
 		//Load user
 		if(!this.editMode) this.dom.uploaderField.val(util.cookie.get('gifbin-user'));
@@ -33,8 +37,8 @@ GifbinEdit = xo.view.extend({
 			self.dom.linkText.html(link);
 			self.dom.image.css('background-image','url("' + link + '")');
 		});
-		this.model.onChange('category', function(category){
-			self.dom.category.find("option[value='"+category+"']").prop('selected', true);
+		this.model.onChange('category_id', function(category_id){
+			self.dom.category.find("option[value='"+category_id+"']").prop('selected', true);
 		});
 		this.model.onChange('user', function(user){
 			self.dom.uploader.html(user);
@@ -60,13 +64,24 @@ GifbinEdit = xo.view.extend({
 				'url("' + self.dom.linkField.val() + '")');
 		});
 
+		this.dom.addCategoryBtn.click(function(){
+			var categoryName = window.prompt("Category name","2kool 4skool");
+			if(categoryName){
+				var newCategory = xo.model.create({name : categoryName})
+				newCategory.save(function(){
+					GifCategories.add(newCategory);
+				})
+			}
+		})
+
 		return this;
 	},
 
 	saveGif : function(){
 		var self = this;
 		this.model.link = this.dom.linkField.val();
-		this.model.category = this.dom.category.val();
+		this.model.category_id = this.dom.category.val();
+		this.model.category = this.dom.category.find('option:selected').text();
 		this.model.tags = utils.map(this.dom.tags.val().split(','), function(tag){
 			return tag.trim();
 		});

@@ -32,6 +32,9 @@ categories = ["Misc", "Nope", "Agreement", "Excited", "The Fuck?", "Fuck This", 
 
 //Routes
 app.get('/', [mw.getCategories], function (req, res) {
+
+	console.log(res.categories);
+
 	Gif.find({}, function(err, gifs){
 		if(err || !gifs) return res.send(500, 'whoops');
 		res.render('home.html', {
@@ -74,14 +77,19 @@ app.get('/add', [mw.getCategories], function (req, res) {
 
 
 app.get('/category/:categoryName', function (req, res) {
-	var r = {
-		category : req.params.categoryName,
-	};
-	Gif.find(r, function(err, gifs){
-		if(err || !gifs) return res.send(500, 'whoops');
-		res.render('category.html', {
-			gifs : JSON.stringify(xo.clean(gifs)),
-			categoryName : req.params.categoryName
+
+	Category.findOne({name : req.params.categoryName}, function(err, category){
+
+		var r = {
+			category : req.params.categoryName,
+		};
+		Gif.find(r, function(err, gifs){
+			if(err || !gifs) return res.send(500, 'whoops');
+			res.render('category.html', {
+				gifs : JSON.stringify(xo.clean(gifs)),
+				categoryName : req.params.categoryName,
+				categoryId : category.id
+			});
 		});
 	});
 });
@@ -93,7 +101,8 @@ app.get('/user/:userName', function (req, res) {
 		if(err || !gifs) return res.send(500, 'whoops');
 		res.render('category.html', {
 			gifs : JSON.stringify(xo.clean(gifs)),
-			categoryName : req.params.userName || 'Misc'
+			categoryName : req.params.userName || 'Misc',
+			categoryId : 'None'
 		});
 	});
 });
@@ -103,10 +112,11 @@ app.get('/user/:userName', function (req, res) {
 
 //Admin
 
-/*
+
 
 app.get('/dropall', function(req,res){
 	Gif.remove({}, function(){});
+	Category.remove({}, function(){});
 	res.send('dropped all');
 });
 
@@ -118,7 +128,7 @@ app.get('/search/:attr/:val', function(req,res){
 		res.send(result);
 	});
 });
-*/
+
 
 var port = process.env.PORT || 5000;
 app.listen(port, function() {

@@ -6,6 +6,7 @@ var GifSchema = mongoose.Schema({
 	created     : { type: Date,    default: Date.now },
 	user        : String,
 	tags        : [String],
+	category_id : String,
 	category    : String,
 	linkCount   : { type: Number, default: 0}
 });

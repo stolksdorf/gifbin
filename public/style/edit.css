@@ -45,7 +45,7 @@
 		}
 
 		.form__item__field textarea{
-			font-size          : 13px;
+			/*ont-size          : 13px;*/
 			width : 275px;
 			height: 65px;
 		}
