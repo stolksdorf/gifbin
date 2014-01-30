@@ -24,10 +24,7 @@ xo            = require('./modules/xo-node.js');
 //Models
 require('./modules/models/gif.js');
 require('./modules/models/category.js');
-
-
-//Categories
-categories = ["Misc", "Nope", "Agreement", "Excited", "The Fuck?", "Fuck This", "Mind Blown"];
+require('./modules/models/clicks.js');
 
 
 //Routes
@@ -119,6 +116,7 @@ app.get('/user/:userName', function (req, res) {
 
 
 
+
 app.get('/dropall', function(req,res){
 	Gif.remove({}, function(){});
 	Category.remove({}, function(){});
@@ -133,6 +131,19 @@ app.get('/search/:attr/:val', function(req,res){
 		res.send(result);
 	});
 });
+app.get('/addclick/:user/:link', function(req,res){
+	Clicks.addClick(req.params.user, req.params.link, function(err, result){
+		if(err) return res.send(500)
+		res.send(200);
+	});
+});
+app.get('/userclick/:user', function(req,res){
+	Clicks.getByUser(req.params.user, function(err, result){
+		if(err) return res.send(500)
+		res.send(result);
+	});
+});
+
 
 
 app.get('*', function(req,res){

@@ -29,6 +29,14 @@ Gifbin_LinkBtn = xo.view.extend({
 			self.dom.view.attr('data-hint', "Copied!");
 			self.model.increaseLinkCount();
 			self.trigger('click');
+
+			//Adds a click to this user
+			if(util.cookie.get('gifbin-user')){
+				$.ajax({
+					url : 'addclick/' + util.cookie.get('gifbin-user') + '/' + self.model.id,
+					type : 'GET'
+				});
+			}
 		});
 		return this;
 	}

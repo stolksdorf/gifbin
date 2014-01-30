@@ -57,7 +57,6 @@ exports.api = function(endpoint, Model, middleware, handleError){
 		});
 	};
 	mw.create = function(req,res,next){
-		console.log(req.body);
 		req.model = new Model(req.body);
 		req.model.id = req.model._id;
 		return next();
