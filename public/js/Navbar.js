@@ -1,6 +1,7 @@
 NavBar = xo.view.extend({
 	schematic : DOM.div({class:'content'},
 		DOM.a({class:'navbar__header', href:"/"}, "gifbin."),
+		DOM.a({class:'navbar__item', href:"/all"}, "All"),
 		DOM.a({class:'navbar__item', href:"/add"}, "Add"),
 		DOM.a({class:'navbar__item', href:"/categories"}, "Categories"),
 		DOM.a({class:'navbar__item', href:"/about"}, "About"),

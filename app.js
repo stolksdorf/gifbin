@@ -32,13 +32,18 @@ categories = ["Misc", "Nope", "Agreement", "Excited", "The Fuck?", "Fuck This", 
 
 //Routes
 app.get('/', [mw.getCategories], function (req, res) {
-
-	console.log(res.categories);
-
 	Gif.find({}, function(err, gifs){
 		if(err || !gifs) return res.render('oops.html');
 		res.render('home.html', {
 			categories : JSON.stringify(res.categories),
+			gifs : JSON.stringify(xo.clean(gifs))
+		});
+	});
+});
+app.get('/all', function (req, res) {
+	Gif.find({}, function(err, gifs){
+		if(err || !gifs) return res.render('oops.html');
+		res.render('all.html', {
 			gifs : JSON.stringify(xo.clean(gifs))
 		});
 	});
