@@ -31,7 +31,6 @@
 	<script type="text/javascript" src="../js/views/GifCard.js"></script>
 	<script type="text/javascript" src="../js/views/LinkBtn.js"></script>
 	<script type="text/javascript" src="../js/views/SearchResults.js"></script>
-	<script type="text/javascript" src="../js/views/CategoryView.js"></script>
 
 	<script type="text/javascript" src="../js/models/GifModel.js"></script>
 	<script type="text/javascript" src="../js/models/GifCollection.js"></script>
@@ -40,77 +39,26 @@
 	<title>gifbin.</title>
 
 	<div class='navbar'></div>
-	<div class='main content' style='min-height : 600px;'>
-		<div class='categoryContainer'>
-			<div class='title'>
-				Categories
+	<div class='main content'>
+		<div class='title'></div>
 
-				<div style='float:right;margin-top: -10px;margin-right: -5px;'>
-					<input id='categoryName' style='font-size:0.4em' type='text'  placeholder='AwesomeTown'></input>
-					<div id='addCategory' style='font-size:0.5em' class='btn green hint--bottom' data-hint='Add Category'>
-						<i class='icon-plus-sign'></i>
-					</div>
-				</div>
 
-			</div>
-		</div>
-		<div class='searchContainer'></div>
 	</div>
 	<div class='footer'></div>
 
 	<script>
 
-	var GifCategories = <%- categories %>;
 	var gifs = GifCollection.create(<%- gifs %>);
+	var categoryName = '<%- categoryName %>';
 
+	//Setup Title
+	$('.title').text(categoryName);
+	document.title = "gifbin." + categoryName;
 
-
-	//Create Category view
-	util.map(gifs.getCategoryBest(), function(bestObj){
-		CategoryView.create(bestObj).injectInto($('.categoryContainer'));
-	});
-
-
-	$('#addCategory').click(function(){
-		if($('#categoryName').val().trim() !== ''){
-			$.ajax({
-				url : '/api/category',
-				type : 'POST',
-				data : {name : $('#categoryName').val().trim()},
-				success : function(){
-					location.reload();
-				},
-				error : function(){
-					location.reload();
-				}
-			});
-		}
-	});
-
-
-
-	var searchBar = Searchbar.create().injectInto($('.main'), true);
+	var searchBar = Searchbar.create().injectInto($('.main'));
 	var searchResults = SearchResults.create(gifs);
 	searchResults.searchBar = searchBar;
-
-	searchResults.injectInto($('.searchContainer'));
-	searchResults.dom.view.hide();
-
-	searchBar.on('searching', function(){
-		 if($('.categoryContainer').is(':visible')) $('.categoryContainer').stop().fadeTo(300, 0.4);
-	});
-	searchBar.on('searched', function(terms){
-		if(terms.length === 1 && terms[0] === ""){
-			$('.categoryContainer').stop().fadeTo(100, 1);
-			searchResults.dom.view.hide();
-		} else {
-			$('.categoryContainer').hide();
-			searchResults.dom.view.stop().fadeTo(100, 1);
-		}
-		if($('.categoryContainer').is(':visible')) $('.categoryContainer').stop().fadeTo(100, 1);
-	});
-
-
+	searchResults.injectInto($('.main'));
 
 
 	</script>

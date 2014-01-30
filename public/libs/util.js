@@ -1,4 +1,4 @@
-var util = {
+var util = utils = {
 	//args = {url, type, data, success, error}
 	ajax : function(args){
 		var req = new XMLHttpRequest();
@@ -82,10 +82,28 @@ var util = {
 		}
 		return result;
 	},
+	every : function(obj, fn){
+		var result = true;
+		for(var propName in obj){
+			if(obj.hasOwnProperty(propName)){
+				if(!fn(obj[propName], propName)) result = false;
+			}
+		}
+		return result;
+	},
+	some : function(obj, fn){
+		var result = false;
+		for(var propName in obj){
+			if(obj.hasOwnProperty(propName)){
+				if(fn(obj[propName], propName)) result = true;
+			}
+		}
+		return result;
+	},
 
 
 	/* Simple Cookie editor */
-	cookies : {
+	cookie : {
 		get : function(name){
 			if(!document.cookie.length) return;
 			var start, end;

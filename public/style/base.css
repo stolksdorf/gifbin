@@ -85,27 +85,24 @@ strong{
 }
 
 
-
-input{
-	height             : 42px;
+input, textarea, select{
 	padding            : 8px 12px;
 
 	font-family        : "Lato", Helvetica, Arial, sans-serif;
 	font-size          : 15px;
 	color              : #34495e;
-	line-height        : 1.467;
 	border             : 2px solid #bdc3c7;
 	box-shadow         : none;
 
-	-webkit-appearance : none;
 	-webkit-box-shadow : none;
 	-webkit-transition : border .25s linear, color .25s linear, background-color .25s linear;
 	transition         : border .25s linear, color .25s linear, background-color .25s linear;
 }
-
-	input:focus{
+	input:focus, textarea:focus, select:focus{
 		border : 2px solid #1ABC9C;
 	}
+
+
 
 
 
@@ -116,20 +113,24 @@ input{
 .btn{
 	display                     : inline-block;
 
+	margin-right                : 5px;
+	margin-left                 : 5px;
 	padding                     : 0.6em;
 
 	cursor                      : pointer;
 	font-size                   : 16px;
 	color                       : white;
-
-	margin-left: 5px;
-	margin-right: 5px;
+	text-decoration             : none;
 
 	transition                  : 0.25s;
 	-webkit-transition          : 0.25s;
 	transition-property         : background-color;
 	-webkit-transition-property : background-color;
 }
+	.btn a:hover{
+		font-weight : normal;
+	}
+
 .btn.large{
 	font-size   : 35px;
 	font-weight : 900;
@@ -157,11 +158,11 @@ input{
 
 
 .btn.disabled{
-	cursor: auto;
-	background-color:#BDC3C7;
+	cursor           : auto;
+	background-color : #BDC3C7;
 }
 .btn.disabled:hover{
-	background-color:#BDC3C7;
+	background-color : #BDC3C7;
 }
 
 

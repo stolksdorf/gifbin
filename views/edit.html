@@ -5,13 +5,13 @@
 	<link href='../libs/lato/lato.css' rel='stylesheet' type='text/css'>
 	<link href='../libs/font-awesome/css/font-awesome.css' rel='stylesheet' type='text/css'>
 
-
 	<link href="../libs/hint.css" rel="stylesheet">
 	<script type="text/javascript" src="../libs/archetype.js"></script>
 	<script type="text/javascript" src="../libs/xo.js"></script>
 	<script type="text/javascript" src="../libs/dom.js"></script>
 	<script type="text/javascript" src="../libs/util.js"></script>
 	<script type="text/javascript" src="../libs/moment.js"></script>
+	<script type="text/javascript" src="../libs/ZeroClipboard/ZeroClipboard.js"></script>
 
 	<!-- Style -->
 	<link rel="stylesheet" type="text/css" href="../style/reset.css" />
@@ -22,51 +22,38 @@
 
 	<link rel="stylesheet" type="text/css" href="../style/edit.css" />
 
+
 	<!-- XO -->
-	<script type="text/javascript" src="../js/EditApp.js"></script>
-	<script type="text/javascript" src="../js/GifModel.js"></script>
+	<script type="text/javascript" src="../js/views/EditView.js"></script>
+	<script type="text/javascript" src="../js/views/LinkBtn.js"></script>
+
+	<script type="text/javascript" src="../js/models/GifModel.js"></script>
 </head>
 <body>
-	<title>gifbin.</title>
-	<div class='navbar'>
-		<div class='content'>
-			<div class='navbar__header'>gifbin.</div>
-			<div class='navbar__item'>Test</div>
-			<a href="google.com" class='navbar__item'>Test</a>
-			<div class='navbar__item'>Test</div>
-			<div class='navbar__item right'>Test</div>
-		</div>
-	</div>
+	<title>gifbin.add</title>
+
+	<div class='navbar'></div>
 
 
 	<div class='main content'>
-
 		<div class='edit' xo-view='edit'>
-
 			<div class='imageContainer' xo-element='image'></div>
-
 			<div class='edit__form'>
-
 				<div class='form__item'>
 					<div class='form__item__title'>Link</div>
 					<div class='form__item__field'>
 						<input type='text' placeholder='http://i.imgur.com/6SAiyP2.gif' xo-element='linkField'></input>
+						<div xo-element='link' style='display:none'>
+							<span xo-element='linkText'></span>
+						</div>
 					</div>
 				</div>
-
 				<div class='form__item'>
 					<div class='form__item__title'>Category</div>
 					<div class='form__item__field'>
-						<select xo-element='category'>
-						  <option value="volvo">Volvo</option>
-						  <option value="saab">Saab</option>
-						  <option value="mercedes">Mercedes</option>
-						  <option value="audi">Audi</option>
-						</select>
+						<select xo-element='category'></select>
 					</div>
 				</div>
-
-
 				<div class='form__item'>
 					<div class='form__item__title'>Tags</div>
 					<div class='form__item__field'>
@@ -76,7 +63,8 @@
 				<div class='form__item'>
 					<div class='form__item__title'>Uploader</div>
 					<div class='form__item__field'>
-						<input xo-element='uploader' type='text' placeholder='Your Name'></input>
+						<input xo-element='uploaderField' type='text' placeholder='Your Name'></input>
+						<a target="_blank" xo-element='uploader' style='display:none'></a>
 					</div>
 				</div>
 				<div class='form__item'>
@@ -87,64 +75,21 @@
 					<div class='form__item__title'>Date Created</div>
 					<div class='form__item__field' xo-element='dateUploaded'></div>
 				</div>
-
 				<div class='btn green' xo-element='saveButton'> Save </div>
-				<div class='btn red' xo-element='deleteButton'> Delete </div>
-
-			</div>
-
-		</div>
-
-
-
-	</div>
-	<div class='footer'>
-		<div class='content'>
-			<div class='footer__about'>
-				<h3>About</h3>
-				<p>
-					This page was generated using <a href='http://stolksdorf.github.io/Paintjob'>Paintjob</a>, a framework that converts Github repos into beautiful demo pages.
-				</p>
-				<p>
-					Everything you see here was written by Scott Tolksdorf. Check out more cool stuff below.
-				</p>
-				<p class='footer__about__icons'>
-					<a target='_blank' href='http://stolksdorf.com'><i class='icon-home'></i></a>
-					<a target='_blank' href="mailto:scott.tolksdorf@gmail.com"><i class='icon-envelope'></i></a>
-					<a target='_blank' href='https://github.com/stolksdorf' ><i class='icon-github'></i></a>
-					<a target='_blank' href='http://stolksdorf.throwww.com/'><i class='icon-pencil'></i></a>
-					<a target='_blank' href='https://twitter.com/stolksdorf'><i class='icon-twitter'></i></a>
-					<a target='_blank' href='https://www.facebook.com/scott.tolksdorf'><i class='icon-facebook'></i></a>
-					<a target='_blank' href='http://ca.linkedin.com/pub/scott-tolksdorf/19/132/53a'><i class='icon-linkedin'></i></a>
-				</p>
-			</div>
-
-			<div class='footer__license'>
-				<h2>License</h2>
-				<p>
-					All the work I release is under <a target='_blank' href='http://www.wtfpl.net'>WTFPL</a>.
-				</p>
-				<p>
-					I believe that the more open we are with information, the more innovation we'll see. In short, do whatever you want with this, just don't say that you made it.
-				</p>
-				<p>
-					Full license text <a target='_blank' href='http://www.wtfpl.net/txt/copying/'>here</a>.
-				</p>
+				<div class='btn red' xo-element='deleteButton' style="display:none"> Delete </div>
 			</div>
 		</div>
 	</div>
-
+	<div class='footer'></div>
 
 	<script>
+		var GifCategories = <%- categories %>;
+		var newGif = GifModel.create(<%- gif %>);
 
-		var newGif = Gifbin_Model_Gif.create();
-
-		if(document.URL.indexOf('edit') !== -1){
-			newGif.id = document.URL.substr(document.URL.lastIndexOf('/') + 1);
-			newGif.fetch();
-		}
 		GifbinEdit.create(newGif);
 
 	</script>
+	<script type="text/javascript" src="../js/Navbar.js"></script>
+	<script type="text/javascript" src="../js/Footer.js"></script>
 </body>
 </html>

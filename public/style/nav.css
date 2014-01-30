@@ -1,7 +1,7 @@
 .navbar{
 	height           : 53px;
 	min-height       : 53px;
-	margin-bottom    : 30px;
+	margin-bottom    : 25px;
 
 	background-color : #ecf0f1;
 	font-size        : 16px;
@@ -18,10 +18,10 @@
 		font-size                   : 24px;
 		font-weight                 : 700;
 		line-height                 : 1.042;
+		text-decoration             : none;
 
 		transition                  : 0.25s;
 		transition-property         : color;
-
 		-webkit-transition          : 0.25s;
 		-webkit-transition-property : color;
 	}
@@ -38,11 +38,10 @@
 		cursor                      : pointer;
 		font-weight                 : 700;
 		line-height                 : 1.042;
-		text-decoration: none;
+		text-decoration             : none;
 
 		transition                  : 0.25s;
 		transition-property         : color;
-
 		-webkit-transition          : 0.25s;
 		-webkit-transition-property : color;
 	}
@@ -51,5 +50,5 @@
 		}
 
 	.navbar__item.right{
-		float:right;
+		float : right;
 	}

@@ -1,0 +1,50 @@
+Searchbar = xo.view.extend({
+	schematic : DOM.div( {class:"searchBar"},
+		DOM.i( {class:"icon-search", 'xo-element':"searchIcon"}),
+		DOM.i( {class:"icon-time", style:"display:none", 'xo-element':"searchingIcon"}),
+		DOM.input( {type:"text", 'xo-element':"search"})
+	),
+
+	render : function(){
+		var self = this;
+		var typingTimeout;
+		this.timer = 600;
+		this.dom.search.keydown(function(){
+			self.trigger('searching');
+			clearTimeout(typingTimeout);
+			self.dom.searchIcon.hide();
+			self.dom.searchingIcon.show();
+			typingTimeout = setTimeout(function(){
+					self.dom.searchIcon.show();
+					self.dom.searchingIcon.hide();
+					self.trigger('searched', self.dom.search.val().split(' '));
+			}, self.timer);
+		});
+		this.dom.search.focus();
+		return this;
+	},
+});
+
+//Style
+css.render({
+	'.searchBar' : {
+		'width'            : '475px',
+		'margin-bottom'    : '20px',
+		'padding-left'     : '20px',
+		'background-color' : 'white',
+		'font-size'        : '1em',
+		'color'            : '#444',
+		'border'           : '2px solid #eee',
+
+		i : {
+			'margin-right' : '10px',
+		},
+		input : {
+			'width'       : '425px',
+			'padding'     : '10px',
+			'font-size'   : '1.1em',
+			'font-weight' : '300',
+			'border'      : '1px solid white',
+		}
+	}
+});

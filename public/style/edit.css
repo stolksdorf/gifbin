@@ -1,3 +1,7 @@
+.edit{
+	margin-bottom: 100px;
+}
+
 .imageContainer{
 	display             : inline-block;
 	vertical-align      : middle;
@@ -36,6 +40,17 @@
 		}
 
 		.form__item__field input{
+			width : 275px;
+			height             : 42px;
+		}
+
+		.form__item__field textarea{
+			font-size          : 13px;
+			width : 275px;
+			height: 65px;
+		}
+
+		.form__item__field select{
 			width : 275px;
 		}
 

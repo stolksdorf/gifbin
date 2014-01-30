@@ -20,6 +20,7 @@
 		}.bind({type : type});
 	}
 
+/*
 	//Each
 	NodeList.prototype.each = function(fn){
 		for(var i=0; i < this.length; i++){
@@ -156,4 +157,5 @@
 		},delay);
 		return this;
 	};
+*/
 })();

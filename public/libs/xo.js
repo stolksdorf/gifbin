@@ -26,11 +26,7 @@
 	//Better ajax call, no jQuery needed
 	var xo_ajax = function(self, method, callback, data){
 		callback = callback || function(){};
-
-		data = extend(self.attributes(), data);
-
-
-
+		data     = extend(self.attributes(), data);
 		var typeMap = {
 			'fetch'  : 'GET',
 			'save'   : self.id ? 'PUT' : 'POST',
@@ -84,7 +80,7 @@
 
 	xo = {};
 
-	xo.ew = $ || function(e){return e;};
+	xo.elementWrapper = $ || function(e){return e;};
 
 	xo.view = Archetype.extend({
 		view      : undefined,
@@ -104,18 +100,21 @@
 				schematicElement = schematicElement.cloneNode(true);
 				schematicElement.removeAttribute("xo-schematic");
 				this.dom.view = target.appendChild(schematicElement);
-			} else if(Object.prototype.toString.call(this.schematic) === '[object HTMLDivElement]'){
-				this.dom.view = target.appendChild(this.schematic.cloneNode(true));
+			} else if(typeof this.schematic !== 'undefined'){
+				this.dom.view = this.schematic.cloneNode(true);
+				if(prepend){ $(target).prepend(this.dom.view) }
+				else{ this.dom.view = target.appendChild(this.dom.view)}
 			}
 			if(this.view){
 				this.dom.view = document.querySelector('[xo-view="' + this.view + '"]');
 				if(!this.dom.view){throw 'xo-view: Could not find view with name ' + this.view;}
 			}
-
 			var elements = this.dom.view.querySelectorAll('[xo-element]');
 			for(var i =0; i < elements.length; i++){
-				this.dom[elements[i].getAttribute('xo-element')] = elements[i];
+				this.dom[elements[i].getAttribute('xo-element')] = xo.elementWrapper(elements[i]);
 			}
+
+			this.dom.view = xo.elementWrapper(this.dom.view);
 
 			this.render();
 			this.trigger('render');
@@ -176,8 +175,9 @@
 		},
 
 		//ajax methods
-		save : function(callback){ //TODO: add ability to pass data to save
-			xo_ajax(this, 'save', callback);
+		save : function(data, callback){
+			if(typeof data === 'function') callback = data;
+			xo_ajax(this, 'save', callback, data);
 			return this;
 		},
 		fetch : function(callback){
