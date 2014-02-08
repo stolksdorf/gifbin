@@ -1,0 +1,12 @@
+DownloadBtnComponent = xo.view.extend({
+	schematic : DOM.a({download : '', class : 'btn red hint--bottom', 'data-hint':"Download"},
+		DOM.i({class:'icon-download-alt '})
+	),
+	render : function(){
+		var self = this;
+
+		this.model.onChange('link', function(link){
+			self.dom.view.attr('href', link);
+		});
+	}
+});

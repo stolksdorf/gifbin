@@ -2,67 +2,62 @@
 	display            : inline-block;
 	vertical-align     : top;
 	z-index            : 500;
-	/*background-color : #ECF0F1;*/
-
 
 	height             : 90px;
 	width              : 90px;
-	/*margin             : 5px;*/
-
-	padding : 8px;
-
+	padding            : 8px;
 
 	text-align         : center;
 
+	/*background-color : #ECF0F1;*/
+	/*margin           : 5px;*/
 	transition         : 0.25s;
 	-webkit-transition : 0.25s;
 }
 
 	.card__imageContainer{
-		position      : relative;
-		display: block;
-
-
-
+		position : relative;
+		display  : block;
 	}
 
 
-	.card__gif, .card__staticImage, .card__copyButton{
-		position: absolute;
-		top:0px;
-		left:0px;
+	.card__gif, .card__staticImage, .card__button{
+		position : absolute;
+		top      : 0px;
+		left     : 0px;
 	}
 
-
-	.card__copyButton{
-		display: none;
-		z-index    : 10000;
-		font-size: 0.8em;
+	.card__button{
+		display   : none;
+		z-index   : 600;
+		font-size : 0.8em;
 	}
+		.card__downloadButton{
+			top     : 28px;
+			z-index : 550;
+		}
 
 	.card__gif{
-		display:none;
-		z-index    : 400;
+		display            : none;
+		z-index            : 400;
+
+		max-height         : 90px;
+		min-width          : 90px;
+
 		transition         : 0.25s;
 		-webkit-transition : 0.25s;
-		max-height : 90px;
-		min-width  : 90px;
-	}
-
-	.card__staticImage{
-
 	}
 
 
 
 	/* On Hover */
 	.card__imageContainer:hover .card__gif, .card.hovered .card__gif{
+		display : block;
 		opacity : 1;
-		display: block;
 	}
 
-	.card__imageContainer:hover .card__copyButton, .card.hovered .card__copyButton{
-		display: block;
+	.card__imageContainer:hover .card__button, .card.hovered .card__button{
+		display : block;
 	}
 
 	.card__gif:hover, .card.hovered .card__gif{
