@@ -4,6 +4,7 @@ GLOBAL._       = require('underscore');
 GLOBAL.express = express = require("express");
 GLOBAL.app     = express();
 GLOBAL.ejs     = require('ejs');
+GLOBAL.async   = require('async');
 
 //Mongoose
 mongoose = require('mongoose');
