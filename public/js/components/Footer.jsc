@@ -33,12 +33,17 @@ Footer = xo.view.extend({
 
 css.render({
 	".main": {
-		"padding-bottom": "345px"
+		"position" : "relative",
+		//"overflow" :"auto",
+		"padding-bottom": "300px",
+		//"min-height": "100%"
 	},
 	"footer": {
 		"position": "absolute",
 		"bottom": "0",
 		"z-index": "10",
+		//"clear" : "both",
+		//"margin-top" : "-300px",
 		"width": "100%",
 		"overflow": "hidden",
 		"height": "300px",

@@ -21,8 +21,15 @@
 .grey      {color:#7F8C8D;}
 */
 
+html{
+	min-height  : 100%;
+	height  : 100%;
+
+}
+
 body{
 	position    : relative;
+	/*height  : 100%;*/
 	min-height  : 100%;
 	font-family : 'Lato', sans-serif;
 }

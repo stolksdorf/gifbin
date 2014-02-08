@@ -26,7 +26,7 @@
 
 	var xo_ajax = function(self, method, callback, data){
 		callback = callback || function(){};
-		data     = extend(self.toJSON(), data);
+		data     = extend(self.attributes(), data);
 		var typeMap = {
 			'fetch'  : 'GET',
 			'save'   : self.id ? 'PUT' : 'POST',
@@ -162,7 +162,7 @@
 			evt(this[attrName]);
 			return this;
 		},
-		toJSON : function(){
+		attributes : function(){
 			return JSON.parse(JSON.stringify(this));
 		},
 		save : function(data, callback){
@@ -232,7 +232,7 @@
 		each : function(fn){
 			return map(this.models, fn);
 		},
-		toJSON : function(){
+		attributes : function(){
 			return JSON.parse(JSON.stringify(this.models));
 		},
 

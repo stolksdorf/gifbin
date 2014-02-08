@@ -1,74 +1,41 @@
-<html>
-<head>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>
-	<!-- Local -->
-	<link href='../libs/lato/lato.css' rel='stylesheet' type='text/css'>
-	<link href='../libs/font-awesome/css/font-awesome.css' rel='stylesheet' type='text/css'>
-
-	<link href="../libs/hint.css" rel="stylesheet">
-	<script type="text/javascript" src="../libs/archetype.js"></script>
-	<script type="text/javascript" src="../libs/xo.js"></script>
-	<script type="text/javascript" src="../libs/dom.js"></script>
-	<script type="text/javascript" src="../libs/css.js"></script>
-	<script type="text/javascript" src="../libs/util.js"></script>
-	<script type="text/javascript" src="../libs/moment.js"></script>
-	<script type="text/javascript" src="../libs/ZeroClipboard/ZeroClipboard.js"></script>
-
-	<!-- Style -->
-	<link rel="stylesheet" type="text/css" href="../style/reset.css" />
-	<link rel="stylesheet" type="text/css" href="../style/base.css" />
-	<link rel="stylesheet" type="text/css" href="../style/footer.css" />
-	<link rel="stylesheet" type="text/css" href="../style/nav.css" />
-	<link rel="stylesheet" type="text/css" href="../style/gifbin.css" />
+<style>
+	.bad_page{
+		display: none;
+		margin-top: 80px;
+		text-align: center;
+		font-weight: 300;
+	}
+	.bad_page .oops{
+		font-size: 3em;
+		font-weight: 300;
+		margin-bottom: 20px;
+	}
 
 
-	<style>
-		.bad_page{
-			display: none;
-			margin-top: 80px;
-			text-align: center;
-			font-weight: 300;
-		}
-		.bad_page .oops{
-			font-size: 3em;
-			font-weight: 300;
-			margin-bottom: 20px;
-		}
+</style>
+
+<title>gifbin.oops</title>
+
+<div class='main content'>
 
 
-	</style>
-
-</head>
-<body>
-	<title>gifbin.oops</title>
-
-	<div class='navbar'></div>
-	<div class='main content'>
-
-
-		<div class='bad_page'>
-			<iframe width="560" height="315" src="//www.youtube.com/embed/y6rZfpSL1RQ" frameborder="0" allowfullscreen></iframe>
-			<div class='oops'>oops.</div>
-			<div>gifbin done messed up!</div>
-		</div>
-
-
-		<div class='bad_page'>
-			<img src="http://i.imgur.com/MxuVp2y.png" style='max-width: 200px'></img>
-			<div class='oops'>oops.</div>
-			<div>gifbin done goof'd</div>
-		</div>
-
+	<div class='bad_page'>
+		<iframe width="560" height="315" src="//www.youtube.com/embed/y6rZfpSL1RQ" frameborder="0" allowfullscreen></iframe>
+		<div class='oops'>oops.</div>
+		<div>gifbin done messed up!</div>
 	</div>
-	<div class='footer'></div>
 
-	<script>
-		var badPages = $('.bad_page');
-		$(badPages[Math.floor(Math.random()*badPages.length)]).show();
 
-	</script>
-	<script type="text/javascript" src="../js/Navbar.js"></script>
-	<script type="text/javascript" src="../js/Footer.js"></script>
+	<div class='bad_page'>
+		<img src="http://i.imgur.com/MxuVp2y.png" style='max-width: 200px'></img>
+		<div class='oops'>oops.</div>
+		<div>gifbin done goof'd</div>
+	</div>
 
-</body>
-</html>
+</div>
+
+<script>
+	var badPages = $('.bad_page');
+	$(badPages[Math.floor(Math.random()*badPages.length)]).show();
+
+</script>

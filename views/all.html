@@ -1,63 +1,27 @@
-<html>
-<head>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>
-	<!-- Local -->
-	<link href='../libs/lato/lato.css' rel='stylesheet' type='text/css'>
-	<link href='../libs/font-awesome/css/font-awesome.css' rel='stylesheet' type='text/css'>
 
-	<link href="../libs/hint.css" rel="stylesheet">
-	<script type="text/javascript" src="../libs/archetype.js"></script>
-	<script type="text/javascript" src="../libs/xo.js"></script>
-	<script type="text/javascript" src="../libs/dom.js"></script>
-	<script type="text/javascript" src="../libs/css.js"></script>
-	<script type="text/javascript" src="../libs/util.js"></script>
-	<script type="text/javascript" src="../libs/moment.js"></script>
-	<script type="text/javascript" src="../libs/ZeroClipboard/ZeroClipboard.js"></script>
+<link rel="stylesheet" type="text/css" href="../style/home.css" />
 
-	<!-- Style -->
-	<link rel="stylesheet" type="text/css" href="../style/reset.css" />
-	<link rel="stylesheet" type="text/css" href="../style/base.css" />
-	<link rel="stylesheet" type="text/css" href="../style/footer.css" />
-	<link rel="stylesheet" type="text/css" href="../style/nav.css" />
-	<link rel="stylesheet" type="text/css" href="../style/gifbin.css" />
-
-	<link rel="stylesheet" type="text/css" href="../style/home.css" />
+<script type="text/javascript" src="../js/components/Searchbar.jsc"></script>
+<script type="text/javascript" src="../js/components/LinkBtn.jsc"></script>
 
 
-	<script type="text/javascript" src="../js/Searchbar.js"></script>
+<script type="text/javascript" src="../js/CardView.js"></script>
+<script type="text/javascript" src="../js/SearchResultsView.js"></script>
+<script type="text/javascript" src="../js/CategoryView.js"></script>
 
 
-	<!-- XO -->
-	<script type="text/javascript" src="../js/views/GifCard.js"></script>
-	<script type="text/javascript" src="../js/views/LinkBtn.js"></script>
-	<script type="text/javascript" src="../js/views/SearchResults.js"></script>
-	<script type="text/javascript" src="../js/views/CategoryView.js"></script>
+<title>gifbin.all</title>
 
-	<script type="text/javascript" src="../js/models/GifModel.js"></script>
-	<script type="text/javascript" src="../js/models/GifCollection.js"></script>
-	<script type="text/javascript" src="../js/models/Categories.js"></script>
-</head>
-<body>
-	<title>gifbin.all</title>
+<div class='main content' style='min-height : 600px;'> </div>
 
-	<div class='navbar'></div>
-	<div class='main content' style='min-height : 600px;'>
-	</div>
-	<div class='footer'></div>
+<script>
 
-	<script>
+	GifCollection.set(<%- gifs %>);
 
-	var gifs = GifCollection.create(<%- gifs %>);
-
-	var searchBar = Searchbar.create().prependTo($('.main'));
-	var searchResults = SearchResults.create(gifs);
+	searchBar = SearchbarComponent.create().prependTo($('.main'));
+	searchResults = SearchResultsView.create(GifCollection);
 	searchResults.searchBar = searchBar;
 
 	searchResults.appendTo($('.main'));
 
-	</script>
-	<script type="text/javascript" src="../js/Navbar.js"></script>
-	<script type="text/javascript" src="../js/Footer.js"></script>
-
-</body>
-</html>
+</script>

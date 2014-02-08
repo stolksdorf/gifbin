@@ -18,14 +18,14 @@ EditGifView = xo.view.extend({
 			}
 		});
 
-		this.copyLinkBtn = Gifbin_LinkBtn.create(self.model).appendTo(this.dom.link);
+		this.copyLinkBtn = LinkBtnComponent.create(self.model).appendTo(this.dom.link);
 
-		GifCategories.each(function(category){
+		CategoryCollection.each(function(category){
 			self.dom.category.append('<option value="' + category.id + '">' +category.name+'</option>');
 		});
 
 		//Build Categories
-		GifCategories.on('add', function(category){
+		CategoryCollection.on('add', function(category){
 			self.dom.category.append('<option value="' + category.id + '">' +category.name+'</option>');
 		})
 
@@ -73,7 +73,7 @@ EditGifView = xo.view.extend({
 			if(categoryName){
 				var newCategory = xo.model.create({name : categoryName})
 				newCategory.save(function(){
-					GifCategories.add(newCategory);
+					CategoryCollection.add(newCategory);
 				})
 			}
 		})

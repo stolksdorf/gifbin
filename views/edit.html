@@ -1,99 +1,64 @@
-\<html>
-<head>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>
-	<!-- Local -->
-	<link href='../libs/lato/lato.css' rel='stylesheet' type='text/css'>
-	<link href='../libs/font-awesome/css/font-awesome.css' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" type="text/css" href="../style/edit.css" />
 
-	<link href="../libs/hint.css" rel="stylesheet">
-	<script type="text/javascript" src="../libs/archetype.js"></script>
-	<script type="text/javascript" src="../libs/xo.js"></script>
-	<script type="text/javascript" src="../libs/dom.js"></script>
-	<script type="text/javascript" src="../libs/util.js"></script>
-	<script type="text/javascript" src="../libs/moment.js"></script>
-	<script type="text/javascript" src="../libs/ZeroClipboard/ZeroClipboard.js"></script>
-
-	<!-- Style -->
-	<link rel="stylesheet" type="text/css" href="../style/reset.css" />
-	<link rel="stylesheet" type="text/css" href="../style/base.css" />
-	<link rel="stylesheet" type="text/css" href="../style/footer.css" />
-	<link rel="stylesheet" type="text/css" href="../style/nav.css" />
-	<link rel="stylesheet" type="text/css" href="../style/gifbin.css" />
-
-	<link rel="stylesheet" type="text/css" href="../style/edit.css" />
+<script type="text/javascript" src="../js/EditGifView.js"></script>
+<script type="text/javascript" src="../js/components/LinkBtn.jsc"></script>
 
 
-	<!-- XO -->
-	<script type="text/javascript" src="../js/views/EditView.js"></script>
-	<script type="text/javascript" src="../js/views/LinkBtn.js"></script>
 
-	<script type="text/javascript" src="../js/models/GifModel.js"></script>
-	<script type="text/javascript" src="../js/models/Categories.js"></script>
-</head>
-<body>
-	<title>gifbin.add</title>
-
-	<div class='navbar'></div>
-
-
-	<div class='main content'>
-		<div class='edit' xo-view='edit'>
-			<div class='imageContainer' xo-element='image'></div>
-			<div class='edit__form'>
-				<div class='form__item'>
-					<div class='form__item__title'>Link</div>
-					<div class='form__item__field'>
-						<input type='text' placeholder='http://i.imgur.com/6SAiyP2.gif' xo-element='linkField'></input>
-						<div xo-element='link' style='display:none'>
-							<div style='display:inline-block;width:274px;' xo-element='linkText'></div>
-						</div>
+<title>gifbin.add</title>
+<div class='main content'>
+	<div class='edit' xo-view='edit'>
+		<div class='imageContainer' xo-element='image'></div>
+		<div class='edit__form'>
+			<div class='form__item'>
+				<div class='form__item__title'>Link</div>
+				<div class='form__item__field'>
+					<input type='text' placeholder='http://i.imgur.com/6SAiyP2.gif' xo-element='linkField'></input>
+					<div xo-element='link' style='display:none'>
+						<div style='display:inline-block;width:274px;' xo-element='linkText'></div>
 					</div>
 				</div>
-				<div class='form__item'>
-					<div class='form__item__title'>Category</div>
-					<div class='form__item__field'>
-						<select xo-element='category'></select>
-						<div xo-element='addCategoryBtn'class='btn teal hint--bottom' data-hint='Add New Category'>
-							<i class='icon-plus-sign'></i>
-						</div>
-					</div>
-				</div>
-				<div class='form__item'>
-					<div class='form__item__title'>Tags</div>
-					<div class='form__item__field'>
-						<textarea xo-element='tags' placeholder='Mind Blown, Ah yes, Colbert, Sloth'></textarea>
-					</div>
-				</div>
-				<div class='form__item'>
-					<div class='form__item__title'>Uploader</div>
-					<div class='form__item__field'>
-						<input xo-element='uploaderField' type='text' placeholder='Your Name'></input>
-						<a target="_blank" xo-element='uploader' style='display:none'></a>
-					</div>
-				</div>
-				<div class='form__item'>
-					<div class='form__item__title'>Times Linked</div>
-					<div class='form__item__field' xo-element='linkCount'></div>
-				</div>
-				<div class='form__item'>
-					<div class='form__item__title'>Date Created</div>
-					<div class='form__item__field' xo-element='dateUploaded'></div>
-				</div>
-				<div class='btn green' xo-element='saveButton'> Save </div>
-				<div class='btn red' xo-element='deleteButton' style="display:none"> Delete </div>
 			</div>
+			<div class='form__item'>
+				<div class='form__item__title'>Category</div>
+				<div class='form__item__field'>
+					<select xo-element='category'></select>
+					<div xo-element='addCategoryBtn'class='btn teal hint--bottom' data-hint='Add New Category'>
+						<i class='icon-plus-sign'></i>
+					</div>
+				</div>
+			</div>
+			<div class='form__item'>
+				<div class='form__item__title'>Tags</div>
+				<div class='form__item__field'>
+					<textarea xo-element='tags' placeholder='Mind Blown, Ah yes, Colbert, Sloth'></textarea>
+				</div>
+			</div>
+			<div class='form__item'>
+				<div class='form__item__title'>Uploader</div>
+				<div class='form__item__field'>
+					<input xo-element='uploaderField' type='text' placeholder='Your Name'></input>
+					<a target="_blank" xo-element='uploader' style='display:none'></a>
+				</div>
+			</div>
+			<div class='form__item'>
+				<div class='form__item__title'>Times Linked</div>
+				<div class='form__item__field' xo-element='linkCount'></div>
+			</div>
+			<div class='form__item'>
+				<div class='form__item__title'>Date Created</div>
+				<div class='form__item__field' xo-element='dateUploaded'></div>
+			</div>
+			<div class='btn green' xo-element='saveButton'> Save </div>
+			<div class='btn red' xo-element='deleteButton' style="display:none"> Delete </div>
 		</div>
 	</div>
-	<div class='footer'></div>
+</div>
 
-	<script>
-		GifCategories.set(<%- categories %>);
-		var newGif = GifModel.create(<%- gif %>);
+<script>
+	CategoryCollection.set(<%- categories %>);
+	var newGif = GifModel.create(<%- gif %>);
 
-		GifbinEdit.create(newGif);
+	EditGifView.create(newGif);
 
-	</script>
-	<script type="text/javascript" src="../js/Navbar.js"></script>
-	<script type="text/javascript" src="../js/Footer.js"></script>
-</body>
-</html>
+</script>

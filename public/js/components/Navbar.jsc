@@ -48,6 +48,9 @@ NavBar = xo.view.extend({
 }).create().appendTo($('header'));
 
 css.render({
+	".main" : {
+		//"margin-bottom": "-53px",
+	},
 	"header": {
 		"height": "53px",
 		"min-height": "53px",

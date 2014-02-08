@@ -31,3 +31,15 @@ app.get('/userclick/:user', function(req,res){
 		res.send(result);
 	});
 });
+
+
+
+
+
+app.get('/imgur/:url', function(req, res){
+
+	var imgurClientId = 'dd9999a685d25ee';
+	var imgurClientSecret = '463d373639c42d66a0190bea7156acfb01b0c188';
+
+
+})

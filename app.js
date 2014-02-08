@@ -26,8 +26,7 @@ app.listen(port, function() {
 //Modules
 mw   = require('./modules/middleware.js');
 xo   = require('./modules/xo-node.js');
-
-//dev  = require('./modules/dev_routes.js');
+dev  = require('./modules/dev_routes.js');
 
 
 //Models
@@ -55,7 +54,7 @@ var showErrorPage = function(res){
 //Routes
 app.get('/', [mw.getCategories], function (req, res) {
 	Gif.find({}, function(err, gifs){
-		if(err || !gifs) return res.render('oops.html');
+		if(err || !gifs) return render(res, 'oops.html');
 		return render(res, 'home.html', {
 			categories : JSON.stringify(res.categories),
 			gifs : JSON.stringify(xo.clean(gifs))
@@ -64,39 +63,39 @@ app.get('/', [mw.getCategories], function (req, res) {
 });
 app.get('/all', function (req, res) {
 	Gif.find({}, function(err, gifs){
-		if(err || !gifs) return res.render('oops.html');
-		res.render('all.html', {
+		if(err || !gifs) return render(res, 'oops.html');
+		render(res, 'all.html', {
 			gifs : JSON.stringify(xo.clean(gifs))
 		});
 	});
 });
 app.get('/categories', [mw.getCategories],function (req, res) {
 	Gif.find({}, function(err, gifs){
-		if(err || !gifs) return res.render('oops.html');
-		res.render('home.html', {
+		if(err || !gifs) return render(res, 'oops.html');
+		render(res, 'home.html', {
 			categories : JSON.stringify(res.categories),
 			gifs : JSON.stringify(xo.clean(gifs))
 		});
 	});
 });
 app.get('/about', function (req, res) {
-	res.render('about.html');
+	render(res, 'about.html');
 });
 
 
 app.get('/edit/:gif_id', [mw.getCategories], function (req, res) {
-	//return res.render('edit.html');
+	//return render(res, 'edit.html');
 
 	Gif.findById(req.params.gif_id, function(err, gif){
-		if(err || !gif) return res.render('oops.html');;
-		return res.render('edit.html', {
+		if(err || !gif) return render(res, 'oops.html');;
+		return render(res, 'edit.html', {
 			categories : JSON.stringify(res.categories),
 			gif : JSON.stringify(xo.clean(gif))
 		});
 	})
 });
 app.get('/add', [mw.getCategories], function (req, res) {
-	res.render('edit.html', {
+	render(res, 'edit.html', {
 		categories : JSON.stringify(res.categories),
 		gif : "{}"
 	});
@@ -111,8 +110,8 @@ app.get('/category/:categoryName', function (req, res) {
 			category : req.params.categoryName,
 		};
 		Gif.find(r, function(err, gifs){
-			if(err || !gifs) return res.render('oops.html');
-			res.render('category.html', {
+			if(err || !gifs) return render(res, 'oops.html');
+			render(res, 'category.html', {
 				gifs : JSON.stringify(xo.clean(gifs)),
 				categoryName : req.params.categoryName,
 				categoryId : category.id
@@ -125,8 +124,8 @@ app.get('/user/:userName', function (req, res) {
 		user : req.params.userName,
 	};
 	Gif.find(r, function(err, gifs){
-		if(err || !gifs) return res.render('oops.html');
-		res.render('category.html', {
+		if(err || !gifs) return render(res, 'oops.html');
+		render(res, 'category.html', {
 			gifs : JSON.stringify(xo.clean(gifs)),
 			categoryName : req.params.userName || 'Misc',
 			categoryId : 'None'
@@ -140,6 +139,6 @@ app.get('/user/:userName', function (req, res) {
 
 
 app.get('*', function(req,res){
-	res.render('oops.html');
+	render(res, 'oops.html');
 });
 
