@@ -1,24 +1,33 @@
-var mongoUri = process.env.MONGOLAB_URI ||
-	process.env.MONGOHQ_URL ||
-	'mongodb://localhost/gifbin';
+//Globals
+GLOBAL.fs      = require('fs');
+GLOBAL._       = require('underscore');
+GLOBAL.express = express = require("express");
+GLOBAL.app     = express();
+GLOBAL.ejs     = require('ejs');
+
+//Mongoose
 mongoose = require('mongoose');
+var mongoUri = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/gifbin';
 mongoose.connect(mongoUri);
 mongoose.connection.on('error', function(){
-	console.log(">>>ERROR: Connect Mongodb ya goof!");
+	console.log(">>>ERROR: Run Mongodb.exe ya goof!");
 });
 
-express = require("express");
-GLOBAL.app = express();
-app.engine('html', require('ejs').renderFile);
+//Express
+app.engine('html', ejs.renderFile);
 app.use(express.bodyParser());
 app.use(express.cookieParser());
 app.use(express.static(__dirname + '/public'));
-
-
+var port = process.env.PORT || 5000;
+app.listen(port, function() {
+	console.log("Listening on " + port);
+});
 
 //Modules
-mw            = require('./modules/middleware.js');
-xo            = require('./modules/xo-node.js');
+mw   = require('./modules/middleware.js');
+xo   = require('./modules/xo-node.js');
+
+//dev  = require('./modules/dev_routes.js');
 
 
 //Models
@@ -27,11 +36,27 @@ require('./modules/models/category.js');
 require('./modules/models/clicks.js');
 
 
+
+//Renders HTML file with layout.ejs
+var render = function(res, htmlFile, vars){
+	var tempRender = ejs.render(fs.readFileSync(__dirname + '/views/' + 'layout.ejs','utf8'), {
+		body : fs.readFileSync(__dirname + '/views/' + htmlFile,'utf8'),
+	});
+	return res.end(ejs.render(tempRender, vars));
+};
+
+var showErrorPage = function(res){
+	return render(res, 'oops.html');
+};
+
+
+
+
 //Routes
 app.get('/', [mw.getCategories], function (req, res) {
 	Gif.find({}, function(err, gifs){
 		if(err || !gifs) return res.render('oops.html');
-		res.render('home.html', {
+		return render(res, 'home.html', {
 			categories : JSON.stringify(res.categories),
 			gifs : JSON.stringify(xo.clean(gifs))
 		});
@@ -112,47 +137,9 @@ app.get('/user/:userName', function (req, res) {
 
 
 
-//Admin
-
-
-
-
-app.get('/dropall', function(req,res){
-	Gif.remove({}, function(){});
-	Category.remove({}, function(){});
-	res.send('dropped all');
-});
-
-app.get('/search/:attr/:val', function(req,res){
-	var r = {};
-	r[req.params.attr] = req.params.val;
-	Gif.find(r , function(err, result){
-		if(err) return res.render('oops.html');
-		res.send(result);
-	});
-});
-app.get('/addclick/:user/:link', function(req,res){
-	Clicks.addClick(req.params.user, req.params.link, function(err, result){
-		if(err) return res.send(500)
-		res.send(200);
-	});
-});
-app.get('/userclick/:user', function(req,res){
-	Clicks.getByUser(req.params.user, function(err, result){
-		if(err) return res.send(500)
-		res.send(result);
-	});
-});
-
 
 
 app.get('*', function(req,res){
 	res.render('oops.html');
-});
-
-
-var port = process.env.PORT || 5000;
-app.listen(port, function() {
-	console.log("Listening on " + port);
 });
 

@@ -1,4 +1,3 @@
-
 var DEBUG = false;
 
 GLOBAL._ = require('underscore');

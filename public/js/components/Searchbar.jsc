@@ -1,4 +1,4 @@
-Searchbar = xo.view.extend({
+SearchbarComponent = xo.view.extend({
 	schematic : DOM.div( {class:"searchBar"},
 		DOM.i( {class:"icon-search", 'xo-element':"searchIcon"}),
 		DOM.i( {class:"icon-time", style:"display:none", 'xo-element':"searchingIcon"}),

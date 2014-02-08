@@ -1,5 +1,5 @@
 .edit{
-	margin-bottom: 100px;
+	margin-bottom : 100px;
 }
 
 .imageContainer{
@@ -40,17 +40,16 @@
 		}
 
 		.form__item__field input{
-			width : 275px;
-			height             : 42px;
+			height : 42px;
+			width  : 275px;
 		}
 
 		.form__item__field textarea{
-			/*ont-size          : 13px;*/
-			width : 275px;
-			height: 65px;
+			height     : 65px;
+			width      : 275px;
+			/*ont-size : 13px;*/
 		}
 
 		.form__item__field select{
 			width : 275px;
 		}
-

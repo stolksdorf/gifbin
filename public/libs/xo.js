@@ -23,14 +23,14 @@
 		return result;
 	};
 
-	//Better ajax call, no jQuery needed
+
 	var xo_ajax = function(self, method, callback, data){
 		callback = callback || function(){};
-		data     = extend(self.attributes(), data);
+		data     = extend(self.toJSON(), data);
 		var typeMap = {
 			'fetch'  : 'GET',
 			'save'   : self.id ? 'PUT' : 'POST',
-			'delete' : 'DELETE'
+			'destroy' : 'DELETE'
 		};
 		var done = function(res){
 			self.set(res);
@@ -41,28 +41,11 @@
 		self.trigger('before:'+method, self);
 		if(!self.URL) return done(data);
 
-		var url = self.URL() + (self.id ? "/" + self.id : "")
-
-
-		/*
-		var req = new XMLHttpRequest();
-		req.open(typeMap[method], url, true);
-		req.onreadystatechange = function(){
-			if(req.readyState != 4) return;
-			if(req.status != 200){
-				self.trigger('error', self, req.responseText);
-				return callback(req.responseText);
-			}
-			done(req.responseText);
-		};
-		req.send(JSON.stringify(data));
-		*/
-
 		$.ajax({
-			url : url,
-			type : typeMap[method],
-			data: data,
-			error : function(req){
+			url     : self.URL() + (self.id ? "/" + self.id : ""),
+			type    : typeMap[method],
+			data    : data,
+			error   : function(req){
 				self.trigger('error', self, req.responseText);
 				return callback(req.responseText);
 			},
@@ -71,17 +54,17 @@
 				return this;
 			},
 		})
-	}
-
-
-
-
-
+	};
 
 	xo = {};
 
+	//Wraps all the dom elements
 	xo.elementWrapper = $ || function(e){return e;};
 
+
+	/*
+		VIEW
+	 */
 	xo.view = Archetype.extend({
 		view      : undefined,
 		schematic : undefined,
@@ -89,31 +72,40 @@
 		initialize : function(model){
 			this.model = model;
 			this.dom = {};
-			if(this.view) this.once('created', this.injectInto.bind(this));
+			if(this.view) this.once('created', this.appendTo.bind(this));
 			return this;
 		},
-		injectInto : function(target, prepend){
+		prependTo  : function(target){
+			return this.appendTo(target, true);
+		},
+		appendTo : function(target, prepend){
 			if(target.length) target = target[0];
-			if(typeof this.schematic === 'string'){
-				var schematicElement = document.querySelector('[xo-schematic="' + this.schematic + '"]');
-				if(!schematicElement){throw 'xo-view: Could not find schematic with name "' + this.schematic + '"';}
-				schematicElement = schematicElement.cloneNode(true);
-				schematicElement.removeAttribute("xo-schematic");
-				this.dom.view = target.appendChild(schematicElement);
-			} else if(typeof this.schematic !== 'undefined'){
-				this.dom.view = this.schematic.cloneNode(true);
-				if(prepend){ $(target).prepend(this.dom.view) }
-				else{ this.dom.view = target.appendChild(this.dom.view)}
+			if(this.schematic){
+				var schematicElement;
+				if(typeof this.schematic === 'string'){
+					schematicElement = document.querySelector('[xo-schematic="' + this.schematic + '"]');
+					if(!schematicElement){throw 'xo-view: Could not find schematic with name "' + this.schematic + '"';}
+					schematicElement = schematicElement.cloneNode(true);
+					schematicElement.removeAttribute("xo-schematic");
+				} else {
+					schematicElement = this.schematic;
+				}
+				this.dom.view = schematicElement.cloneNode(true);
+				if(prepend){
+					target.insertBefore(this.dom.view, target.firstChild);
+				}else{
+					target.appendChild(this.dom.view);
+				}
 			}
 			if(this.view){
 				this.dom.view = document.querySelector('[xo-view="' + this.view + '"]');
 				if(!this.dom.view){throw 'xo-view: Could not find view with name ' + this.view;}
 			}
+
 			var elements = this.dom.view.querySelectorAll('[xo-element]');
 			for(var i =0; i < elements.length; i++){
 				this.dom[elements[i].getAttribute('xo-element')] = xo.elementWrapper(elements[i]);
 			}
-
 			this.dom.view = xo.elementWrapper(this.dom.view);
 
 			this.render();
@@ -135,11 +127,11 @@
 		MODEL
 	 */
 	xo.model = Archetype.extend({
-		URL : undefined, //function(){},
+		URL : undefined,
 
 		initialize : function(obj){
 			this.set(obj);
-			this.on('delete', this.off);
+			this.on('destroy', this.off);
 			return this;
 		},
 		set : function(key, value){
@@ -170,11 +162,9 @@
 			evt(this[attrName]);
 			return this;
 		},
-		attributes : function(){
+		toJSON : function(){
 			return JSON.parse(JSON.stringify(this));
 		},
-
-		//ajax methods
 		save : function(data, callback){
 			if(typeof data === 'function') callback = data;
 			xo_ajax(this, 'save', callback, data);
@@ -184,10 +174,10 @@
 			xo_ajax(this, 'fetch', callback);
 			return this;
 		},
-		delete : function(callback){
-			xo_ajax(this, 'delete', callback);
+		destroy : function(callback){
+			xo_ajax(this, 'destroy', callback);
 			return this;
-		},
+		}
 	}),
 
 
@@ -195,7 +185,7 @@
 		COLLECTION
 	 */
 	xo.collection = Archetype.extend({
-		URL : undefined, //function(){},
+		URL : undefined,
 		model  : xo.model,
 		models : [],
 
@@ -231,7 +221,7 @@
 		},
 		add : function(obj){
 			if(!this.model.isPrototypeOf(obj)) obj = this.model.create(obj);
-			obj.on('delete', function(obj){
+			obj.on('destroy', function(obj){
 				this.remove(obj);
 			}.bind(this));
 
@@ -239,31 +229,31 @@
 			this.trigger('add', obj);
 			return obj;
 		},
-		//remove
 		each : function(fn){
 			return map(this.models, fn);
 		},
-		attributes : function(){
+		toJSON : function(){
 			return JSON.parse(JSON.stringify(this.models));
 		},
 
-		//Ajax methods
 		fetch : function(callback){
-			//this.URL should be fine
 			xo_ajax(this, 'fetch', callback);
-			//xo_ajax(this, 'fetch', callback)
 			return this;
 		},
-		delete : function(callback){
-			//delete call on each model
-			xo_ajax(this, 'delete', callback);
+		destroy : function(callback){
+			var count = this.models.length, self = this;
+			self.trigger('before:destroy');
+			map(this.models,function(model){
+				model.destroy(function(){
+					if(--count === 0){
+						self.trigger('destroy');
+						callback && callback();
+					}
+				});
+			});
 			return this;
 		},
 		save : function(callback){
-			//save call on each model
-			xo_ajax(this, 'save', callback);
-
-			/*
 			var count = this.models.length, self = this;
 			self.trigger('before:save');
 			map(this.models,function(model){
@@ -274,12 +264,14 @@
 					}
 				});
 			});
-	*/
-
 			return this;
 		},
 	});
 
+
+	/*
+		Router
+	*/
 	xo.router = Archetype.extend({
 		routes : {},
 		initialize : function(routes){
@@ -306,10 +298,7 @@
 		},
 	});
 
-
-
 })();
-
 
 
 
