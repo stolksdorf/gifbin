@@ -11,8 +11,7 @@ CardView = xo.view.extend({
 
 
 		DOM.a({class:"card__imageContainer",
-			'xo-element' : 'pageBtn',
-			target : '_blank'
+			'xo-element' : 'pageBtn'
 		},
 			DOM.img({class : 'card__gif', 'xo-element' : 'image'}),
 			DOM.img({class : 'card__staticImage', 'xo-element' : 'staticImage'})
