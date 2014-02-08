@@ -3,19 +3,19 @@ GifModel = xo.model.extend({
 		return "/api/gif"
 	},
 
+	defaults : function(){
+		return {
+			linkCount : 0
+		}
+	},
+
+	test2 : 'awesomr',
+
 	initialize : function(){
 		var self = this;
-		/*this.onChange('category_id', function(c_id){
-			if(c_id){
-				var name = GifCategories.get(c_id).name;
-				if(name) self.category = name;
-			}
-		});*/
 
 		return this;
 	},
-
-	linkCount : 0,
 
 	increaseLinkCount : function(){
 		this.save({linkCount : this.linkCount+1});

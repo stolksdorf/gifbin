@@ -48,7 +48,7 @@
 
 	//Setup Title
 	$('.titleText').text(categoryName);
-	document.title = "gifbin." + categoryName.toLowerCase();
+	document.title = "gifbin." + categoryName.toLowerCase().replace(' ', '_');
 
 	searchBar = SearchbarComponent.create().prependTo($('.main'));
 	searchResults = SearchResultsView.create(GifCollection);

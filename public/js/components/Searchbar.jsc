@@ -28,7 +28,7 @@ SearchbarComponent = xo.view.extend({
 //Style
 css.render({
 	'.searchBar' : {
-		'width'            : '475px',
+		//'width'            : '475px',
 		'margin-bottom'    : '20px',
 		'padding-left'     : '20px',
 		'background-color' : 'white',

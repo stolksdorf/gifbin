@@ -43,10 +43,6 @@ CardView = xo.view.extend({
 		})
 
 
-
-
-
-
 		this.dom.imageContainer.on('mouseover', function(){
 			self.hover();
 		});
@@ -55,7 +51,7 @@ CardView = xo.view.extend({
 		});
 
 
-
+		//Download BUtton
 		this.downloadBtn = DownloadBtnComponent.create(self.model).prependTo(this.dom.imageContainer);
 		this.downloadBtn.dom.view.addClass('card__button');
 		this.downloadBtn.dom.view.addClass('card__downloadButton');

@@ -1,7 +1,5 @@
 SearchResultsView = xo.view.extend({
-	schematic : DOM.div({class : 'searchResults', style : 'margin-left:-7px'}
-		//DOM.div({class:'', 'xo-element' : 'container'})
-	),
+	schematic : DOM.div({class : 'searchResults', style : 'margin-left:-7px'}),
 
 	initialize : function(){
 		this.collection = this.model;

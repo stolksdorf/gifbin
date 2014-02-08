@@ -128,9 +128,10 @@
 	 */
 	xo.model = Archetype.extend({
 		URL : undefined,
+		defaults : function(){},
 
 		initialize : function(obj){
-			this.set(obj);
+			this.set(extend(obj, this.defaults()));
 			this.on('destroy', this.off);
 			return this;
 		},
