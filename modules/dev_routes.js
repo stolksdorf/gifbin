@@ -35,11 +35,27 @@ app.get('/userclick/:user', function(req,res){
 
 
 
+imgur = require('imgur-node-api'),
+
+
+imgurClientId = 'dd9999a685d25ee';
+imgurClientSecret = '463d373639c42d66a0190bea7156acfb01b0c188';
+
+
+imgur.setClientID(imgurClientId);
+
+
+
 
 app.get('/imgur/:url', function(req, res){
 
-	var imgurClientId = 'dd9999a685d25ee';
-	var imgurClientSecret = '463d373639c42d66a0190bea7156acfb01b0c188';
+	//var img_url = "http://sinsip.com/Jl.jpg";
+	var img_url = 'http://mashable.com/wp-content/uploads/2013/07/Dr.-Who.gif';
 
+	imgur.upload(img_url,function(err,img){
+		if(err || !img) return res.send(500, err);
+		console.log(img.data);
+		res.send(200, img.data)
+	});
 
-})
+});

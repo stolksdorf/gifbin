@@ -57,7 +57,8 @@ css.render({
 		"margin-bottom": "25px",
 		"background-color": "#ecf0f1",
 		"font-size": "16px",
-		"color": "#2C3E50"
+		"color": "#2C3E50",
+		"overflow" : "hidden"
 	},
 	".navbar__header": {
 		"float": "left",
