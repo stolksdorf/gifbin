@@ -1,4 +1,4 @@
-SearchResults = xo.view.extend({
+SearchResultsView = xo.view.extend({
 	schematic : DOM.div({}
 		//DOM.div({class:'', 'xo-element' : 'container'})
 	),
@@ -12,8 +12,8 @@ SearchResults = xo.view.extend({
 		var self = this;
 
 		this.collection.each(function(gif){
-			var newView = GifCard.create(gif).injectInto(self.dom.view);
-		})
+			var newView = CardView.create(gif).appendTo(self.dom.view);
+		});
 
 		this.searchBar.on('searching', function(){
 			if(self.dom.view.is(':visible')) self.dom.view.stop().fadeTo(300, 0.4);
@@ -25,14 +25,6 @@ SearchResults = xo.view.extend({
 
 		return this;
 	},
-
-
-
-
-
-
-
-
 
 
 });

@@ -1,11 +1,13 @@
 
 <link rel="stylesheet" type="text/css" href="../style/home.css" />
-<script type="text/javascript" src="../js/components/Searchbar.jsc"></script>
 
-<script type="text/javascript" src="../js/views/GifCard.js"></script>
-<script type="text/javascript" src="../js/views/LinkBtn.js"></script>
-<script type="text/javascript" src="../js/views/SearchResults.js"></script>
-<script type="text/javascript" src="../js/views/CategoryView.js"></script>
+<script type="text/javascript" src="../js/components/Searchbar.jsc"></script>
+<script type="text/javascript" src="../js/components/LinkBtn.jsc"></script>
+
+
+<script type="text/javascript" src="../js/CardView.js"></script>
+<script type="text/javascript" src="../js/SearchResultsView.js"></script>
+<script type="text/javascript" src="../js/CategoryView.js"></script>
 
 <title>gifbin.</title>
 
@@ -20,23 +22,23 @@
 
 
 <script>
-	GifCategories.set(<%- categories %>);
-	var gifs = GifCollection.create(<%- gifs %>);
+	CategoryCollection.set(<%- categories %>);
+	GifCollection.set(<%- gifs %>);
 
 	//Create Category view
-	util.map(gifs.getCategoryBest(GifCategories), function(bestObj){
+	_.map(GifCollection.getCategoryBest(CategoryCollection), function(bestObj){
 		CategoryView.create(bestObj).appendTo($('.categoryContainer'));
 	});
 
-	var searchBar = SearchbarComponent.create().prependTo($('.main'));
-	var searchResults = SearchResults.create(gifs);
+	searchBar = SearchbarComponent.create().prependTo($('.main'));
+	searchResults = SearchResultsView.create(GifCollection);
 	searchResults.searchBar = searchBar;
 
 	searchResults.appendTo($('.searchContainer'));
 	searchResults.dom.view.hide();
 
 	searchBar.on('searching', function(){
-		 if($('.categoryContainer').is(':visible')) $('.categoryContainer').stop().fadeTo(300, 0.4);
+		if($('.categoryContainer').is(':visible')) $('.categoryContainer').stop().fadeTo(300, 0.4);
 	});
 	searchBar.on('searched', function(terms){
 		if(terms.length === 1 && terms[0] === ""){

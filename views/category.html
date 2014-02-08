@@ -78,10 +78,10 @@
 	$('.titleText').text(categoryName);
 	document.title = "gifbin." + categoryName.toLowerCase();
 
-	var searchBar = Searchbar.create().injectInto($('.main'));
+	var searchBar = Searchbar.create().appendTo($('.main'));
 	var searchResults = SearchResults.create(gifs);
 	searchResults.searchBar = searchBar;
-	searchResults.injectInto($('.main'));
+	searchResults.appendTo($('.main'));
 
 
 	</script>

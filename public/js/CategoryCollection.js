@@ -1,4 +1,4 @@
-GifCategories = xo.collection.extend({
+CategoryCollection = xo.collection.extend({
 	URL : function(){
 		return '/api/category'
 	}

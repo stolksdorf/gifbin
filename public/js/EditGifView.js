@@ -1,4 +1,4 @@
-GifbinEdit = xo.view.extend({
+EditGifView = xo.view.extend({
 	view : 'edit',
 
 	render : function()
@@ -18,7 +18,7 @@ GifbinEdit = xo.view.extend({
 			}
 		});
 
-		this.copyLinkBtn = Gifbin_LinkBtn.create(self.model).injectInto(this.dom.link);
+		this.copyLinkBtn = Gifbin_LinkBtn.create(self.model).appendTo(this.dom.link);
 
 		GifCategories.each(function(category){
 			self.dom.category.append('<option value="' + category.id + '">' +category.name+'</option>');
@@ -32,27 +32,31 @@ GifbinEdit = xo.view.extend({
 		//Load user
 		if(!this.editMode) this.dom.uploaderField.val(util.cookie.get('gifbin-user'));
 
-		this.model.onChange('link', function(link){
-			self.dom.linkField.val(link);
-			self.dom.linkText.html(link);
-			self.dom.image.css('background-image','url("' + link + '")');
+
+		this.model.onChange({
+			link : function(link){
+				self.dom.linkField.val(link);
+				self.dom.linkText.html(link);
+				self.dom.image.css('background-image','url("' + link + '")');
+			},
+			category_id : function(category_id){
+				self.dom.category.find("option[value='"+category_id+"']").prop('selected', true);
+			},
+			user : function(user){
+				self.dom.uploader.html(user);
+				self.dom.uploader.attr('href', '/user/' + user);
+			},
+			tags : function(tags){
+				if(tags) self.dom.tags.val(tags.join(', '));
+			},
+			linkCount : function(count){
+				self.dom.linkCount.html(count);
+			},
+			created : function(created){
+				self.dom.dateUploaded.html(moment(created).fromNow());
+			}
 		});
-		this.model.onChange('category_id', function(category_id){
-			self.dom.category.find("option[value='"+category_id+"']").prop('selected', true);
-		});
-		this.model.onChange('user', function(user){
-			self.dom.uploader.html(user);
-			self.dom.uploader.attr('href', '/user/' + user);
-		});
-		this.model.onChange('tags', function(tags){
-			if(tags) self.dom.tags.val(tags.join(', '));
-		});
-		this.model.onChange('linkCount', function(count){
-			self.dom.linkCount.html(count);
-		});
-		this.model.onChange('created', function(created){
-			self.dom.dateUploaded.html(moment(created).fromNow());
-		});
+
 
 		//Update image on linkfield change
 		this.dom.linkField.change(function(){

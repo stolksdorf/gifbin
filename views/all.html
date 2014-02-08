@@ -49,11 +49,11 @@
 
 	var gifs = GifCollection.create(<%- gifs %>);
 
-	var searchBar = Searchbar.create().injectInto($('.main'), true);
+	var searchBar = Searchbar.create().prependTo($('.main'));
 	var searchResults = SearchResults.create(gifs);
 	searchResults.searchBar = searchBar;
 
-	searchResults.injectInto($('.main'));
+	searchResults.appendTo($('.main'));
 
 	</script>
 	<script type="text/javascript" src="../js/Navbar.js"></script>

@@ -1,7 +1,6 @@
 GifCollection = xo.collection.extend({
 	model : GifModel,
 
-
 	search : function(terms){
 
 		var result = util.reduce(this.models, function(result, gif){
@@ -33,4 +32,4 @@ GifCollection = xo.collection.extend({
 		})
 		return result;
 	},
-});
+}).create();

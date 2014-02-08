@@ -1,6 +1,6 @@
 ZeroClipboard.config( { moviePath: "../libs/ZeroClipboard/ZeroClipboard.swf" });
 
-Gifbin_RandBtn = xo.view.extend({
+RandBtnComponent = xo.view.extend({
 	schematic : DOM.div({class : 'btn purple hint--bottom', 'data-hint':"Random Link"},
 		DOM.i({class:'icon-random'})
 	),

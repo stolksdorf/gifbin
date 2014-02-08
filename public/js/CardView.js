@@ -1,4 +1,4 @@
-GifCard = xo.view.extend({
+CardView = xo.view.extend({
 	schematic : DOM.div({class:"card"},
 		DOM.div({class:"card__expandHover"}, DOM.i({class:"icon-plus"})),
 		DOM.div({class:"card__imageContainer"},
@@ -27,7 +27,7 @@ GifCard = xo.view.extend({
 			}
 		})
 
-		this.copyLinkBtn = Gifbin_LinkBtn.create(self.model).injectInto(this.dom.view);
+		this.copyLinkBtn = LinkBtnComponent.create(self.model).appendTo(this.dom.view);
 		this.copyLinkBtn.dom.view.addClass('card__copyButton');
 
 		this.copyLinkBtn.on('mouseover', function(){
