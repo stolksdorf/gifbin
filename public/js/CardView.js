@@ -1,23 +1,47 @@
 CardView = xo.view.extend({
 	schematic : DOM.div({class:"card"},
-		DOM.div({class:"card__expandHover"}, DOM.i({class:"icon-plus"})),
+		//DOM.div({class:"card__expandHover"}, DOM.i({class:"icon-plus"})),
+
+/*
 		DOM.div({class:"card__imageContainer"},
-			DOM.img({'xo-element' : 'image'})
-		),
+			DOM.img({class : 'card__gif', 'xo-element' : 'image'}),
+			DOM.img({class : 'card__staticImage', 'xo-element' : 'staticImage'})
+		)
+*/
+
+
+		DOM.a({class:"card__imageContainer",
+			'xo-element' : 'pageBtn',
+			target : '_blank'
+		},
+			DOM.img({class : 'card__gif', 'xo-element' : 'image'}),
+			DOM.img({class : 'card__staticImage', 'xo-element' : 'staticImage'})
+		)
+
+/*
+		,
 		DOM.a({'xo-element' : 'pageBtn',
 				class:"btn blue card__linkButton hint--bottom",
 				'data-hint':"View Gif Page",
 				target : '_blank'}, DOM.i({class:"icon-external-link"}))
+*/
+
 	),
 	render : function(){
 		var self = this;
 
-		this.model.onChange('link', function(link){
-			self.dom.image.attr('src', link)
+		this.model.onChange({
+			'link' : function(link){
+				self.dom.image.attr('src', link)
+			},
+			'staticLink' : function(staticLink){
+				self.dom.staticImage.attr('src', staticLink)
+			},
+			'id' : function(id){
+				self.dom.pageBtn.attr('href', '/edit/' + id);
+			}
 		});
-		this.model.onChange('id', function(id){
-			self.dom.pageBtn.attr('href', '/edit/' + id);
-		});
+
 
 		this.model.on('matched', function(isMatched){
 			if(isMatched){
@@ -27,6 +51,7 @@ CardView = xo.view.extend({
 			}
 		})
 
+/*
 		this.copyLinkBtn = LinkBtnComponent.create(self.model).appendTo(this.dom.view);
 		this.copyLinkBtn.dom.view.addClass('card__copyButton');
 
@@ -36,12 +61,17 @@ CardView = xo.view.extend({
 		this.copyLinkBtn.on('mouseout', function(){
 			self.dom.view.removeClass('hovered');
 		});
-
+*/
 
 		return this;
 	},
 });
 
+
+
+
+
+/*
 css.render({
 	'.card' : {
 		'display': 'inline-block',
@@ -127,3 +157,4 @@ css.render({
 		},
 })
 
+*/

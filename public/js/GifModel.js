@@ -11,6 +11,7 @@ GifModel = xo.model.extend({
 				if(name) self.category = name;
 			}
 		});*/
+
 		return this;
 	},
 

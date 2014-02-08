@@ -2,7 +2,7 @@ ZeroClipboard.config( { moviePath: "../libs/ZeroClipboard/ZeroClipboard.swf" });
 
 LinkBtnComponent = xo.view.extend({
 	schematic : DOM.div({class : 'btn green hint--bottom', 'data-hint':"Copy Link"},
-		DOM.i({class:'icon-copy'})
+		DOM.i({class:'icon-link'})
 	),
 	render : function(){
 		var self = this;

@@ -83,10 +83,6 @@ a{
 	color : inherit;
 }
 
-a:hover{
-	font-weight : bold;
-}
-
 strong{
 	font-weight : bold;
 }

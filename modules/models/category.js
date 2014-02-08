@@ -7,4 +7,4 @@ var CategorySchema = mongoose.Schema({
 });
 
 Category = mongoose.model('Category', CategorySchema);
-xo.api('/api/category', Category);
+xo.api('/api/category', CategorySchema, Category);

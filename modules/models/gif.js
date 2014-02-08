@@ -14,7 +14,6 @@ String.prototype.insert = function (index, string) {
 
 
 var GifSchema = mongoose.Schema({
-	id          : String,
 	link        : String,
 	staticLink  : String,
 	created     : { type: Date,    default: Date.now },
@@ -47,7 +46,7 @@ GifSchema.methods.generateStaticLink = function(callback){
 
 
 Gif = mongoose.model('Gif', GifSchema);
-xo.api('/api/gif', Gif, {
+xo.api('/api/gif', GifSchema, Gif, {
 	post : [function(req, res, next){
 		if(req.model){
 			return req.model.validateImgur(next);

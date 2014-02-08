@@ -14,11 +14,17 @@ exports.clean = function(obj){
 	}
 	var result = obj.toObject();
 	delete result._id;
-	delete result.__v;
+	//delete result.__v;
 	return result;
 };
 
-exports.api = function(endpoint, Model, middleware, handleError){
+exports.api = function(endpoint, Schema, Model, middleware, handleError){
+
+	Schema.set('versionKey', false);
+	Schema.set('toJSON', { getters: true });
+	Schema.set('toObject', { getters: true });
+
+
 	exports.endpoints.push(endpoint);
 	middleware = middleware || [];
 	var mw = {
