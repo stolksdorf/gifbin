@@ -2,12 +2,15 @@
 	display            : inline-block;
 	vertical-align     : top;
 	z-index            : 500;
-	background-color : #ECF0F1;
+	/*background-color : #ECF0F1;*/
 
-	height             : 140px;
-	width              : 100px;
-	margin             : 5px;
-	padding            : 15px;
+
+	height             : 90px;
+	width              : 90px;
+	/*margin             : 5px;*/
+
+	padding : 8px;
+
 
 	text-align         : center;
 
@@ -15,48 +18,68 @@
 	-webkit-transition : 0.25s;
 }
 
-
-
-
-
 	.card__imageContainer{
 		position      : relative;
-		height        : 100px;
-		margin-bottom : 10px;
+		display: block;
+
+
+
 	}
 
 
-		.card__imageContainer:hover .card__staticImage{
-			display : none;
-		}
-		.card__imageContainer:hover .card__gif{
-			display : block;
-		}
+	.card__gif, .card__staticImage, .card__copyButton{
+		position: absolute;
+		top:0px;
+		left:0px;
+	}
 
 
-		.card__gif, .card__staticImage{
-			position: absolute;
-			top:0px;
-			left:0px;
-		}
+	.card__copyButton{
+		display: none;
+		z-index    : 10000;
+		font-size: 0.8em;
+	}
 
-		.card__gif{
-			display : none;
-			transition         : 0.25s;
-			-webkit-transition : 0.25s;
-			max-height : 90px;
-		}
+	.card__gif{
+		display:none;
+		z-index    : 400;
+		transition         : 0.25s;
+		-webkit-transition : 0.25s;
+		max-height : 90px;
+		min-width  : 90px;
+	}
 
-		.card__staticImage{
+	.card__staticImage{
 
-		}
+	}
 
 
-		.card__gif:hover{
-			z-index    : 400;
-			max-height : 300px;
-			max-width  : 300px;
-		}
+
+	/* On Hover */
+	.card__imageContainer:hover .card__gif, .card.hovered .card__gif{
+		opacity : 1;
+		display: block;
+	}
+
+	.card__imageContainer:hover .card__copyButton, .card.hovered .card__copyButton{
+		display: block;
+	}
+
+	.card__gif:hover, .card.hovered .card__gif{
+		max-height : 300px;
+		max-width  : 300px;
+	}
+
+
+
+
+
+
+
+
+
+
+
 
 /*
 

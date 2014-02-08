@@ -11,19 +11,11 @@ CardView = xo.view.extend({
 
 
 		DOM.a({class:"card__imageContainer",
-			'xo-element' : 'pageBtn'
+			'xo-element' : 'imageContainer'
 		},
 			DOM.img({class : 'card__gif', 'xo-element' : 'image'}),
 			DOM.img({class : 'card__staticImage', 'xo-element' : 'staticImage'})
 		)
-
-/*
-		,
-		DOM.a({'xo-element' : 'pageBtn',
-				class:"btn blue card__linkButton hint--bottom",
-				'data-hint':"View Gif Page",
-				target : '_blank'}, DOM.i({class:"icon-external-link"}))
-*/
 
 	),
 	render : function(){
@@ -37,7 +29,7 @@ CardView = xo.view.extend({
 				self.dom.staticImage.attr('src', staticLink)
 			},
 			'id' : function(id){
-				self.dom.pageBtn.attr('href', '/edit/' + id);
+				self.dom.imageContainer.attr('href', '/edit/' + id);
 			}
 		});
 
@@ -50,20 +42,48 @@ CardView = xo.view.extend({
 			}
 		})
 
-/*
-		this.copyLinkBtn = LinkBtnComponent.create(self.model).appendTo(this.dom.view);
+
+
+		this.dom.imageContainer.on('mouseover', function(){
+			self.hover();
+		});
+		this.dom.imageContainer.on('mouseout', function(){
+			self.unhover();
+		});
+
+
+
+		//Setup link button
+		this.copyLinkBtn = LinkBtnComponent.create(self.model).prependTo(this.dom.imageContainer);
 		this.copyLinkBtn.dom.view.addClass('card__copyButton');
 
 		this.copyLinkBtn.on('mouseover', function(){
-			self.dom.view.addClass('hovered');
+			self.hover();
 		});
 		this.copyLinkBtn.on('mouseout', function(){
-			self.dom.view.removeClass('hovered');
+			self.unhover();
 		});
-*/
 
 		return this;
 	},
+
+	hover : function(){
+		clearTimeout(this.hoverTimeOut);
+		this.dom.view.addClass('hovered');
+
+		//restarts the gif animation
+		if(!this.dom.view.hasClass('hovered')){
+			this.dom.image.attr('src', this.model.link);
+		}
+	},
+	unhover : function(){
+		var self = this;
+		this.hoverTimeOut = setTimeout(function(){
+			self.dom.view.removeClass('hovered');
+		}, 10);
+	},
+
+
 });
 
 

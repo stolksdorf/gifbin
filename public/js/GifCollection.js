@@ -2,7 +2,6 @@ GifCollection = xo.collection.extend({
 	model : GifModel,
 
 	search : function(terms){
-
 		var result = util.reduce(this.models, function(result, gif){
 			if(gif.match(terms)) result.push(gif);
 			return result;
