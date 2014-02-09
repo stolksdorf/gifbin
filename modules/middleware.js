@@ -16,7 +16,7 @@ exports.getCategories = function(req,res,next){
 	});*/
 	Category.find({}, function(err, categories){
 		if(err || !categories) return res.render('oops.html');
-		res.categories = xo.clean(categories);
+		res.categories = categories;
 		next();
 	});
 };

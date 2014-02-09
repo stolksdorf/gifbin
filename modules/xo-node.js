@@ -17,7 +17,6 @@ exports.api = function(endpoint, Schema, Model, middleware, handleError){
 		delete ret._id;
 	}
 
-
 	exports.endpoints.push(endpoint);
 	middleware = middleware || [];
 	var mw = {
@@ -69,10 +68,6 @@ exports.api = function(endpoint, Schema, Model, middleware, handleError){
 		});
 		return result;
 	};
-
-
-
-
 
 
 	//XO Middleware

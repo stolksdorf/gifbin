@@ -26,7 +26,7 @@
 
 	var xo_ajax = function(self, method, callback, data){
 		callback = callback || function(){};
-		data     = extend(self.attributes(), data);
+		if(method === 'save') data = extend(self.attributes(), data);
 		var typeMap = {
 			'fetch'  : 'GET',
 			'save'   : self.id ? 'PUT' : 'POST',
@@ -41,8 +41,10 @@
 		self.trigger('before:'+method, self);
 		if(!self.URL) return done(data);
 
+		var url = self.URL() + (self.id ? "/" + self.id : "");
+
 		$.ajax({
-			url     : self.URL() + (self.id ? "/" + self.id : ""),
+			url     : url,
 			type    : typeMap[method],
 			data    : data,
 			error   : function(req){
@@ -237,8 +239,9 @@
 			return JSON.parse(JSON.stringify(this.models));
 		},
 
-		fetch : function(callback){
-			xo_ajax(this, 'fetch', callback);
+		fetch : function(query, callback){
+			if(typeof query === 'function') callback = query;
+			xo_ajax(this, 'fetch', callback, query);
 			return this;
 		},
 		destroy : function(callback){

@@ -60,7 +60,7 @@ app.get('/', [mw.getCategories], function (req, res) {
 		if(err || !gifs) return render(res, 'oops.html');
 		return render(res, 'home.html', {
 			categories : JSON.stringify(res.categories),
-			gifs : JSON.stringify(xo.clean(gifs))
+			gifs : JSON.stringify(gifs)
 		});
 	});
 });
@@ -68,7 +68,7 @@ app.get('/all', function (req, res) {
 	Gif.find({}, function(err, gifs){
 		if(err || !gifs) return render(res, 'oops.html');
 		render(res, 'all.html', {
-			gifs : JSON.stringify(xo.clean(gifs))
+			gifs : JSON.stringify(gifs)
 		});
 	});
 });
@@ -77,7 +77,7 @@ app.get('/categories', [mw.getCategories],function (req, res) {
 		if(err || !gifs) return render(res, 'oops.html');
 		render(res, 'home.html', {
 			categories : JSON.stringify(res.categories),
-			gifs : JSON.stringify(xo.clean(gifs))
+			gifs : JSON.stringify(gifs)
 		});
 	});
 });
@@ -93,7 +93,7 @@ app.get('/edit/:gif_id', [mw.getCategories], function (req, res) {
 		if(err || !gif) return render(res, 'oops.html');;
 		return render(res, 'edit.html', {
 			categories : JSON.stringify(res.categories),
-			gif : JSON.stringify(xo.clean(gif))
+			gif : JSON.stringify(gif)
 		});
 	})
 });
@@ -106,16 +106,14 @@ app.get('/add', [mw.getCategories], function (req, res) {
 
 
 app.get('/category/:categoryName', function (req, res) {
-
 	Category.findOne({name : req.params.categoryName}, function(err, category){
-
 		var r = {
 			category : req.params.categoryName,
 		};
 		Gif.find(r, function(err, gifs){
 			if(err || !gifs) return render(res, 'oops.html');
 			render(res, 'category.html', {
-				gifs : JSON.stringify(xo.clean(gifs)),
+				gifs : JSON.stringify(gifs),
 				categoryName : req.params.categoryName,
 				categoryId : category.id
 			});
@@ -129,16 +127,19 @@ app.get('/user/:userName', function (req, res) {
 	Gif.find(r, function(err, gifs){
 		if(err || !gifs) return render(res, 'oops.html');
 		render(res, 'category.html', {
-			gifs : JSON.stringify(xo.clean(gifs)),
+			gifs : JSON.stringify(gifs),
 			categoryName : req.params.userName || 'Misc',
 			categoryId : 'None'
 		});
 	});
 });
 
-
-
-
+app.get('/addclick/:user/:link', function(req,res){
+	Clicks.addClick(req.params.user, req.params.link, function(err, result){
+		if(err) return res.send(500)
+		res.send(200);
+	});
+});
 
 
 app.get('*', function(req,res){
