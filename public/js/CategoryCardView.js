@@ -7,7 +7,7 @@ CategoryView = xo.view.extend({
 				DOM.span({'xo-element' : 'gifCount'}),
 				" gifs - ",
 				DOM.span({'xo-element' : 'linkCount'}),
-				" total links")
+				" links")
 		//)
 	),
 

@@ -63,7 +63,12 @@
 	}
 
 	.card__gif:hover, .card.hovered .card__gif{
-		z-index            : 525;
+		z-index     : 525;
 		max-height : 300px;
 		max-width  : 300px;
+	}
+
+	.card:hover, .card.hovered{
+		z-index     : 100;
+
 	}

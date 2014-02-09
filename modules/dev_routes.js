@@ -51,7 +51,6 @@ var randArray = function(arr){
 	return arr[Math.floor(Math.random()*arr.length)];
 }
 
-
 var genGifs = function(categories, count){
 	count = count || 30;
 	var result = [];
@@ -65,6 +64,7 @@ var genGifs = function(categories, count){
 			staticLink : link.insert(link.lastIndexOf('.'), 's'),
 			category : category.name,
 			category_id : category.id,
+			linkCount : _.random(0, 200)
 		});
 	});
 	return result;

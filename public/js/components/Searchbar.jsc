@@ -8,7 +8,7 @@ SearchbarComponent = xo.view.extend({
 	render : function(){
 		var self = this;
 		var typingTimeout;
-		this.timer = 600;
+		this.timer = 300;
 		this.dom.search.keydown(function(){
 			self.trigger('searching');
 			clearTimeout(typingTimeout);
