@@ -1,7 +1,7 @@
 SearchResultsView = xo.view.extend({
 	schematic : DOM.div({class : 'searchResults', style : 'text-align: center'},
-		DOM.div({'xo-element' : 'container', style : ''}),
-		DOM.div({class : 'noResults', 'xo-element' : 'noResults'}, 'No results :(')
+		DOM.div({'xo-element' : 'container', class:'searchResults__container'}),
+		DOM.div({class : 'searchResults__noResults', 'xo-element' : 'noResults'}, 'No results :(')
 	),
 
 	initialize : function(){
@@ -51,7 +51,11 @@ css.render({
 	'.searchResults' : {
 		'margin-bottom' : '50px'
 	},
-	'.noResults' : {
+	'.searchResults__container' : {
+		'margin-bottom' : '50px',
+		'overflow' : 'visible!important'
+	},
+	'.searchResults__noResults' : {
 		'display' : 'none',
 		'text-align': 'center',
 		'font-size': '2em',

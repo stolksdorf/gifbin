@@ -24,10 +24,10 @@ CardView = xo.view.extend({
 
 		this.model.on('matched', function(isMatched){
 			if(isMatched){
-				//self.dom.view.show();
+				self.dom.view.css('display', 'inline-block');
 				self.dom.view.addClass('matched');
 			} else {
-				//self.dom.view.hide();
+				self.dom.view.css('display', 'none');
 				self.dom.view.removeClass('matched');
 			}
 		})
