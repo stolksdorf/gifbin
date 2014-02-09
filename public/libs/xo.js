@@ -131,7 +131,7 @@
 		defaults : function(){},
 
 		initialize : function(obj){
-			this.set(extend(obj, this.defaults()));
+			this.set(extend(this.defaults(), obj));
 			this.on('destroy', this.off);
 			return this;
 		},

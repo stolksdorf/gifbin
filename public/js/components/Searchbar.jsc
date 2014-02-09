@@ -28,7 +28,6 @@ SearchbarComponent = xo.view.extend({
 //Style
 css.render({
 	'.searchBar' : {
-		//'width'            : '475px',
 		'margin-bottom'    : '20px',
 		'padding-left'     : '20px',
 		'background-color' : 'white',
@@ -40,7 +39,7 @@ css.render({
 			'margin-right' : '10px',
 		},
 		input : {
-			'width'       : '425px',
+			'width'       : '90%',
 			'padding'     : '10px',
 			'font-size'   : '1.1em',
 			'font-weight' : '300',

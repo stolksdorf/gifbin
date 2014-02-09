@@ -27,9 +27,10 @@
 	GifCollection.set(<%- gifs %>);
 
 	//Create Category view
-	_.map(GifCollection.getCategoryBest(CategoryCollection), function(bestObj){
+	_.map(GifCollection.getCategoryBest(), function(bestObj){
 		CategoryView.create(bestObj).appendTo($('.categoryContainer'));
 	});
+
 
 	searchBar = SearchbarComponent.create().prependTo($('.main'));
 	searchResults = SearchResultsView.create(GifCollection);
@@ -51,4 +52,6 @@
 		}
 		if($('.categoryContainer').is(':visible')) $('.categoryContainer').stop().fadeTo(100, 1);
 	});
+
+
 </script>

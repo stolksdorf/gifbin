@@ -2,18 +2,14 @@ GifModel = xo.model.extend({
 	URL : function(){
 		return "/api/gif"
 	},
-
 	defaults : function(){
 		return {
 			linkCount : 0
 		}
 	},
 
-	test2 : 'awesomr',
-
 	initialize : function(){
 		var self = this;
-
 		return this;
 	},
 

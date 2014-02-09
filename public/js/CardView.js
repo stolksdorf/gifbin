@@ -1,22 +1,10 @@
 CardView = xo.view.extend({
 	schematic : DOM.div({class:"card"},
-		//DOM.div({class:"card__expandHover"}, DOM.i({class:"icon-plus"})),
-
-/*
-		DOM.div({class:"card__imageContainer"},
-			DOM.img({class : 'card__gif', 'xo-element' : 'image'}),
-			DOM.img({class : 'card__staticImage', 'xo-element' : 'staticImage'})
-		)
-*/
-
-
 		DOM.a({class:"card__imageContainer",
-			'xo-element' : 'imageContainer'
-		},
+			'xo-element' : 'imageContainer'},
 			DOM.img({class : 'card__gif', 'xo-element' : 'image'}),
 			DOM.img({class : 'card__staticImage', 'xo-element' : 'staticImage'})
 		)
-
 	),
 	render : function(){
 		var self = this;
