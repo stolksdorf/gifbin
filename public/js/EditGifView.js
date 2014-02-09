@@ -12,7 +12,7 @@ EditGifView = xo.view.extend({
 		});
 		this.dom.deleteButton.on('click', function(){
 			if(confirm("Delete this gif?")){
-				self.model.delete(function(){
+				self.model.destroy(function(){
 					window.location.href = '/';
 				});
 			}
