@@ -40,7 +40,7 @@ EditGifView = xo.view.extend({
 				self.dom.image.css('background-image','url("' + link + '")');
 			},
 			category_id : function(category_id){
-				self.dom.category.find("option[value='"+category_id+"']").prop('selected', true);
+				self.selectCategoryById(category_id);
 			},
 			user : function(user){
 				self.dom.uploader.html(user);
@@ -74,6 +74,7 @@ EditGifView = xo.view.extend({
 				var newCategory = xo.model.create({name : categoryName})
 				newCategory.save(function(){
 					CategoryCollection.add(newCategory);
+					self.selectCategoryById(newCategory.id);
 				})
 			}
 		})
@@ -115,10 +116,12 @@ EditGifView = xo.view.extend({
 		this.dom.uploader.show();
 		this.dom.uploaderField.hide();
 
-		console.log(util.cookie.get('gifbin-user'));
-
 		document.title = "gifbin.edit";
+		return this;
+	},
 
+	selectCategoryById : function(categoryId){
+		this.dom.category.find("option[value='"+categoryId+"']").prop('selected', true);
 		return this;
 	},
 
