@@ -39,7 +39,7 @@ GifSchema.methods.validateImgur = function(callback){
 };
 
 GifSchema.methods.generateStaticLink = function(callback){
-	this.staticLink = this.link.insert(this.link.lastIndexOf('.'), 's');
+	if(this.link) this.staticLink = this.link.insert(this.link.lastIndexOf('.'), 's');
 	return this.save(callback);
 }
 
