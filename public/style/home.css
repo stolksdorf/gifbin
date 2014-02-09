@@ -25,6 +25,10 @@
 		font-weight : bold;
 	}
 
+	.category__gifContainer{
+		margin-left: 10px;
+	}
+
 
 	.category .card{
 		height : 120px;

@@ -8,5 +8,16 @@ DownloadBtnComponent = xo.view.extend({
 		this.model.onChange('link', function(link){
 			self.dom.view.attr('href', link);
 		});
+
+		this.dom.view.click(function(){
+			self.model.increaseLinkCount();
+			//Adds a click to this user
+			if(util.cookie.get('gifbin-user')){
+				$.ajax({
+					url : 'addclick/' + util.cookie.get('gifbin-user') + '/' + self.model.id,
+					type : 'GET'
+				});
+			}
+		})
 	}
 });
