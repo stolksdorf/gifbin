@@ -1,0 +1,19 @@
+# Logs
+logs
+*.log
+
+#Ignore our built files
+build/*
+architecture.json
+
+# Ignore sensitive stuff
+/config/*
+!/config/default.json
+
+# Modules directory
+#/node_modules/*
+#/node_modules/*/
+#!/node_modules/gifbin/*
+
+# Ignore Vitreum cuz it's big
+/node_modules/vitreum/
