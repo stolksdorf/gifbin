@@ -120,12 +120,9 @@ Promise.prototype.resolve = function (err, val) {
  *
  * Alias of [mpromise#onResolve](https://github.com/aheckmann/mpromise#onresolve).
  *
- * _Deprecated. Use `onResolve` instead._
- *
  * @method addBack
  * @param {Function} listener
  * @return {Promise} this
- * @deprecated
  */
 
 Promise.prototype.addBack = Promise.prototype.onResolve;
@@ -133,32 +130,11 @@ Promise.prototype.addBack = Promise.prototype.onResolve;
 /**
  * Fulfills this promise with passed arguments.
  *
- * @method fulfill
- * @see https://github.com/aheckmann/mpromise#fulfill
- * @param {any} args
- * @api public
- */
-
-/**
- * Fulfills this promise with passed arguments.
- *
- * @method fulfill
- * @see https://github.com/aheckmann/mpromise#fulfill
- * @param {any} args
- * @api public
- */
-
-/**
- * Fulfills this promise with passed arguments.
- *
  * Alias of [mpromise#fulfill](https://github.com/aheckmann/mpromise#fulfill).
- *
- * _Deprecated. Use `fulfill` instead._
  *
  * @method complete
  * @param {any} args
  * @api public
- * @deprecated
  */
 
 Promise.prototype.complete = MPromise.prototype.fulfill;
@@ -168,13 +144,10 @@ Promise.prototype.complete = MPromise.prototype.fulfill;
  *
  * Alias of [mpromise#onFulfill](https://github.com/aheckmann/mpromise#onfulfill).
  *
- * _Deprecated. Use `onFulfill` instead._
- *
  * @method addCallback
  * @param {Function} listener
  * @return {Promise} this
  * @api public
- * @deprecated
  */
 
 Promise.prototype.addCallback = Promise.prototype.onFulfill;
@@ -184,13 +157,10 @@ Promise.prototype.addCallback = Promise.prototype.onFulfill;
  *
  * Alias of [mpromise#onReject](https://github.com/aheckmann/mpromise#onreject).
  *
- * _Deprecated. Use `onReject` instead._
- *
  * @method addErrback
  * @param {Function} listener
  * @return {Promise} this
  * @api public
- * @deprecated
  */
 
 Promise.prototype.addErrback = Promise.prototype.onReject;

@@ -27,8 +27,7 @@ var ReadPreference = function(mode, tags) {
 ReadPreference.isValid = function(_mode) {
   return (_mode == ReadPreference.PRIMARY || _mode == ReadPreference.PRIMARY_PREFERRED
     || _mode == ReadPreference.SECONDARY || _mode == ReadPreference.SECONDARY_PREFERRED
-    || _mode == ReadPreference.NEAREST
-    || _mode == true || _mode == false);
+    || _mode == ReadPreference.NEAREST);
 }
 
 /**

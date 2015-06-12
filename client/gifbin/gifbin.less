@@ -1,16 +1,30 @@
+@import 'palette/reset.less';
+@import 'palette/elements.less';
+@import 'palette/animations.less';
+@import 'palette/colors.less';
+@import 'palette/tooltip.less';
+
+
 
 body{
-	background-color : #eee;
-	font-family      : 'Open Sans', sans-serif;
-	color            : #4b5055;
-	font-weight      : 100;
-	text-rendering   : optimizeLegibility;
-	margin           : 0;
-	padding          : 0;
+	background-color: white;
 }
+
+
 
 
 .gifbin{
-	color : #333;
-	background-color: #eee;
+
+
 }
+
+
+.iconButton(@backgroundColor : @green){
+	display          : inline-block;
+	padding          : 0.6em;
+	cursor           : pointer;
+	background-color : @backgroundColor;
+	color            : white;
+	text-align       : center;
+}
+

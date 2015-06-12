@@ -1,0 +1,16 @@
+- Send all gif data on every page load
+- Use smooth page transitions
+- Reload page on save
+- INclude imgur view stats
+- Categories stored in the Gif Store
+- Delete requires password
+- Add favourites when you check for cookie (server side)
+- search on every page
+- Smart section titles based on search?
+- Search keys, c:category u:user
+- Replace the imgur node api with direct imgur calls
+
+
+
+
+

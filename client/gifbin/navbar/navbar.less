@@ -1,0 +1,30 @@
+
+@navHeight : 55px;
+header {
+	height           : @navHeight;
+	min-height       : @navHeight;
+	margin-bottom    : 25px;
+	background-color : @silverLight;
+	color            : @steel;
+	.logo, .item{
+		.animate(color);
+		cursor          : pointer;
+		font-weight     : 700;
+		line-height     : @navHeight;
+		text-decoration : none;
+		&:hover{
+			color : @teal;
+		}
+	}
+	.logo{
+		margin-right : 20px;
+		font-size    : 1.6em;
+	}
+	.item{
+		margin    : 0 20px;
+		font-size : 1.2em;
+	}
+	.login{
+		float : right;
+	}
+}

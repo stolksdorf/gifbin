@@ -6,20 +6,23 @@ app.use(express.static(__dirname + '/build'));
 require('node-jsx').install();
 
 
-if(process.env.NODE_ENV == 'development'){
-	vitreum.cacheBusting([
-		'./client/**/*.jsx',
-		'./client/**/*.js',
-		'./node_modules/gifbin/**/*.jsx',
-		'./node_modules/gifbin/**/*.js'
-	])
-}
+
+//Mongoose
+var mongoose = require('mongoose');
+var mongoUri = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/gifbin';
+mongoose.connect(mongoUri);
+mongoose.connection.on('error', function(){
+	console.log(">>>ERROR: Run Mongodb.exe ya goof!");
+});
+
+
+
 
 
 app.get('/', function (req, res) {
 	vitreum.render({
 		page: './build/gifbin/bundle.hbs',
-		
+
 		prerenderWith : './client/gifbin/gifbin.jsx',
 		initialProps: {
 			url: req.originalUrl
