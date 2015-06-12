@@ -5,8 +5,6 @@ var app = express();
 app.use(express.static(__dirname + '/build'));
 require('node-jsx').install();
 
-
-
 //Mongoose
 var mongoose = require('mongoose');
 var mongoUri = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/gifbin';
@@ -19,10 +17,9 @@ mongoose.connection.on('error', function(){
 
 
 
-app.get('/', function (req, res) {
+app.get('*', function (req, res) {
 	vitreum.render({
 		page: './build/gifbin/bundle.hbs',
-
 		prerenderWith : './client/gifbin/gifbin.jsx',
 		initialProps: {
 			url: req.originalUrl

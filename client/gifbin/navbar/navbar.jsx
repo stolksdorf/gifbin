@@ -2,35 +2,31 @@
 var React = require('react');
 var _ = require('underscore');
 
+var Link = require('gifbin/link.jsx');
+
 var Navbar = React.createClass({
 
 	render : function(){
 		var self = this;
 		return(
 			<header><nav className='container'>
-				<a href='/' className='logo'>
+				<Link href='/' className='logo'>
 					gifbin.
-				</a>
+				</Link>
 
-				<a href='/add' className='item'>
-					add
-				</a>
-				<a href='/' className='item'>
-					all
-				</a>
-				<a href='/' className='item'>
+				<Link href='/buckets' className='item'>
+					buckets
+				</Link>
+				<Link href='/users' className='item'>
 					users
-				</a>
-				<a href='/' className='item'>
-					category
-				</a>
-
+				</Link>
+				<Link href='/add' className='item'>
+					add
+				</Link>
 
 				<div className='login item'>
 					<i className='fa fa-sign-in' /> login
 				</div>
-
-
 			</nav></header>
 		);
 	}

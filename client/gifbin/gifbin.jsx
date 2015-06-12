@@ -11,16 +11,49 @@ var Footer = require('./footer/footer.jsx');
 var GifCard = require('gifbin/gifCard/gifCard.jsx');
 
 
+var GifStore = require('gifbin/gifstore');
+
+
 
 var Gifbin = React.createClass({
 
 
 	componentWillMount: function() {
+		var self = this;
 		this.router = Router(this, {
+
+			'/users' : function(){
+				return <div>users</div>
+			},
+			'/users/:id' : function(args){
+				return <div arg={args} >{args.id}</div>
+			},
+			'/buckets' : function(){
+				return <div>buckets</div>
+			},
+			'/buckets/:id' : function(args){
+				return <div>{args.id}</div>
+			},
+			'/add' : function(args){
+				return <div>add</div>
+			},
+			'/edit/:id' : function(args){
+				return <div>edit</div>
+			},
+			'/' : function(){
+				return <div>Hey</div>
+			},
 			'' : function(){
 				return <div>Hey</div>
+			},
+			'*' : function(){
+				return <div>404</div>
 			}
-		})
+		});
+
+		global.window.onHistoryChange = function() {
+			self.executeRouting(global.window.location.pathname);
+		}
 		this.executeRouting(this.props.url);
 	},
 
@@ -34,6 +67,13 @@ var Gifbin = React.createClass({
 
 	render : function(){
 		var self = this;
+
+
+		var gifs = _.map(GifStore.getGifs(), function(gif){
+			return <GifCard gif={gif} key={gif.id} />
+		})
+
+
 		return(
 			<div className='gifbin'>
 				<Navbar />
@@ -43,8 +83,7 @@ var Gifbin = React.createClass({
 
 				<div className='container'>
 
-					<GifCard />
-					<GifCard />
+					{gifs}
 
 				</div>
 

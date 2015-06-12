@@ -1,16 +1,20 @@
 - Send all gif data on every page load
-- Use smooth page transitions
+- Use smooth page transitions (Add Link componenet)
 - Reload page on save
 - INclude imgur view stats
 - Categories stored in the Gif Store
 - Delete requires password
-- Add favourites when you check for cookie (server side)
+- Add favourites boolean to server side when you check for cookie (server side)
 - search on every page
 - Smart section titles based on search?
-- Search keys, c:category u:user
+- Search keys, c:category, u:user, <3
 - Replace the imgur node api with direct imgur calls
-
-
-
+- If any url ends with ?s=term, it will prepopulate the search box
+- Make logout smaller
+- /add?i=URL, will prepopulate the image url. Make a corresponding chrome extension.
+- Add password for delete?
+- Add button for gifv
+- Handle uploading .webm (just replace it with .gif)
+- Force logins when editing/adding
 
 
