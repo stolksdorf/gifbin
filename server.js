@@ -2,11 +2,13 @@
 var vitreum = require('vitreum');
 var express = require("express");
 var bodyParser = require('body-parser')
-GLOBAL.app = express();
+var app = express();
 app.use(express.static(__dirname + '/build'));
 app.use(bodyParser.json());
 require('node-jsx').install();
 
+var apigen = require('./server/apigen.js');
+apigen.use(app);
 
 
 
@@ -23,8 +25,6 @@ if (process.env.NODE_ENV == 'development'){
 
 
 
-
-
 //Mongoose
 var mongoose = require('mongoose');
 var mongoUri = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/gifbin';
@@ -35,13 +35,14 @@ mongoose.connection.on('error', function(){
 
 
 
-require('./server/gif.model.js');
+var Gif = require('./server/gif.model.js')
+Gif.generateRoutes();
 
 
 
 app.get('*', function (req, res) {
 
-	Gif.find({}, function(err, gifs){
+	Gif.model.find({}, function(err, gifs){
 
 		if(err || !gifs) return console.log('err', err);
 

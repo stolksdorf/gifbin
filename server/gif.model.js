@@ -1,39 +1,22 @@
 var mongoose = require('mongoose');
-var ApiGen = require('./apigen');
-
+var apigen = require('./apigen');
 var imgur = require('imgur-node-api');
-
 imgur.setClientID('dd9999a685d25ee');
 
 
-String.prototype.insert = function (index, string) {
-  if (index > 0)
-    return this.substring(0, index) + string + this.substring(index, this.length);
-  else
-    return string + this;
-};
-
-
-//TODO : Add a static link vitrual
-
 var GifSchema = mongoose.Schema({
 	link        : String,
-	staticLink  : String,
-	created     : { type: Date,    default: Date.now },
+	created     : { type: Date, default: Date.now },
 	user        : String,
 	tags        : String,
 
-
-
-	//tagArray    : [String], //maybe depricate?
-
 	favouritedBy : [String],
-	buckets      : [String],
+	buckets      : {type : [String], default : ['groos']},
 	views       : { type: Number, default: 0},
 
 	//Depreacited
-	linkCount   : { type: Number, default: 0},
-	category    : String
+	//linkCount   : { type: Number, default: 0},
+	//category    : String
 });
 
 
@@ -42,27 +25,39 @@ GifSchema.methods.validateImgur = function(callback){
 	var isImgur = this.link.indexOf('i.imgur.com') !== -1;
 	if(!isImgur){
 		return imgur.upload(this.link, function(err, img){
-			if(err || !img) return res.send(500, err);
+			if(err || !img) return callback(err);
 			self.link = img.data.link;
-			return self.generateStaticLink(callback);
+			return self.save(callback)
 		});
 	}
-	return this.generateStaticLink(callback);
 };
 
-GifSchema.methods.generateStaticLink = function(callback){
-	if(this.link) this.staticLink = this.link.insert(this.link.lastIndexOf('.'), 's');
-	return this.save(callback);
-}
-
-
-
-Gif = mongoose.model('Gif', GifSchema);
-ApiGen('/api/gif', GifSchema, Gif, {
-	post : [function(req, res, next){
-		if(req.model){
-			return req.model.validateImgur(next);
-		}
-		return next();
-	}]
+GifSchema.virtual('imgLink').get(function(){
+	return this.link.replace('.gif', 's.jpg');
 });
+GifSchema.virtual('gifvLink').get(function(){
+	return this.link.replace('.gif', '.gifv');
+});
+GifSchema.virtual('webmLink').get(function(){
+	return this.link.replace('.gif', '.webm');
+});
+
+
+
+var Gif = mongoose.model('Gif', GifSchema);
+
+
+module.exports = {
+	schema : GifSchema,
+	model : Gif,
+	generateRoutes : function(){
+		apigen.add('/api/gifs', GifSchema, Gif, {
+			post : [function(req, res, next){
+				if(req.model){
+					return req.model.validateImgur(next);
+				}
+				return next();
+			}]
+		});
+	}
+}

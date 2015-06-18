@@ -10,10 +10,3 @@ architecture.json
 /config/*
 !/config/default.json
 
-# Modules directory
-#/node_modules/*
-#/node_modules/*/
-#!/node_modules/gifbin/*
-
-# Ignore Vitreum cuz it's big
-/node_modules/vitreum/

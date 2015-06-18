@@ -1,23 +1,35 @@
-var DEBUG = false;
-
 var _ = require('underscore');
+var expressServer;
 
-//module.exports.endpoints = [];
-
-module.exports = function(endpoint, Schema, Model, middleware, handleError){
+var setupSchema = function(Schema){
 	Schema.set('versionKey', false);
-	Schema.set('toJSON', { getters: true });
-	Schema.set('toObject', { getters: true });
+	Schema.set('toJSON', { virtuals: true });
+	Schema.set('toObject', { virtuals: true });
 
+	Schema.virtual('id').get(function(){
+		return this._id.toHexString();
+	});
 	Schema.options.toJSON.transform = function (doc, ret, options) {
 		delete ret._id;
+		delete ret.__t;
+		delete ret.__v;
 	}
-
 	Schema.options.toObject.transform = function (doc, ret, options) {
 		delete ret._id;
+		delete ret.__t;
+		delete ret.__v;
+	}
+	return Schema;
+}
+
+var createResourceEndpoint = function(endpoint, Schema, Model, middleware, handleError){
+	if(!expressServer){
+		console.error('ERROR apigen : Express instance not setup. To fix apigen.use(expressApp)');
+		return;
 	}
 
-	//module.exports.endpoints.push(endpoint);
+	Schema = setupSchema(Schema);
+
 	middleware = middleware || [];
 	var mw = {
 		get  : middleware,
@@ -70,7 +82,7 @@ module.exports = function(endpoint, Schema, Model, middleware, handleError){
 	};
 
 
-	//XO Middleware
+	//Setup Middleware to use in routes
 	mw.queryModels = function(req,res,next){
 		var query = buildQuery(req.query);
 
@@ -88,9 +100,7 @@ module.exports = function(endpoint, Schema, Model, middleware, handleError){
 		});
 	};
 	mw.createModel = function(req,res,next){
-		console.log('BDY', req.body);
 		req.model = new Model(req.body);
-		req.model.id = req.model._id;
 		return next();
 	};
 	mw.updateModel = function(req,res,next){
@@ -103,18 +113,18 @@ module.exports = function(endpoint, Schema, Model, middleware, handleError){
 
 
 	//Collection
-	app.get(endpoint, mw.queryModels, mw.get, function(req,res){
+	expressServer.get(endpoint, mw.queryModels, mw.get, function(req,res){
 		if(!req.models) return handleError('no collection', req, res);
 		return res.status(200).send(req.models);
 	});
 
 	//Model
-	app.get(endpoint + '/:id', mw.findModel, mw.get, function(req,res){
+	expressServer.get(endpoint + '/:id', mw.findModel, mw.get, function(req,res){
 		if(!req.model) return handleError('no model', req, res);
 		return res.status(200).send(req.model);
 	});
 
-	app.delete(endpoint + '/:id', mw.findModel, mw.del, function(req,res){
+	expressServer.delete(endpoint + '/:id', mw.findModel, mw.del, function(req,res){
 		if(!req.model) return handleError('no model', req, res);
 		req.model.remove(function(err){
 			if(err) return handleError(err, req, res);
@@ -122,7 +132,7 @@ module.exports = function(endpoint, Schema, Model, middleware, handleError){
 		});
 	});
 
-	app.post(endpoint, mw.createModel, mw.post, function(req, res){
+	expressServer.post(endpoint, mw.createModel, mw.post, function(req, res){
 		if(!req.model) return handleError('no model', req, res);
 		req.model.save(function(err, obj){
 			if(err) return handleError(err, req, res);
@@ -130,11 +140,19 @@ module.exports = function(endpoint, Schema, Model, middleware, handleError){
 		});
 	});
 
-	app.put(endpoint + '/:id', mw.updateModel, mw.put, function(req,res){
+	expressServer.put(endpoint + '/:id', mw.updateModel, mw.put, function(req,res){
 		if(!req.model) return handleError('no model', req, res);
 		req.model.save(function(err, obj){
 			if(err) return handleError(err, req, res);
 			return res.status(200).send(obj);
 		});
 	});
+}
+
+
+module.exports = {
+	use : function(expressInstance){
+		expressServer = expressInstance;
+	},
+	add : createResourceEndpoint
 }
