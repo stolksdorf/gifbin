@@ -14,12 +14,12 @@ var gulp = vitreum.tasks(gulp, {
 	pageTemplate: "./client/template.hbs",
 
 	projectModules: ["./node_modules/gifbin", ],
-	assetExts: ["*.svg", "*.png", "*.ico"],
+	assetExts: ["*.svg", "*.png", "*.ico", "*.swf"],
 
 	serverWatchPaths: ["server", "server.js"],
 	serverScript: "server.js",
 	cdn: {
-		"react" : ["window.React","<script src='//cdnjs.cloudflare.com/ajax/libs/react/0.12.2/react-with-addons.min.js'></script>"],
+		"react" : ["window.React","<script src='//cdnjs.cloudflare.com/ajax/libs/react/0.12.2/react-with-addons.js'></script>"],
 		"jquery" : ["window.jQuery","<script src='//code.jquery.com/jquery-1.11.0.min.js'></script>"],
 
 		"underscore" : ["window._", "<script src='//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js'></script>"],

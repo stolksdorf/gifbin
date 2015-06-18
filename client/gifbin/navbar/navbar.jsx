@@ -8,6 +8,7 @@ var Navbar = React.createClass({
 
 	render : function(){
 		var self = this;
+
 		return(
 			<header><nav className='container'>
 				<Link href='/' className='logo'>

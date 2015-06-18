@@ -7,15 +7,24 @@ var Router = require('gifbin/router.js');
 var Navbar = require('./navbar/navbar.jsx');
 var Footer = require('./footer/footer.jsx');
 
-
-var GifCard = require('gifbin/gifCard/gifCard.jsx');
-
-
 var GifStore = require('gifbin/gifstore');
+
+//Pages
+var Home = require('./home/home.jsx');
+var Edit = require('./edit/edit.jsx');
+var Add = require('./add/add.jsx');
+var Buckets = require('./buckets/buckets.jsx');
+var Users = require('./users/users.jsx');
 
 
 
 var Gifbin = React.createClass({
+
+	getInitialState: function() {
+		return {
+			hasExtensionInstalled: false
+		};
+	},
 
 
 	componentWillMount: function() {
@@ -23,38 +32,49 @@ var Gifbin = React.createClass({
 		this.router = Router(this, {
 
 			'/users' : function(){
-				return <div>users</div>
+				return <Users />
 			},
 			'/users/:id' : function(args){
-				return <div arg={args} >{args.id}</div>
+				return <Users name={args.id} args={args} />
 			},
 			'/buckets' : function(){
-				return <div>buckets</div>
+				return <Buckets />
 			},
 			'/buckets/:id' : function(args){
-				return <div>{args.id}</div>
+				return <Buckets id={args.id} args={args} />
 			},
 			'/add' : function(args){
-				return <div>add</div>
+				return <Add />
 			},
 			'/edit/:id' : function(args){
 				return <div>edit</div>
 			},
-			'/' : function(){
-				return <div>Hey</div>
+			'/' : function(args){
+				return <Home  />
 			},
-			'' : function(){
-				return <div>Hey</div>
+			'' : function(args){
+				return <Home  />
 			},
 			'*' : function(){
 				return <div>404</div>
 			}
 		});
 
-		global.window.onHistoryChange = function() {
-			self.executeRouting(global.window.location.pathname);
-		}
+
+		GifStore.setGifs(this.props.gifs);
+
+
 		this.executeRouting(this.props.url);
+	},
+
+	componentDidMount: function() {
+		var self = this;
+		if(typeof window === 'undefined') window={};
+		window.onHistoryChange = function() {
+			self.executeRouting(window.location.pathname);
+		}
+
+		this.extensionCheck();
 	},
 
 	executeRouting : function(path){
@@ -63,31 +83,45 @@ var Gifbin = React.createClass({
 		});
 	},
 
+	extensionCheck : function(){
+		var self = this;
+		chrome.runtime.sendMessage('mahbghldlglligfmhahgpdbjhehgeimd', { message: "version" },
+			function (reply) {
+				if (reply && reply.version == 1) {
+					self.setState({
+						hasExtensionInstalled : true
+					})
+				}
+			});
+	},
+
 
 
 	render : function(){
 		var self = this;
 
-
-		var gifs = _.map(GifStore.getGifs(), function(gif){
-			return <GifCard gif={gif} key={gif.id} />
-		})
+		var extMsg;
+		if(!this.state.hasExtensionInstalled){
+			extMsg = <a href='google.com'>You should totaly get the extension</a>
+		}
 
 
 		return(
 			<div className='gifbin'>
 				<Navbar />
 
-				{this.state.page}
+
 
 
 				<div className='container'>
 
-					{gifs}
+
+
+					{this.state.page}
 
 				</div>
 
-
+				{extMsg}
 			</div>
 		);
 	}

@@ -16,5 +16,6 @@
 - Add button for gifv
 - Handle uploading .webm (just replace it with .gif)
 - Force logins when editing/adding
+- On keypress within the searchbox update the query string
 
 
