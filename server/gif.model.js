@@ -13,10 +13,6 @@ var GifSchema = mongoose.Schema({
 	favouritedBy : [String],
 	buckets      : {type : [String], default : ['groos']},
 	views       : { type: Number, default: 0},
-
-	//Depreacited
-	//linkCount   : { type: Number, default: 0},
-	//category    : String
 });
 
 
@@ -29,6 +25,8 @@ GifSchema.methods.validateImgur = function(callback){
 			self.link = img.data.link;
 			return self.save(callback)
 		});
+	}else{
+		return callback();
 	}
 };
 

@@ -44,10 +44,10 @@ var Gifbin = React.createClass({
 				return <Buckets id={args.id} args={args} />
 			},
 			'/add' : function(args){
-				return <Add />
+				return <Add queryLink={args.query.i} />
 			},
 			'/edit/:id' : function(args){
-				return <div>edit</div>
+				return <Edit gif={GifStore.getGif(args.id)} />
 			},
 			'/' : function(args){
 				return <Home  />

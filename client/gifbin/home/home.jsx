@@ -14,7 +14,7 @@ var Home = React.createClass({
 
 	getInitialState: function() {
 
-		var search = GifStore.getQuery() || "in:approve";
+		var search = GifStore.getQuery();// || "in:approve";
 		var searchObj = GifStore.createSearchObject(search);
 
 		return {
@@ -25,6 +25,8 @@ var Home = React.createClass({
 
 	componentDidMount: function() {
 		document.title = 'gifbin.';
+
+		console.log(GifStore.getGifs());
 	},
 
 	handleSearch : function(search){
@@ -43,14 +45,23 @@ var Home = React.createClass({
 		var self = this;
 
 
+		var content;
+		if(this.state.search){
+			content = <GifContainer searchObj={this.state.searchObj} />
+		}else{
+			content = <div>Home page</div>
+		}
+
+
 
 
 		return(
 			<div className='home'>
-
 				<Searchbar value={this.state.search} onSearch={this.handleSearch} />
 
-				<GifContainer searchObj={this.state.searchObj} />
+				{content}
+
+
 
 			</div>
 		);

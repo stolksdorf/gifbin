@@ -100,6 +100,7 @@ var createResourceEndpoint = function(endpoint, Schema, Model, middleware, handl
 		});
 	};
 	mw.createModel = function(req,res,next){
+		console.log('creating', req.body);
 		req.model = new Model(req.body);
 		return next();
 	};
