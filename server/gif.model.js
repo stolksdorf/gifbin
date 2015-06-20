@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var apigen = require('./apigen');
-var imgur = require('imgur-node-api');
+var imgur = require('./imgur.js');
 imgur.setClientID('dd9999a685d25ee');
 
 
@@ -13,23 +13,40 @@ var GifSchema = mongoose.Schema({
 	favouritedBy : [String],
 	buckets      : {type : [String], default : ['groos']},
 	views       : { type: Number, default: 0},
+	width       : { type: Number, default: 0},
+	height       : { type: Number, default: 0},
 });
 
 
-GifSchema.methods.validateImgur = function(callback){
+GifSchema.pre('save', function(next){
 	var self = this;
+
+	var updateModel = function(err, img){
+		if(err || !img) return next(err);
+
+		self.link = img.link;
+		self.width = img.width;
+		self.height = img.height;
+		self.views = img.views;
+		return next();
+	}
+
 	var isImgur = this.link.indexOf('i.imgur.com') !== -1;
 	if(!isImgur){
-		return imgur.upload(this.link, function(err, img){
-			if(err || !img) return callback(err);
-			self.link = img.data.link;
-			return self.save(callback)
-		});
+		return imgur.upload(this.link, updateModel);
 	}else{
-		return callback();
+		return imgur.getData(this.imgurID, updateModel);
 	}
-};
+});
 
+GifSchema.methods.updateViewCount = function(callback){
+
+}
+
+
+GifSchema.virtual('imgurID').get(function(){
+	return this.link.replace('http://i.imgur.com/', '').replace('.gif','');
+});
 GifSchema.virtual('imgLink').get(function(){
 	return this.link.replace('.gif', 's.jpg');
 });
@@ -49,13 +66,6 @@ module.exports = {
 	schema : GifSchema,
 	model : Gif,
 	generateRoutes : function(){
-		apigen.add('/api/gifs', GifSchema, Gif, {
-			post : [function(req, res, next){
-				if(req.model){
-					return req.model.validateImgur(next);
-				}
-				return next();
-			}]
-		});
+		apigen.add('/api/gifs', GifSchema, Gif,);
 	}
 }
