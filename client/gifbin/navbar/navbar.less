@@ -6,9 +6,12 @@ header {
 	margin-bottom    : 25px;
 	background-color : @silverLight;
 	color            : @steel;
-	.logo, .item{
+	.navItem{
 		.animate(color);
+		display         : inline-block;
+		margin          : 0 20px;
 		cursor          : pointer;
+		font-size       : 1.2em;
 		font-weight     : 700;
 		line-height     : @navHeight;
 		text-decoration : none;
@@ -17,15 +20,16 @@ header {
 		}
 	}
 	.logo{
+		margin-left: 0px;
 		margin-right : 40px;
 		font-size    : 1.6em;
 	}
-	.item{
-		margin    : 0 20px;
-		font-size : 1.2em;
-	}
-	.login{
-		float : right;
-		margin:  0;
+	.userInfo{
+		float  : right;
+		margin : 0;
+
+		.logout, .login{
+			margin-right: 0px;
+		}
 	}
 }

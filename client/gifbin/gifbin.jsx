@@ -7,7 +7,7 @@ var Router = require('gifbin/router.js');
 var Navbar = require('./navbar/navbar.jsx');
 var Footer = require('./footer/footer.jsx');
 
-var GifStore = require('gifbin/gifstore');
+var GifStore = require('gifbin/gif.store.js');
 
 //Pages
 var Home = require('./home/home.jsx');
@@ -22,7 +22,7 @@ var Gifbin = React.createClass({
 
 	getInitialState: function() {
 		return {
-			hasExtensionInstalled: false
+			hasExtensionInstalled: true
 		};
 	},
 

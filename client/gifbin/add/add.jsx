@@ -30,7 +30,6 @@ var Add = React.createClass({
 	render : function(){
 		var self = this;
 
-		console.log(this.state);
 
 
 		return(

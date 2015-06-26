@@ -2,7 +2,9 @@
 var React = require('react');
 var _ = require('underscore');
 
-var GifStore = require('gifbin/gifstore');
+//var GifStore = require('gifbin/gif.store.js');
+
+var Utils = require('gifbin/utils');
 
 
 var GifContainer = require('gifbin/gifContainer/gifContainer.jsx');
@@ -12,10 +14,12 @@ var Searchbar = require('gifbin/searchBar/searchBar.jsx');
 
 var Home = React.createClass({
 
+
+
 	getInitialState: function() {
 
-		var search = GifStore.getQuery();// || "in:approve";
-		var searchObj = GifStore.createSearchObject(search);
+		var search = Utils.getQuery() || "in:approve";
+		var searchObj = Utils.createSearchObject(search);
 
 		return {
 			search : search,
@@ -31,7 +35,7 @@ var Home = React.createClass({
 
 	handleSearch : function(search){
 
-		var searchObj = GifStore.createSearchObject(search);
+		var searchObj = Utils.createSearchObject(search);
 
 
 		this.setState({
