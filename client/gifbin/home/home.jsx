@@ -53,8 +53,6 @@ var Home = React.createClass({
 		}
 
 
-
-
 		return(
 			<div className='home'>
 				<Searchbar value={this.state.search} onSearch={this.handleSearch} />

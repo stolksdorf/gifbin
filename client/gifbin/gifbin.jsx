@@ -62,8 +62,6 @@ var Gifbin = React.createClass({
 
 
 		GifStore.setGifs(this.props.gifs);
-
-
 		this.executeRouting(this.props.url);
 	},
 
@@ -109,18 +107,9 @@ var Gifbin = React.createClass({
 		return(
 			<div className='gifbin'>
 				<Navbar />
-
-
-
-
 				<div className='container'>
-
-
-
 					{this.state.page}
-
 				</div>
-
 				{extMsg}
 			</div>
 		);

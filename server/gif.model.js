@@ -66,6 +66,6 @@ module.exports = {
 	schema : GifSchema,
 	model : Gif,
 	generateRoutes : function(){
-		apigen.add('/api/gifs', GifSchema, Gif,);
+		apigen.add('/api/gifs', GifSchema, Gif);
 	}
 }
