@@ -26,7 +26,6 @@ var Gifbin = React.createClass({
 		};
 	},
 
-
 	componentWillMount: function() {
 		var self = this;
 		this.router = Router(this, {
@@ -41,7 +40,7 @@ var Gifbin = React.createClass({
 				return <Buckets />
 			},
 			'/buckets/:id' : function(args){
-				return <Buckets id={args.id} args={args} />
+				return <Buckets bucketId={args.id} args={args} key={args.id} />
 			},
 			'/add' : function(args){
 				return <Add queryLink={args.query.i} />

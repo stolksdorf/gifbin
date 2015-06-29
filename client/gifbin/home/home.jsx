@@ -5,20 +5,14 @@ var _ = require('underscore');
 //var GifStore = require('gifbin/gif.store.js');
 
 var Utils = require('gifbin/utils');
-
-
 var GifContainer = require('gifbin/gifContainer/gifContainer.jsx');
-
 var Searchbar = require('gifbin/searchBar/searchBar.jsx');
-
 
 var Home = React.createClass({
 
-
-
 	getInitialState: function() {
 
-		var search = Utils.getQuery() || "in:approve";
+		var search = Utils.getQuery(); // || "in:approve";
 		var searchObj = Utils.createSearchObject(search);
 
 		return {
