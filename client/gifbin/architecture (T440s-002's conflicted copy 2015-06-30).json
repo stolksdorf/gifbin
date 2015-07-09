@@ -1,0 +1,145 @@
+{
+	"C:\\Dropbox\\root\\Programming\\Javascript\\gifbin\\node_modules\\vitreum\\node_modules\\browserify\\lib\\_empty.js": [],
+	"C:\\Dropbox\\root\\Programming\\Javascript\\gifbin\\client\\gifbin\\footer\\footer.jsx": [
+		"react",
+		"underscore"
+	],
+	"C:\\Dropbox\\root\\Programming\\Javascript\\gifbin\\client\\gifbin\\users\\users.jsx": [
+		"react",
+		"underscore"
+	],
+	"C:\\Dropbox\\root\\Programming\\Javascript\\gifbin\\node_modules\\gifbin\\cookieJar.js": [],
+	"C:\\Dropbox\\root\\Programming\\Javascript\\gifbin\\node_modules\\url-pattern\\lib\\url-pattern.js": [],
+	"C:\\Dropbox\\root\\Programming\\Javascript\\gifbin\\node_modules\\gifbin\\router.js": [
+		"underscore",
+		"url-pattern"
+	],
+	"C:\\Dropbox\\root\\Programming\\Javascript\\gifbin\\node_modules\\gifbin\\utils.js": [
+		"underscore"
+	],
+	"C:\\Dropbox\\root\\Programming\\Javascript\\gifbin\\node_modules\\vitreum\\node_modules\\browserify\\node_modules\\events\\events.js": [],
+	"C:\\Dropbox\\root\\Programming\\Javascript\\gifbin\\node_modules\\gifbin\\flux.warehouse.js": [
+		"underscore",
+		"events"
+	],
+	"C:\\Dropbox\\root\\Programming\\Javascript\\gifbin\\client\\gifbin\\home\\home.jsx": [
+		"react",
+		"underscore",
+		"gifbin/utils",
+		"gifbin/searchBar/searchBar.jsx",
+		"gifbin/gifContainer/gifContainer.jsx"
+	],
+	"C:\\Dropbox\\root\\Programming\\Javascript\\gifbin\\client\\gifbin\\edit\\edit.jsx": [
+		"react",
+		"underscore",
+		"gifbin/gifForm/gifForm.jsx"
+	],
+	"C:\\Dropbox\\root\\Programming\\Javascript\\gifbin\\node_modules\\gifbin\\searchBar\\searchBar.jsx": [
+		"react",
+		"underscore"
+	],
+	"C:\\Dropbox\\root\\Programming\\Javascript\\gifbin\\node_modules\\gifbin\\gif.actions.js": [
+		"gifbin/flux.dispatcher.js"
+	],
+	"C:\\Dropbox\\root\\Programming\\Javascript\\gifbin\\node_modules\\classnames\\index.js": [],
+	"C:\\Dropbox\\root\\Programming\\Javascript\\gifbin\\node_modules\\gifbin\\polyfills.js": [],
+	"C:\\Dropbox\\root\\Programming\\Javascript\\gifbin\\node_modules\\gifbin\\link.jsx": [
+		"react",
+		"underscore",
+		"gifbin/router",
+		"classnames",
+		"gifbin/polyfills"
+	],
+	"C:\\Dropbox\\root\\Programming\\Javascript\\gifbin\\client\\gifbin\\navbar\\navbar.jsx": [
+		"react",
+		"underscore",
+		"gifbin/gif.store.js",
+		"gifbin/gif.actions.js",
+		"gifbin/link.jsx"
+	],
+	"C:\\Dropbox\\root\\Programming\\Javascript\\gifbin\\node_modules\\flux\\lib\\invariant.js": [],
+	"C:\\Dropbox\\root\\Programming\\Javascript\\gifbin\\node_modules\\flux\\lib\\Dispatcher.js": [
+		"./invariant"
+	],
+	"C:\\Dropbox\\root\\Programming\\Javascript\\gifbin\\node_modules\\flux\\index.js": [
+		"./lib/Dispatcher"
+	],
+	"C:\\Dropbox\\root\\Programming\\Javascript\\gifbin\\node_modules\\gifbin\\flux.dispatcher.js": [
+		"flux"
+	],
+	"C:\\Dropbox\\root\\Programming\\Javascript\\gifbin\\node_modules\\gifbin\\gif.store.js": [
+		"underscore",
+		"gifbin/cookieJar.js",
+		"gifbin/flux.warehouse.js",
+		"gifbin/flux.dispatcher.js"
+	],
+	"C:\\Dropbox\\root\\Programming\\Javascript\\gifbin\\node_modules\\gifbin\\clipboardButton\\clipboardButton.jsx": [
+		"react",
+		"underscore",
+		"jquery",
+		"zeroclipboard"
+	],
+	"C:\\Dropbox\\root\\Programming\\Javascript\\gifbin\\node_modules\\superagent\\node_modules\\component-emitter\\index.js": [],
+	"C:\\Dropbox\\root\\Programming\\Javascript\\gifbin\\node_modules\\superagent\\node_modules\\reduce-component\\index.js": [],
+	"C:\\Dropbox\\root\\Programming\\Javascript\\gifbin\\node_modules\\superagent\\lib\\client.js": [
+		"emitter",
+		"reduce"
+	],
+	"C:\\Dropbox\\root\\Programming\\Javascript\\gifbin\\node_modules\\gifbin\\bucketSelect\\bucketSelect.jsx": [
+		"react",
+		"underscore",
+		"classnames",
+		"gifbin/gif.store.js"
+	],
+	"C:\\Dropbox\\root\\Programming\\Javascript\\gifbin\\node_modules\\gifbin\\gifForm\\gifForm.jsx": [
+		"react",
+		"underscore",
+		"classnames",
+		"gifbin/gif.actions.js",
+		"gifbin/gif.store.js",
+		"gifbin/clipboardButton/clipboardButton.jsx",
+		"superagent",
+		"gifbin/bucketSelect/bucketSelect.jsx"
+	],
+	"C:\\Dropbox\\root\\Programming\\Javascript\\gifbin\\client\\gifbin\\add\\add.jsx": [
+		"react",
+		"underscore",
+		"gifbin/gifForm/gifForm.jsx"
+	],
+	"C:\\Dropbox\\root\\Programming\\Javascript\\gifbin\\node_modules\\gifbin\\gifCard\\gifCard.jsx": [
+		"react",
+		"underscore",
+		"jquery",
+		"classnames",
+		"gifbin/link.jsx",
+		"gifbin/clipboardButton/clipboardButton.jsx"
+	],
+	"C:\\Dropbox\\root\\Programming\\Javascript\\gifbin\\node_modules\\gifbin\\gifContainer\\gifContainer.jsx": [
+		"react",
+		"underscore",
+		"gifbin/gif.store.js",
+		"gifbin/gifCard/gifCard.jsx"
+	],
+	"C:\\Dropbox\\root\\Programming\\Javascript\\gifbin\\client\\gifbin\\buckets\\buckets.jsx": [
+		"react",
+		"underscore",
+		"gifbin/link.jsx",
+		"gifbin/gif.store.js",
+		"gifbin/utils",
+		"gifbin/searchBar/searchBar.jsx",
+		"gifbin/gifContainer/gifContainer.jsx"
+	],
+	"./client/gifbin/gifbin.jsx": [
+		"underscore",
+		"react",
+		"./footer/footer.jsx",
+		"./users/users.jsx",
+		"gifbin/router.js",
+		"./home/home.jsx",
+		"./edit/edit.jsx",
+		"./navbar/navbar.jsx",
+		"gifbin/gif.store.js",
+		"./add/add.jsx",
+		"./buckets/buckets.jsx"
+	]
+}

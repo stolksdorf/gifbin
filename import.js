@@ -1,5 +1,6 @@
 //Mongoose
 var async = require('async');
+var _ = require('underscore');
 var mongoose = require('mongoose');
 var mongoUri = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/gifbin';
 mongoose.connect(mongoUri);
@@ -7,7 +8,9 @@ mongoose.connection.on('error', function(){
 	console.log(">>>ERROR: Run Mongodb.exe ya goof!");
 });
 
-var Gif = require('./server/gif.model.js');
+var fs = require('fs');
+ 
+var Gif = require('./server/gif.model.js'); 
 
 if(process.argv[2] == 'drop'){
 	Gif.model.remove({}, function(err) {
@@ -18,15 +21,49 @@ if(process.argv[2] == 'drop'){
 }
 
 
+if(process.argv[2] == 'clean'){
+	var gifs = JSON.parse(fs.readFileSync(process.argv[3], 'utf8'));
+
+	console.log(gifs.length);
+
+	var cleaned = _.reduce(gifs, function(r, gif){
+
+		if(gif.link){
+			var link = this.link;
+			var tags = gif.tags || []
 
 
-var fs = require('fs');
+			r.push({
+				created : gif.created,
+				tags : tags.join(', '),
+				user : gif.user,
+				buckets : ['TEST'],
+				link : gif.link
+			})
+		}
+		return r;
+	}, [])
+
+	fs.writeFileSync('cleaned.json', JSON.stringify(cleaned, null, '\t'));
+	mongoose.connection.close();
+
+	console.log('DONE');
+
+	return;
+
+}
+
+
+
+
+
 var gifs = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
 
 
 async.map(gifs, function(gif, callback){
 	var tempGif = new Gif.model(gif);
 	console.log('importing ' + gif.link);
+
 	tempGif.save(callback);
 }, function(err, res){
 	mongoose.connection.close();

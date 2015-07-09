@@ -6,6 +6,7 @@ var _ = require('underscore');
 
 var Utils = require('gifbin/utils');
 var GifContainer = require('gifbin/gifContainer/gifContainer.jsx');
+var GifCard = require('gifbin/gifCard/gifCard.jsx');
 var Searchbar = require('gifbin/searchBar/searchBar.jsx');
 
 var Home = React.createClass({
@@ -39,6 +40,10 @@ var Home = React.createClass({
 
 	},
 
+
+
+
+
 	render : function(){
 		var self = this;
 
@@ -47,7 +52,9 @@ var Home = React.createClass({
 		if(this.state.search){
 			content = <GifContainer searchObj={this.state.searchObj} />
 		}else{
-			content = <div>Home page</div>
+			content = _.map(GifStore.getGifs(), function(gif){
+				return <GifCard gif={gif} key={gif.id} />
+			});
 		}
 
 

@@ -11,10 +11,10 @@ var GifSchema = mongoose.Schema({
 	tags        : String,
 
 	favouritedBy : [String],
-	buckets      : {type : [String], default : ['groos']},
+	buckets      : {type : [String]},
 	views       : { type: Number, default: 0},
-	width       : { type: Number, default: 0},
-	height       : { type: Number, default: 0},
+	width       : { type: Number, default: 90},
+	height       : { type: Number, default: 90},
 });
 
 
@@ -30,12 +30,17 @@ GifSchema.pre('save', function(next){
 		self.views = img.views;
 		return next();
 	}
+	if(!this.link) return next();
+
 
 	var isImgur = this.link.indexOf('i.imgur.com') !== -1;
 	if(!isImgur){
 		return imgur.upload(this.link, updateModel);
 	}else{
-		return imgur.getData(this.imgurID, updateModel);
+		return imgur.getData(this.imgurID, function(err, img){
+			if(img) return updateModel(null, img);
+			return next();
+		});
 	}
 });
 
@@ -45,7 +50,13 @@ GifSchema.methods.updateViewCount = function(callback){
 
 
 GifSchema.virtual('imgurID').get(function(){
-	return this.link.replace('http://i.imgur.com/', '').replace('.gif','');
+	return this.link
+		.replace('http://i.imgur.com/', '')
+		.replace('https://i.imgur.com/', '')
+		.replace('.gif','')
+		.replace('.jpg','')
+		.replace('.webm','')
+		.replace('.gifv','');
 });
 GifSchema.virtual('imgLink').get(function(){
 	return this.link.replace('.gif', 's.jpg');
