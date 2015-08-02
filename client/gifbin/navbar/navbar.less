@@ -1,12 +1,14 @@
 
-@navHeight : 55px;
+@navHeight  : 55px;
+@navSpacing : 25px;
 header {
 	height           : @navHeight;
 	min-height       : @navHeight;
-	margin-bottom    : 25px;
+	margin-bottom    : @navSpacing;
 	background-color : @silverLight;
+	font-size        : 0.8em;
 	color            : @steel;
-	border-bottom : 1px solid darken(@silverLight, 10%);
+	border-bottom    : 1px solid darken(@silverLight, 10%);
 	.navItem{
 		.animate(color);
 		display         : inline-block;
@@ -21,16 +23,15 @@ header {
 		}
 	}
 	.logo{
-		margin-left: 0px;
 		margin-right : 40px;
+		margin-left  : 0px;
 		font-size    : 1.6em;
 	}
 	.userInfo{
 		float  : right;
 		margin : 0;
-
 		.logout, .login{
-			margin-right: 0px;
+			margin-right : 0px;
 		}
 	}
 }

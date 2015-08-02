@@ -16,6 +16,7 @@ var Edit = require('./edit/edit.jsx');
 var Add = require('./add/add.jsx');
 var Buckets = require('./buckets/buckets.jsx');
 var Users = require('./users/users.jsx');
+var Page404 = require('./page404/page404.jsx')
 
 
 
@@ -50,7 +51,7 @@ var Gifbin = React.createClass({
 				return <Home  />
 			},
 			'*' : function(){
-				return <div>404</div>
+				return <Page404 />
 			}
 		});
 
