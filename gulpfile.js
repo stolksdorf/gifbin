@@ -25,6 +25,9 @@ var gulp = vitreum.tasks(gulp, {
 		"underscore" : ["window._", "<script src='//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js'></script>"],
 
 
+		"moment" : ["window.moment", "<script src='//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js'></script>"],
+
+
 		"zeroclipboard" : ["window.ZeroClipboard", "<script src='//cdnjs.cloudflare.com/ajax/libs/zeroclipboard/2.2.0/ZeroClipboard.min.js'></script>"],
 
 
