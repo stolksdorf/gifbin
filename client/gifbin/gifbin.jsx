@@ -6,6 +6,7 @@ var Router = require('gifbin/router.js');
 
 var Navbar = require('./navbar/navbar.jsx');
 var Footer = require('./footer/footer.jsx');
+var ExtensionCheck = require('./extensionCheck/extensionCheck.jsx');
 
 var GifStore = require('gifbin/gif.store.js');
 
@@ -20,12 +21,6 @@ var Users = require('./users/users.jsx');
 
 var Gifbin = React.createClass({
 
-	getInitialState: function() {
-		return {
-			hasExtensionInstalled: true
-		};
-	},
-
 	componentWillMount: function() {
 		var self = this;
 		this.router = Router(this, {
@@ -34,13 +29,13 @@ var Gifbin = React.createClass({
 				return <Users />
 			},
 			'/users/:id' : function(args){
-				return <Users name={args.id} args={args} key={args.id}/>
+				return <Users name={decodeURIComponent(args.id)} args={args} key={args.id}/>
 			},
 			'/buckets' : function(){
 				return <Buckets />
 			},
 			'/buckets/:id' : function(args){
-				return <Buckets bucketId={args.id} args={args} key={args.id} />
+				return <Buckets bucketId={decodeURIComponent(args.id)} args={args} key={args.id} />
 			},
 			'/add' : function(args){
 				return <Add queryLink={args.query.i} />
@@ -59,7 +54,6 @@ var Gifbin = React.createClass({
 			}
 		});
 
-
 		GifStore.setGifs(this.props.gifs);
 		this.executeRouting(this.props.url);
 	},
@@ -70,8 +64,6 @@ var Gifbin = React.createClass({
 		window.onHistoryChange = function() {
 			self.executeRouting(window.location.pathname);
 		}
-
-		this.extensionCheck();
 	},
 
 	executeRouting : function(path){
@@ -80,36 +72,23 @@ var Gifbin = React.createClass({
 		});
 	},
 
-	extensionCheck : function(){
-		var self = this;
-		chrome.runtime.sendMessage('mahbghldlglligfmhahgpdbjhehgeimd', { message: "version" },
-			function (reply) {
-				if (reply && reply.version == 1) {
-					self.setState({
-						hasExtensionInstalled : true
-					})
-				}
-			});
-	},
+
 
 
 
 	render : function(){
 		var self = this;
 
-		var extMsg;
-		if(!this.state.hasExtensionInstalled){
-			extMsg = <a href='google.com'>You should totaly get the extension</a>
-		}
-
-
 		return(
 			<div className='gifbin'>
 				<Navbar />
-				<div className='container'>
+				<div className='container page'>
 					{this.state.page}
 				</div>
-				{extMsg}
+
+				<ExtensionCheck />
+
+				<Footer />
 			</div>
 		);
 	}
