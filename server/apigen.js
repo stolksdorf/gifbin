@@ -148,6 +148,8 @@ var createResourceEndpoint = function(endpoint, Schema, Model, middleware, handl
 			return res.status(200).send(obj);
 		});
 	});
+
+	return mw;
 }
 
 

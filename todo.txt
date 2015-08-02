@@ -18,4 +18,14 @@
 - Force logins when editing/adding
 - On keypress within the searchbox update the query string
 
+==============
+
+- Make an admin page, Basic auth, new entry point
+- Make some admin routes, requires key access
+- Make a category box? (has image, main text, and two sub fields)
+- Temporarily remove favourites?
+- Change favourites so it's a new table
+- Create a user list, with meta data on gif add (used for the users page)
+
+
 
