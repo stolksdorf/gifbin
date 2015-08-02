@@ -34,7 +34,7 @@ var Gifbin = React.createClass({
 				return <Users />
 			},
 			'/users/:id' : function(args){
-				return <Users name={args.id} args={args} />
+				return <Users name={args.id} args={args} key={args.id}/>
 			},
 			'/buckets' : function(){
 				return <Buckets />
