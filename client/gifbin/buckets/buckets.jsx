@@ -8,27 +8,27 @@ var GifStore = require('gifbin/gif.store.js');
 var Utils = require('gifbin/utils');
 var GifContainer = require('gifbin/gifContainer/gifContainer.jsx');
 var Searchbar = require('gifbin/searchBar/searchBar.jsx');
+var GroupCard = require('gifbin/groupCard/groupCard.jsx');
 
 
 var Buckets = React.createClass({
+	componentDidMount: function() {
+
+		console.log(this.props);
+		document.title = 'gifbin.' + (this.props.bucketId || 'buckets');
+	},
+
 
 	getInitialState: function() {
 		var search;
-
 		if(this.props.bucketId){
 			search = "in:" + this.props.bucketId;
 		}
-
 		search = Utils.getQuery() || search;
-
 		return {
 			search : search,
 			searchObj : Utils.createSearchObject(search)
 		};
-	},
-
-	componentDidMount: function() {
-		document.title = 'gifbin.buckets';
 	},
 
 
@@ -42,11 +42,12 @@ var Buckets = React.createClass({
 
 	renderBucketSelect : function(){
 		return _.map(GifStore.getBuckets(), function(bucket, id){
-
-			return <Link className='bucketSelect' key={id} href={'/buckets/' + id }>
-				<img src={bucket.img} />
-				<div className='name'>{bucket.name}</div>
-			</Link>
+			return <GroupCard
+				key={id}
+				img={bucket.img}
+				title={bucket.name}
+				link={'/buckets/' + id}
+			/>
 
 		})
 	},
