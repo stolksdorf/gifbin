@@ -40,7 +40,11 @@ var Home = React.createClass({
 		if(this.state.search){
 			content = <GifContainer searchObj={this.state.searchObj} />
 		}else{
-			content = _.map(GifStore.getGifs(), function(gif){
+
+			var gifs = _.sortBy(GifStore.getGifs(), function(gif){
+				return -gif.views || 0;
+			});
+			content = _.map(gifs, function(gif){
 				return <GifCard gif={gif} key={gif.id} />
 			});
 		}
