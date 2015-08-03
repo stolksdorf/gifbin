@@ -6,8 +6,6 @@ var Router = require('gifbin/router.js');
 
 var Navbar = require('./navbar/navbar.jsx');
 var Footer = require('./footer/footer.jsx');
-var ExtensionCheck = require('./extensionCheck/extensionCheck.jsx');
-
 var GifStore = require('gifbin/gif.store.js');
 
 //Pages
@@ -39,7 +37,7 @@ var Gifbin = React.createClass({
 				return <Buckets bucketId={decodeURIComponent(args.id)} args={args} key={args.id} />
 			},
 			'/add' : function(args){
-				return <Add queryLink={args.query.i} />
+				return <Add />
 			},
 			'/edit/:id' : function(args){
 				return <Edit gif={GifStore.getGif(args.id)} />
@@ -74,20 +72,14 @@ var Gifbin = React.createClass({
 	},
 
 
-
-
-
 	render : function(){
 		var self = this;
-
 		return(
 			<div className='gifbin'>
 				<Navbar />
 				<div className='container page'>
 					{this.state.page}
 				</div>
-
-				<ExtensionCheck />
 
 				<Footer />
 			</div>

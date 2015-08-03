@@ -1,4 +1,20 @@
-//Mongoose
+/*
+
+	how to use
+
+	node import.js drop
+	- removes all gifs
+
+	node import.js clean [file]
+	- creates a cleaned up version of the file
+
+	node import.js [file]
+	- imports that json of gifs
+
+
+
+
+*/
 var async = require('async');
 var _ = require('underscore');
 var mongoose = require('mongoose');
@@ -9,8 +25,8 @@ mongoose.connection.on('error', function(){
 });
 
 var fs = require('fs');
- 
-var Gif = require('./server/gif.model.js'); 
+
+var Gif = require('./server/gif.model.js');
 
 if(process.argv[2] == 'drop'){
 	Gif.model.remove({}, function(err) {
@@ -24,8 +40,6 @@ if(process.argv[2] == 'drop'){
 if(process.argv[2] == 'clean'){
 	var gifs = JSON.parse(fs.readFileSync(process.argv[3], 'utf8'));
 
-	console.log(gifs.length);
-
 	var cleaned = _.reduce(gifs, function(r, gif){
 
 		if(gif.link){
@@ -37,7 +51,7 @@ if(process.argv[2] == 'clean'){
 				created : gif.created,
 				tags : tags.join(', '),
 				user : gif.user,
-				buckets : ['TEST'],
+				buckets : ['unknown'],
 				link : gif.link
 			})
 		}

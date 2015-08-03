@@ -34,7 +34,10 @@ var Users = React.createClass({
 	},
 
 	renderUserSelect : function(){
-		return _.map(GifStore.getUsers(), function(user){
+		var users = _.sortBy(GifStore.getUsers(), function(user){
+			return -user.total;
+		});
+		return _.map(users, function(user){
 			return <GroupCard
 				key={user.name}
 				img={user.gif.imgLink}

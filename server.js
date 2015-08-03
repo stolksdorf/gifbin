@@ -12,6 +12,9 @@ apigen.use(app);
 
 
 
+
+
+
 if (process.env.NODE_ENV == 'development'){
 	vitreum.cacheBusting([
 		'./client/**/*.jsx',
@@ -34,12 +37,34 @@ mongoose.connection.on('error', function(){
 });
 
 
-
+//Models
 var Gif = require('./server/gif.model.js')
 Gif.generateRoutes();
 
 
+//Admin route
+var auth = require('basic-auth');
+app.get('/admin', function(req, res){
+	var credentials = auth(req)
 
+	if (!credentials || credentials.name !== 'john' || credentials.pass !== 'secret') {
+		res.setHeader('WWW-Authenticate', 'Basic realm="example"')
+		return res.status(401).send('Access denied')
+	}
+
+	vitreum.render({
+		page: './build/admin/bundle.hbs',
+		prerenderWith : './client/admin/admin.jsx',
+		initialProps: {
+			url: req.originalUrl
+		},
+	}, function (err, page) {
+		return res.send(page)
+	});
+})
+
+
+//Routes
 app.get('*', function (req, res) {
 
 	Gif.model.find({}, function(err, gifs){
