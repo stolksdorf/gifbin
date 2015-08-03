@@ -10,7 +10,6 @@ var ExtensionCheck = React.createClass({
 	getInitialState: function() {
 		return {
 			hasExtensionInstalled : true,
-
 		};
 	},
 

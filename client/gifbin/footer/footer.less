@@ -1,4 +1,71 @@
+
+@footerSpacing : @navHeight + @navSpacing + 60px;
 footer{
-	background-color: @steel;
-	height : 300px;
+	@footerHeight    : 300px;
+	margin-top       : -@footerSpacing;
+	background-color : black;
+	color            : @silverLight;
+	.about{
+		height      : @footerHeight;
+		padding-top : 80px;
+		line-height : 1.5em;
+		h3{
+			margin-top    : 5px;
+			margin-bottom : 7px;
+			font-size     : 1em;
+			font-weight   : 900;
+			color         : @greyLight;
+		}
+		p{
+			font-size : 12px;
+			color     : @grey;
+		}
+		p.icons{
+			font-size       : 17px;
+			letter-spacing  : 10px;
+			text-decoration : none;
+			a{
+				.animate(color);
+				&:hover{
+					color : white;
+				}
+			}
+		}
+	}
+	.rightColumn{
+		height          : @footerHeight;
+		padding         : 10px 20px;
+		color           : white;
+		text-decoration : none;
+		p{
+			color : white;
+		}
+		&.info{
+			background-color : @steel;
+		}
+		&.extension{
+			.animate(background-color);
+			background-color : @red;
+
+			.gogetit{
+				.animate(opacity);
+				display    : block;
+				margin     : 30px auto;
+				opacity    : 0.1;
+				font-size  : 4em;
+				text-align : center;
+			}
+			&:hover{
+				background-color : @redLight;
+				.gogetit{
+					opacity : 1;
+				}
+				i.fa-rocket{
+					.rumble();
+					-webkit-animation-iteration-count : infinite;
+					animation-iteration-count         : infinite;
+				}
+			}
+		}
+	}
 }

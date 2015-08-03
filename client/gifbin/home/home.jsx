@@ -12,8 +12,7 @@ var Searchbar = require('gifbin/searchBar/searchBar.jsx');
 var Home = React.createClass({
 
 	getInitialState: function() {
-
-		var search = Utils.getQuery(); // || "in:approve";
+		var search = Utils.getQuery();
 		var searchObj = Utils.createSearchObject(search);
 
 		return {
@@ -24,29 +23,18 @@ var Home = React.createClass({
 
 	componentDidMount: function() {
 		document.title = 'gifbin.';
-
-		console.log(GifStore.getGifs());
 	},
 
 	handleSearch : function(search){
-
 		var searchObj = Utils.createSearchObject(search);
-
-
 		this.setState({
 			search : search,
 			searchObj : searchObj
 		});
-
 	},
-
-
-
-
 
 	render : function(){
 		var self = this;
-
 
 		var content;
 		if(this.state.search){
@@ -56,16 +44,10 @@ var Home = React.createClass({
 				return <GifCard gif={gif} key={gif.id} />
 			});
 		}
-
-
 		return(
 			<div className='home'>
 				<Searchbar value={this.state.search} onSearch={this.handleSearch} />
-
 				{content}
-
-
-
 			</div>
 		);
 	}
