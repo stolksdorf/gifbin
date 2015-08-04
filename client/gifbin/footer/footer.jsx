@@ -35,7 +35,7 @@ var Footer = React.createClass({
 
 		var rightColumn = (
 			<div className={cx('info col4 rightColumn', {'offset4' : this.state.hasExtensionInstalled})}>
-				<h2><i className='fa fa-cog' /> What is this jazz?</h2>
+				<h2><i className='fa fa-briefcase' /> Gifs are Serious Business</h2>
 				<p>I made gifbin to share my love of gifs.</p>
 				<ul>
 					<li>there is no moderation on the site.</li>
