@@ -23,15 +23,15 @@ var Buckets = React.createClass({
 		}
 		search = Utils.getQuery() || search;
 		return {
-			search : search,
+			initialValue : search,
 			searchObj : Utils.createSearchObject(search)
 		};
 	},
 
-	handleSearch : function(search){
-		this.setState({
-			search : search,
-			searchObj : Utils.createSearchObject(search)
+	handleSearch : function(searchObj){
+		var self = this;
+		this.setState({ searchObj : searchObj}, function(){
+			self.forceUpdate()
 		});
 	},
 
@@ -51,7 +51,8 @@ var Buckets = React.createClass({
 	render : function(){
 		var self = this;
 		var content;
-		if(this.state.search){
+
+		if(this.state.searchObj.query){
 			content = <GifContainer searchObj={this.state.searchObj} />
 		}else{
 			content = <div className='content'>
@@ -62,7 +63,7 @@ var Buckets = React.createClass({
 
 		return(
 			<div className='buckets'>
-				<Searchbar value={this.state.search} onSearch={this.handleSearch} />
+				<Searchbar initialValue={this.state.initialValue} onSearch={this.handleSearch} />
 				{content}
 			</div>
 		);

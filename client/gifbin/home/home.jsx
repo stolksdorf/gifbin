@@ -12,12 +12,8 @@ var Searchbar = require('gifbin/searchBar/searchBar.jsx');
 var Home = React.createClass({
 
 	getInitialState: function() {
-		var search = Utils.getQuery();
-		var searchObj = Utils.createSearchObject(search);
-
 		return {
-			search : search,
-			searchObj : searchObj
+			searchObj : Utils.createSearchObject(Utils.getQuery())
 		};
 	},
 
@@ -25,11 +21,10 @@ var Home = React.createClass({
 		document.title = 'gifbin.';
 	},
 
-	handleSearch : function(search){
-		var searchObj = Utils.createSearchObject(search);
-		this.setState({
-			search : search,
-			searchObj : searchObj
+	handleSearch : function(searchObj){
+		var self = this;
+		this.setState({ searchObj : searchObj}, function(){
+			self.forceUpdate()
 		});
 	},
 
@@ -37,7 +32,7 @@ var Home = React.createClass({
 		var self = this;
 
 		var content;
-		if(this.state.search){
+		if(this.state.searchObj.query){
 			content = <GifContainer searchObj={this.state.searchObj} />
 		}else{
 
@@ -50,7 +45,7 @@ var Home = React.createClass({
 		}
 		return(
 			<div className='home'>
-				<Searchbar value={this.state.search} onSearch={this.handleSearch} />
+				<Searchbar initialValue={Utils.getQuery()} onSearch={this.handleSearch} />
 				{content}
 			</div>
 		);

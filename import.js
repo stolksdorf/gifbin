@@ -46,13 +46,14 @@ if(process.argv[2] == 'clean'){
 			var link = this.link;
 			var tags = gif.tags || []
 
+			//TODO : add a basic category to bucket mapping from v1 to v2
 
 			r.push({
 				created : gif.created,
 				tags : tags.join(', '),
-				user : gif.user,
+				user : gif.user || 'anon',
 				buckets : ['unknown'],
-				link : gif.link
+				originalLink : gif.link.replace('.jpg', '.gif')
 			})
 		}
 		return r;
@@ -76,7 +77,7 @@ var gifs = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
 
 async.map(gifs, function(gif, callback){
 	var tempGif = new Gif.model(gif);
-	console.log('importing ' + gif.link);
+	console.log('importing ' + gif.originalLink);
 
 	tempGif.save(callback);
 }, function(err, res){
