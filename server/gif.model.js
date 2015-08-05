@@ -6,7 +6,6 @@ imgur.setClientID('dd9999a685d25ee');
 
 var GifSchema = mongoose.Schema({
 	originalLink : String,
-	link : String,
 	imgurID     : String,
 	created     : { type: Date, default: Date.now },
 	user        : String,
@@ -32,26 +31,16 @@ GifSchema.pre('save', function(next){
 		return next();
 	}
 
-	//Remove?
-	if(!this.link) return next();
+	//Sanity Check
+	if(!this.originalLink) return next();
 
-	//TODO: Switch over to using original Link
-
-	//Handle all three cases
-	//1) Non imgur first time
-	//2) imgur first time
-	//3) imgur non-first
-
-	//Extrac toout the imgur ID to use for getting the get
-
-
-	var isImgur = this.link.indexOf('i.imgur.com') !== -1;
+	var isImgur = this.originalLink.indexOf('i.imgur.com') !== -1;
 	if(!isImgur){
-		return imgur.upload(this.link, updateModel);
+		return imgur.upload(this.originalLink, updateModel);
 	}else{
 
 		if(!this.imgurID){
-			this.imgurID = this.link.replace('http://', '').replace('https://', '').replace('i.imgur.com/', '').replace('.gif', '');
+			this.imgurID = this.originalLink.replace('http://', '').replace('https://', '').replace('i.imgur.com/', '').replace('.gif', '');
 		}
 
 		return imgur.getData(this.imgurID, function(err, img){

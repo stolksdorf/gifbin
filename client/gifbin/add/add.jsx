@@ -12,7 +12,7 @@ var Add = React.createClass({
 	render : function(){
 		var self = this;
 		return(
-			<div className='add'>
+			<div className='addPage'>
 				<GifForm queryLink={this.props.queryLink}/>
 			</div>
 		);

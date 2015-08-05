@@ -5,6 +5,12 @@ footer{
 	margin-top       : -@footerSpacing;
 	background-color : black;
 	color            : @silverLight;
+	.fa-heart{
+		.animate(color);
+		&:hover{
+			color : @red;
+		}
+	}
 	.about{
 		height      : @footerHeight;
 		padding-top : 80px;

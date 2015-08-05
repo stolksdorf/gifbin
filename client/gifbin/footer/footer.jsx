@@ -21,7 +21,7 @@ var Footer = React.createClass({
 	extensionCheck : function(){
 		var self = this;
 		if(typeof chrome === 'undefined') return;
-		chrome.runtime.sendMessage('mahbghldlglligfmhahgpdbjhehgeimd', { message: "version" },
+		chrome.runtime.sendMessage('mobgiifepffambifgfhnncnleoldjgmb', { message: "version" },
 			function (reply) {
 				self.setState({
 					hasExtensionInstalled : (reply && reply.version == 1)
