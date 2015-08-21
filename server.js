@@ -11,9 +11,9 @@ var apigen = require('./server/apigen.js');
 apigen.use(app);
 
 //Admin panel creds
-var adminUser = process.env.ADMIN_USER || 'john';
-var adminPassword = process.env.ADMIN_PASS || 'secret';
-
+process.env.ADMIN_USER = process.env.ADMIN_USER || 'john';
+process.env.ADMIN_PASS = process.env.ADMIN_PASS || 'secret';
+process.env.ADMIN_KEY  = process.env.ADMIN_KEY  || 'admin';
 
 
 if (process.env.NODE_ENV == 'development'){
@@ -47,25 +47,28 @@ Gif.generateRoutes();
 var auth = require('basic-auth');
 app.get('/admin', function(req, res){
 	var credentials = auth(req)
-
-	if (!credentials || credentials.name !== adminUser || credentials.pass !== adminPassword) {
+	if (!credentials || credentials.name !== process.env.ADMIN_USER || credentials.pass !== process.env.ADMIN_PASS) {
 		res.setHeader('WWW-Authenticate', 'Basic realm="example"')
 		return res.status(401).send('Access denied')
 	}
-
 	Gif.model.find({}, function(err, gifs){
 		vitreum.render({
 			page: './build/admin/bundle.hbs',
 			prerenderWith : './client/admin/admin.jsx',
 			initialProps: {
 				url: req.originalUrl,
+				ADMIN_KEY : process.env.ADMIN_KEY,
 				gifs : gifs
 			},
 		}, function (err, page) {
 			return res.send(page)
 		});
 	});
-})
+});
+
+//Admin Api Routes
+var AdminApi = require('./server/api.admin.js');
+AdminApi.addRoutes(app);
 
 
 //Routes

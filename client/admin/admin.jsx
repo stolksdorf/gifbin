@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 var React = require('react');
 var _ = require('underscore');
+var request = require('superagent');
 
 var Admin = React.createClass({
 
@@ -22,6 +23,15 @@ var Admin = React.createClass({
 				</div>
 			</div>
 		)
+	},
+
+	dropDatabase : function(){
+		request
+			.get('/api/admin/drop')
+			.query({admin_key : this.props.ADMIN_KEY + 1})
+			.end(function(err, res){
+				console.log(err, res);
+			})
 	},
 
 	render : function(){
@@ -48,7 +58,7 @@ var Admin = React.createClass({
 							Import Database
 						</button>
 
-						<button className='trashButton'>
+						<button className='trashButton' onClick={this.dropDatabase}>
 							<i className='fa fa-trash' />
 							Drop Database
 						</button>
