@@ -10,8 +10,9 @@ require('node-jsx').install();
 var apigen = require('./server/apigen.js');
 apigen.use(app);
 
-
-
+//Admin panel creds
+var adminUser = process.env.ADMIN_USER || 'john';
+var adminPassword = process.env.ADMIN_PASS || 'secret';
 
 
 
@@ -47,19 +48,22 @@ var auth = require('basic-auth');
 app.get('/admin', function(req, res){
 	var credentials = auth(req)
 
-	if (!credentials || credentials.name !== 'john' || credentials.pass !== 'secret') {
+	if (!credentials || credentials.name !== adminUser || credentials.pass !== adminPassword) {
 		res.setHeader('WWW-Authenticate', 'Basic realm="example"')
 		return res.status(401).send('Access denied')
 	}
 
-	vitreum.render({
-		page: './build/admin/bundle.hbs',
-		prerenderWith : './client/admin/admin.jsx',
-		initialProps: {
-			url: req.originalUrl
-		},
-	}, function (err, page) {
-		return res.send(page)
+	Gif.model.find({}, function(err, gifs){
+		vitreum.render({
+			page: './build/admin/bundle.hbs',
+			prerenderWith : './client/admin/admin.jsx',
+			initialProps: {
+				url: req.originalUrl,
+				gifs : gifs
+			},
+		}, function (err, page) {
+			return res.send(page)
+		});
 	});
 })
 

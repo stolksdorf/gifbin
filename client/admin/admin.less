@@ -1,3 +1,57 @@
+@import 'palette/reset.less';
+@import 'palette/elements.less';
+@import 'palette/animations.less';
+@import 'palette/colors.less';
+@import 'palette/tooltip.less';
+@import 'palette/grid.less';
+
 .admin{
+
+	header{
+		background-color : @red;
+		font-size: 2em;
+		padding : 20px 0px;
+		color : white;
+		margin-bottom: 30px;
+		i{
+			margin-right: 30px;
+		}
+	}
+
+
+
+	button.trashButton{
+		.button(@redLight);
+		font-size: 1.5em;
+	}
+
+	button.exportButton{
+		.button(@blue);
+		font-size: 1.5em;
+	}
+
+	button{
+		margin-right: 20px;
+		font-size: 1.5em;
+		i{
+			margin-right: 8px;
+		}
+	}
+
+	.stats{
+		margin-top: 50px;
+
+		label{
+			display: inline-block;
+			width : 200px;
+
+		}
+
+		.data{
+			display: inline-block;
+			font-weight: 800;
+		}
+	}
+
 
 }
