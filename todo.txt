@@ -22,22 +22,11 @@
 
 - Make an admin page, Basic auth, new entry point
 - Make some admin routes, requires key access
+
 - Make a category box? (has image, main text, and two sub fields)
 - Temporarily remove favourites?
 - Change favourites so it's a new table
-- Create a user list, with meta data on gif add (used for the users page)
+- Create a user list, with meta data on gif add (used for the users page, grab the most viewed gif they've uploaded as the meta data)
 
-===========
-
-- Add a no gif message on empty categories
-- Add a admin password, username and key, and expose them via environment variables (Stockpiler?)
-- Add a 'drop', 'export', and 'import' ui to the admin page
-- Switch over to sending the model.originalLink, and using the model.gifLink
-- Figure out the flow with using the original link stuff
-- Add a changelog page?
-- Add Gifbin insta-add to the stroe and update the url
-- Finish the footer message
-- Add images to the chrome extensions
-- Finish the menu menu on the searchbar
 
 

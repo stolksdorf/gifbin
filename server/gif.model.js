@@ -43,11 +43,7 @@ GifSchema.pre('save', function(next){
 			this.imgurID = this.originalLink.replace('http://', '').replace('https://', '').replace('i.imgur.com/', '').replace('.gif', '');
 		}
 
-		return imgur.getData(this.imgurID, function(err, img){
-			if(err) console.log('issue getting data');
-			if(img) return updateModel(null, img);
-			return next();
-		});
+		return imgur.getData(this.imgurID, updateModel);
 	}
 });
 
