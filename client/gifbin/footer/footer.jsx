@@ -3,6 +3,8 @@ var React = require('react');
 var _ = require('underscore');
 var cx = require('classnames');
 
+var CHROME_EXTENSION_ID = 'mobgiifepffambifgfhnncnleoldjgmb';
+
 var Footer = React.createClass({
 
 	getInitialState: function() {
@@ -21,7 +23,7 @@ var Footer = React.createClass({
 	extensionCheck : function(){
 		var self = this;
 		if(typeof chrome === 'undefined') return;
-		chrome.runtime.sendMessage('mobgiifepffambifgfhnncnleoldjgmb', { message: "version" },
+		chrome.runtime.sendMessage(CHROME_EXTENSION_ID, { message: "version" },
 			function (reply) {
 				self.setState({
 					hasExtensionInstalled : (reply && reply.version == 1)
@@ -52,7 +54,7 @@ var Footer = React.createClass({
 
 		if(!this.state.hasExtensionInstalled){
 			var getTheExtension = (
-				<a className='extension col4 rightColumn' href='https://google.com' target="_blank">
+				<a className='extension col4 rightColumn' href={'https://chrome.google.com/webstore/detail/'+CHROME_EXTENSION_ID} target="_blank">
 					<h2><i className='fa fa-rocket' /> Up your gif game</h2>
 					<p>Did you know there's a gifbin extension?</p>
 					<p>
