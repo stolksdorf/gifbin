@@ -73,7 +73,7 @@ var Navbar = React.createClass({
 
 
 				<Link href='/' className='logo navItem'>
-				hey clare
+					gifbin.
 				</Link>
 
 				<Link href='/buckets' className='navItem'>
