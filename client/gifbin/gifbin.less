@@ -1,0 +1,64 @@
+
+@import 'palette/reset.less';
+@import 'palette/elements.less';
+@import 'palette/animations.less';
+@import 'palette/colors.less';
+@import 'palette/tooltip.less';
+@import 'palette/grid.less';
+body,html{
+	background-color : white;
+	overflow-x: hidden;
+	font-family        : "Lato", Helvetica, Arial, sans-serif;
+}
+.gifbin{
+}
+input, textarea, select{
+	.animateAll();
+	padding            : 8px 12px;
+	font-family        : "Lato", Helvetica, Arial, sans-serif;
+	font-size          : 15px;
+	color              : @steelLight;
+	border             : 2px solid @silver;
+	box-shadow         : none;
+	-webkit-box-shadow : none;
+	&:focus{
+		border : 2px solid @tealLight;
+	}
+}
+button{
+	.button();
+}
+.button(@backgroundColor : @green){
+	.animate(background-color);
+	display          : inline-block;
+	padding          : 0.6em 1.2em;
+	cursor           : pointer;
+	background-color : @backgroundColor;
+	font-family      : "Lato", Helvetica, Arial, sans-serif;
+	font-size        : 15px;
+	color            : white;
+	text-decoration  : none;
+	border           : none;
+	outline          : none;
+	&:hover{
+		background-color : darken(@backgroundColor, 5%);
+	}
+	&:active{
+		background-color : darken(@backgroundColor, 10%);
+	}
+	&:disabled{
+		background-color : @silver !important;
+	}
+}
+.iconButton(@backgroundColor : @green){
+	padding          : 0.6em;
+	cursor           : pointer;
+	background-color : @backgroundColor;
+	font-size        : 14px;
+	color            : white;
+	text-align       : center;
+}
+
+.page{
+	min-height : 100vh;
+}
