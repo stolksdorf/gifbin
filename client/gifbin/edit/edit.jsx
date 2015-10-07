@@ -9,9 +9,6 @@ var Edit = React.createClass({
 	},
 	render : function(){
 		var self = this;
-
-		console.log(this.props.gif);
-
 		return(
 			<div className='edit'>
 				<GifForm gif={this.props.gif} />
