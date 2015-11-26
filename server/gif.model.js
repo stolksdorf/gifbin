@@ -12,6 +12,7 @@ var GifSchema = mongoose.Schema({
 	tags        : String,
 
 	buckets     : {type : [String]},
+	favs        : {type : [String]},
 	views       : { type: Number, default: 0},
 	width       : { type: Number, default: 90},
 	height      : { type: Number, default: 90},

@@ -17,7 +17,7 @@ var Users = React.createClass({
 	getInitialState: function() {
 		var search;
 		if(this.props.name){
-			search = "by:" + this.props.name;
+			search = "user:" + this.props.name;
 		}
 		search = Utils.getQuery() || search;
 		return {

@@ -2,6 +2,7 @@
 var React = require('react');
 var _ = require('underscore');
 
+var Utils = require('gifbin/utils.js');
 var Router = require('gifbin/router.js');
 
 var Navbar = require('./navbar/navbar.jsx');
@@ -55,6 +56,7 @@ var Gifbin = React.createClass({
 
 		GifStore.setGifs(this.props.gifs);
 		this.executeRouting(this.props.url);
+		Utils.setInitialUrl(this.props.url);
 	},
 
 	componentDidMount: function() {
