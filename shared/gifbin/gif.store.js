@@ -76,7 +76,7 @@ var Storage = {
 
 var GIFBIN_USER_KEY = 'gifbin-user';
 
-module.exports = GifStore = Warehouse.createStore(Dispatcher,{
+var GifStore = Warehouse.createStore(Dispatcher,{
 
 	setGifs : function(gifs){
 		Storage.gifs = _.reduce(gifs, function(r, gif){
@@ -275,7 +275,7 @@ module.exports = GifStore = Warehouse.createStore(Dispatcher,{
 			if(searchObj.users.length !== 0){
 				var isUploaded = _.contains(searchObj.users, gif.user.toLowerCase());
 
-				isFav = _.some(_.map(gif.favs, function(favUser){
+				var isFav = _.some(_.map(gif.favs, function(favUser){
 					return _.contains(searchObj.users, favUser.toLowerCase());
 				}))
 
@@ -300,3 +300,6 @@ module.exports = GifStore = Warehouse.createStore(Dispatcher,{
 	},
 
 });
+
+
+module.exports = GifStore;

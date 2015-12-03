@@ -1,6 +1,6 @@
 var _ = require('lodash');
 var UrlPattern = require('url-pattern');
-//var Url = require('url');
+var Url = require('url');
 
 var onBrowser = (typeof window !== 'undefined');
 var hasHistorySupport = !!(typeof window !== 'undefined' && window.history && window.history.pushState);
@@ -35,8 +35,8 @@ var Router = function(context, routes, rootPath){
 			if(!path && onBrowser){
 				path = window.location.pathname;
 			}
-			//var parts = Url.parse(path, true);
-			//path = parts.pathname;
+			var parts = Url.parse(path, true);
+			path = parts.pathname;
 			// strip query string
 			var query;
 			if (path.indexOf('?') > -1) {

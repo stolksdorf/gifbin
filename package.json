@@ -10,13 +10,17 @@
   "license": "BSD-2-Clause",
   "dependencies": {
     "app-module-path": "^1.0.5",
+    "basic-auth": "^1.0.3",
     "classnames": "^2.2.1",
     "express": "^4.13.3",
     "flux": "^2.1.1",
     "gulp": "^3.9.0",
     "lodash": "^3.10.1",
     "moment": "^2.10.6",
+    "mongoose": "^4.2.9",
+    "react-dom": "^0.14.3",
     "superagent": "^1.5.0",
+    "url": "^0.11.0",
     "url-pattern": "^0.10.2",
     "vitreum": "^3.1.3"
   }

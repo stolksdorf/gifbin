@@ -35,8 +35,8 @@ var GifCard = React.createClass({
 		if(this.state.hovered) return;
 
 		if(!this.state.webmLoaded){
-			this.refs.gifvSource.getDOMNode().setAttribute('src', this.props.gif.webmLink);
-			this.refs.gifv.getDOMNode().load()
+			this.refs.gifvSource.setAttribute('src', this.props.gif.webmLink);
+			this.refs.gifv.load()
 		}
 
 		this.setState({
@@ -51,27 +51,27 @@ var GifCard = React.createClass({
 				hovered : false
 			})
 			if(self.refs){
-				//$(self.refs.hitbox.getDOMNode()).find('.clipboardButton').removeClass('zeroclipboard-is-hover');
+				//$(self.refs.hitbox..find('.clipboardButton').removeClass('zeroclipboard-is-hover');
 			}
 		}, 50)
 	},
 
 	componentDidMount: function() {
 		var self = this;
-		this.refs.gifv.getDOMNode().oncanplay = function(){
+		this.refs.gifv.oncanplay = function(){
 
 			self.setState({
 				webmLoaded : true
 			});
 
-			self.refs.gifv.getDOMNode().oncanplay = null
+			self.refs.gifv.oncanplay = null
 		}
-		this.refs.gifvSource.getDOMNode().onerror = function(err){
+		this.refs.gifvSource.onerror = function(err){
 			//console.log('ERROR', this.props, err);
 		};
 	},
 
-	componentDidUnmount : function(){
+	componentWillUnmount : function(){
 		clearTimeout(this.timeout);
 	},
 

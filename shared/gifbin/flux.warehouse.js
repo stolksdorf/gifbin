@@ -9,7 +9,7 @@ var defaultStatus = {
 }
 
 
-module.exports = Warehouse = {
+module.exports = {
 
 	createStore : function(Dispatcher, StoreBlueprint){
 		var store = _.extend({

@@ -20,6 +20,7 @@ var gulp = vitreumTasks(gulp, {
 
 	libs : [
 		'react',
+		'react-dom',
 		'lodash',
 		'classnames',
 		'superagent',

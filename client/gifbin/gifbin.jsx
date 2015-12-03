@@ -21,6 +21,10 @@ var Page404 = require('./page404/page404.jsx')
 
 var Gifbin = React.createClass({
 
+	getDefaultProps: function() {
+
+	},
+
 	componentWillMount: function() {
 		var self = this;
 		this.router = Router(this, {
@@ -28,6 +32,7 @@ var Gifbin = React.createClass({
 			'/users' : function(){
 				return <Users />
 			},
+
 			'/users/:id' : function(args){
 				return <Users name={decodeURIComponent(args.id)} args={args} key={args.id}/>
 			},
@@ -46,9 +51,7 @@ var Gifbin = React.createClass({
 			'/' : function(args){
 				return <Home  />
 			},
-			'' : function(args){
-				return <Home  />
-			},
+
 			'*' : function(){
 				return <Page404 />
 			}

@@ -77,7 +77,7 @@ app.get('*', function (req, res) {
 			clearRequireCache : true,
 			initialProps: {
 				gifs : gifs,
-				url: req.originalUrl
+				url: req.originalUrl,
 			},
 		}, function (err, page) {
 			return res.send(page)
