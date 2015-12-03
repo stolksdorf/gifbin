@@ -1,15 +1,17 @@
 {
-	"name": "gifbin",
-	"description": "A super rad project!",
-	"version": "3.0.0",
-	"scripts": {
-		"postinstall": "gulp prod",
-		"start": "node server.js"
-	},
-
-	"author": "stolksdorf",
-	"license": "BSD-2-Clause",
-	"dependencies": {
-
-	}
+  "name": "gifbin",
+  "description": "A super rad project!",
+  "version": "3.0.0",
+  "scripts": {
+    "postinstall": "gulp prod",
+    "start": "node server.js"
+  },
+  "author": "stolksdorf",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "express": "^4.13.3",
+    "gulp": "^3.9.0",
+    "lodash": "^3.10.1",
+    "vitreum": "^3.1.3"
+  }
 }
