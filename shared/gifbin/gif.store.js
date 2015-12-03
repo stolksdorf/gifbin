@@ -1,4 +1,4 @@
-var _ = require('underscore');
+var _ = require('lodash');
 var CookieJar = require('gifbin/cookieJar.js');
 var request = require('superagent');
 

@@ -1,4 +1,4 @@
-var _ = require('underscore');
+var _ = require('lodash');
 var UrlPattern = require('url-pattern');
 //var Url = require('url');
 

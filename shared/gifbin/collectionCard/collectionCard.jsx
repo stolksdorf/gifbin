@@ -1,6 +1,6 @@
-/** @jsx React.DOM */
+
 var React = require('react');
-var _ = require('underscore');
+var _ = require('lodash');
 var cx = require('classnames');
 
 var Copy = require('gifbin/clipboardButton/clipboardButton.jsx');

@@ -1,4 +1,4 @@
-var _ = require('underscore');
+var _ = require('lodash');
 var eventsEmitter = require('events').EventEmitter;
 
 var defaultStatus = {

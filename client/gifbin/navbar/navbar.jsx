@@ -1,6 +1,6 @@
-/** @jsx React.DOM */
+
 var React = require('react');
-var _ = require('underscore');
+var _ = require('lodash');
 
 var GifActions = require('gifbin/gif.actions.js');
 var GifStore = require('gifbin/gif.store.js');

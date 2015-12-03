@@ -1,6 +1,6 @@
-/** @jsx React.DOM */
+
 var React = require('react');
-var _ = require('underscore');
+var _ = require('lodash');
 
 var GifForm = require('gifbin/gifForm/gifForm.jsx');
 var Add = React.createClass({

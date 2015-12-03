@@ -1,11 +1,15 @@
 'use strict';
-var vitreum = require('vitreum');
+require('app-module-path').addPath('./shared');
+
+var vitreumRender = require('vitreum/render')
 var express = require("express");
 var bodyParser = require('body-parser')
 var app = express();
 app.use(express.static(__dirname + '/build'));
 app.use(bodyParser.json());
-require('node-jsx').install();
+
+
+//require('node-jsx').install();
 
 var apigen = require('./server/apigen.js');
 apigen.use(app);
@@ -14,18 +18,6 @@ apigen.use(app);
 process.env.ADMIN_USER = process.env.ADMIN_USER || 'john';
 process.env.ADMIN_PASS = process.env.ADMIN_PASS || 'secret';
 process.env.ADMIN_KEY  = process.env.ADMIN_KEY  || 'admin';
-
-
-if (process.env.NODE_ENV == 'development'){
-	vitreum.cacheBusting([
-		'./client/**/*.jsx',
-		'./client/**/*.js',
-		'./node_modules/gifbin/**/*.jsx',
-		'./node_modules/gifbin/**/*.js',
-		'./node_modules/palette/**/*.jsx',
-		'./node_modules/palette/**/*.js',
-	])
-}
 
 
 
@@ -52,9 +44,10 @@ app.get('/admin', function(req, res){
 		return res.status(401).send('Access denied')
 	}
 	Gif.model.find({}, function(err, gifs){
-		vitreum.render({
-			page: './build/admin/bundle.hbs',
+		vitreumRender({
+			page: './build/admin/bundle.dot',
 			prerenderWith : './client/admin/admin.jsx',
+			clearRequireCache : true,
 			initialProps: {
 				url: req.originalUrl,
 				ADMIN_KEY : process.env.ADMIN_KEY,
@@ -78,9 +71,10 @@ app.get('*', function (req, res) {
 
 		if(err || !gifs) return console.log('err', err);
 
-		vitreum.render({
-			page: './build/gifbin/bundle.hbs',
+		vitreumRender({
+			page: './build/gifbin/bundle.dot',
 			prerenderWith : './client/gifbin/gifbin.jsx',
+			clearRequireCache : true,
 			initialProps: {
 				gifs : gifs,
 				url: req.originalUrl
