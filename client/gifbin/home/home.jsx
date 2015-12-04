@@ -2,7 +2,7 @@
 var React = require('react');
 var _ = require('lodash');
 
-//var GifStore = require('gifbin/gif.store.js');
+var GifStore = require('gifbin/gif.store.js');
 
 var Utils = require('gifbin/utils');
 var GifContainer = require('gifbin/gifContainer/gifContainer.jsx');

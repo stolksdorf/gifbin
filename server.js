@@ -1,12 +1,13 @@
-'use strict';
 require('app-module-path').addPath('./shared');
 
 var vitreumRender = require('vitreum/render')
 var express = require("express");
 var bodyParser = require('body-parser')
+var cookieParser = require('cookie-parser')
 var app = express();
 app.use(express.static(__dirname + '/build'));
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 
 //require('node-jsx').install();
@@ -67,6 +68,8 @@ AdminApi.addRoutes(app);
 //Routes
 app.get('*', function (req, res) {
 
+	console.log(req.cookies);
+
 	Gif.model.find({}, function(err, gifs){
 
 		if(err || !gifs) return console.log('err', err);
@@ -77,7 +80,7 @@ app.get('*', function (req, res) {
 			clearRequireCache : true,
 			initialProps: {
 				gifs : gifs,
-				url: req.originalUrl,
+				url: req.originalUrl
 			},
 		}, function (err, page) {
 			return res.send(page)

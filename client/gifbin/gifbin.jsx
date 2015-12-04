@@ -1,9 +1,6 @@
-
 var React = require('react');
 var _ = require('lodash');
 
-var Utils = require('gifbin/utils.js');
-var Router = require('gifbin/router.js');
 
 var Navbar = require('./navbar/navbar.jsx');
 var Footer = require('./footer/footer.jsx');
@@ -15,81 +12,45 @@ var Edit = require('./edit/edit.jsx');
 var Add = require('./add/add.jsx');
 var Buckets = require('./buckets/buckets.jsx');
 var Users = require('./users/users.jsx');
-var Page404 = require('./page404/page404.jsx')
+var Page404 = require('./page404/page404.jsx');
 
+var GifBinRouter = require('pico-router').createRouter({
+	'/'        : <Home />,
+	'/users'   : <Users />,
+	'/buckets' : <Buckets />,
+	'/add'     : <Add />,
+
+	'/users/:id' : function(args){
+		return <Users name={decodeURIComponent(args.id)} args={args} key={args.id}/>
+	},
+	'/buckets/:id' : function(args){
+		return <Buckets bucketId={decodeURIComponent(args.id)} args={args} key={args.id} />
+	},
+	'/edit/:id' : function(args){
+		return <Edit gif={GifStore.getGif(args.id)} />
+	},
+
+	'*' : <Page404 />
+});
 
 
 var Gifbin = React.createClass({
-
-	getDefaultProps: function() {
-
-	},
-
 	componentWillMount: function() {
-		var self = this;
-		this.router = Router(this, {
-
-			'/users' : function(){
-				return <Users />
-			},
-
-			'/users/:id' : function(args){
-				return <Users name={decodeURIComponent(args.id)} args={args} key={args.id}/>
-			},
-			'/buckets' : function(){
-				return <Buckets />
-			},
-			'/buckets/:id' : function(args){
-				return <Buckets bucketId={decodeURIComponent(args.id)} args={args} key={args.id} />
-			},
-			'/add' : function(args){
-				return <Add />
-			},
-			'/edit/:id' : function(args){
-				return <Edit gif={GifStore.getGif(args.id)} />
-			},
-			'/' : function(args){
-				return <Home  />
-			},
-
-			'*' : function(){
-				return <Page404 />
-			}
-		});
-
 		GifStore.setGifs(this.props.gifs);
-		this.executeRouting(this.props.url);
-		Utils.setInitialUrl(this.props.url);
 	},
-
-	componentDidMount: function() {
-		var self = this;
-		if(typeof window === 'undefined') window={};
-		window.onHistoryChange = function() {
-			self.executeRouting(window.location.pathname);
-		}
-	},
-
-	executeRouting : function(path){
-		this.setState({
-			page : this.router.match(path)
-		});
-	},
-
 
 	render : function(){
-		var self = this;
 		return(
 			<div className='gifbin'>
 				<Navbar />
 				<div className='container page'>
-					{this.state.page}
+					<GifBinRouter initialUrl={this.props.url} />
 				</div>
-
 				<Footer />
 			</div>
 		);
 	}
 });
+
 
 module.exports = Gifbin;
