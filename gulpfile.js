@@ -24,9 +24,7 @@ var gulp = vitreumTasks(gulp, {
 		'lodash',
 		'classnames',
 		'superagent',
-		'url-pattern',
 		'moment',
-		'flux',
 
 		'pico-router',
 		'pico-flux'
