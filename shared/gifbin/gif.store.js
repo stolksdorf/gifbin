@@ -35,88 +35,27 @@ module.exports = flux.createStore({
 		CookieJar.remove(GIFBIN_USER_KEY);
 	},
 
-	//TODO: Move ASync calls to actions
-
-	SAVE_GIF : function(gifData, callback){
-		var self = this;
-
+	SET_PENDING : function(){
 		Storage.status.saving = true;
 		Storage.status.errors = null;
-
-		request
-			.post('/api/gifs')
-			.send(gifData)
-			.set('Accept', 'application/json')
-			.end(function(err, res){
-				Storage.status.saving = false;
-				if(err){
-					Storage.status.errors = res;
-					self.emitChange();
-					return;
-				}
-				callback && callback(res);
-			})
 	},
-	UPDATE_GIF : function(gifData, callback){
-		var self = this;
-
-		Storage.status.saving = true;
-		Storage.status.errors = null;
-
-		request
-			.put('/api/gifs/' + gifData.id)
-			.send(gifData)
-			.set('Accept', 'application/json')
-			.end(function(err, res){
-				Storage.status.saving = false;
-				if(err){
-					Storage.status.errors = err;
-					self.emitChange();
-					return;
-				}
-				callacbk && callback(res);
-			})
+	SET_ERRORS : function(errors){
+		Storage.status.saving = false;
+		Storage.status.errors = errors;
 	},
-	DELETE_GIF : function(gifId, callback){
-		var self = this;
-
-		Storage.status.saving = true;
-		Storage.status.errors = null;
-
-		request
-			.del('/api/gifs/' + gifId)
-			.set('Accept', 'application/json')
-			.end(function(err, res){
-				Storage.status.saving = false;
-				if(err){
-					Storage.status.errors = err;
-					self.emitChange();
-					return;
-				}
-				callback && callback(res);
-			})
+	SET_FINISHED : function(){
+		Storage.status.saving = false;
+		Storage.status.errors = false;
+		return false;
 	},
-	CHANGE_FAV_GIF : function(gifId, makeFav){
-		var self = this;
-		var gif = Storage.gifs[gifId]
 
-		if(makeFav){
-			gif.favs.push(GifStore.getUser());
-		}else{
-			gif.favs = _.without(gif.favs, GifStore.getUser());
-		}
+	UPDATE_GIF : function(gifData){
+		Storage.gifs[gifData.id] = gifData;
+	},
+	REMOVE_GIF : function(gifId){
+		delete Storage.gifs[gifData.id];
+	},
 
-		request
-			.put('/api/gifs/' + gif.id)
-			.send(gif)
-			.set('Accept', 'application/json')
-			.end(function(err, res){
-				if(err){
-					Storage.status.errors = err;
-				}
-				self.emitChange();
-			})
-	}
 },{
 
 
