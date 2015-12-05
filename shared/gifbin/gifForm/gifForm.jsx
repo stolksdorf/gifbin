@@ -133,14 +133,14 @@ var GifForm = React.createClass({
 	},
 	handleFavClick : function(){
 		if(this.isFav()){
-			GifActions.unfavGif(this.state.gif.id);
-			this.state.gif.favs = _.without(this.state.gif.favs, this.state.loggedinUser);
+			GifActions.unfavGif(this.state.gif);
+			//this.state.gif.favs = _.without(this.state.gif.favs, this.state.loggedinUser);
 		}else{
-			GifActions.favGif(this.state.gif.id);
-			this.state.gif.favs.push(this.state.loggedinUser);
+			GifActions.favGif(this.state.gif);
+			//this.state.gif.favs.push(this.state.loggedinUser);
 		}
 		this.setState({
-			gif : this.state.gif
+			//gif : this.state.gif
 		})
 	},
 
@@ -219,7 +219,11 @@ var GifForm = React.createClass({
 		</div>
 	},
 	renderDeleteButton : function(){
-		if(!this.state.gif.id) return false;
+		if(!this.state.gif.id) return null;
+
+		if(GifStore.getUser() !== 'admin') return null;
+
+
 		return (
 			<div className='deleteButton' onClick={this.handleDelete} data-tooltip-right='Delete this gif'>
 				<i className='fa fa-trash' />

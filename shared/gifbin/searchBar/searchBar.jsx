@@ -35,7 +35,12 @@ var SearchBar = React.createClass({
 	/* Used to throttled searching */
 	updateFromChange : _.debounce(function(){
 		var self = this;
-		self.props.onSearch(utils.createSearchObject(self.state.value));
+		//self.props.onSearch(utils.createSearchObject(self.state.value));
+
+
+		console.log(utils.createSearchObject(self.state.value));
+
+
 		queryVal = self.state.value;
 		self.updateUrl();
 		self.setState({ waiting : false });

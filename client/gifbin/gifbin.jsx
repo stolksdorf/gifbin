@@ -1,7 +1,6 @@
 var React = require('react');
 var _ = require('lodash');
 
-
 var Navbar = require('./navbar/navbar.jsx');
 var Footer = require('./footer/footer.jsx');
 var GifStore = require('gifbin/gif.store.js');
@@ -13,6 +12,15 @@ var Add = require('./add/add.jsx');
 var Buckets = require('./buckets/buckets.jsx');
 var Users = require('./users/users.jsx');
 var Page404 = require('./page404/page404.jsx');
+
+
+/** TODO
+
+	- Make a deadicated page for individual users to simplifed a bunch of things
+	- Change the bucket's link to just a query mapping
+	- Favving is broken
+
+*/
 
 var GifBinRouter = require('pico-router').createRouter({
 	'/'        : <Home />,
@@ -38,16 +46,21 @@ var Gifbin = React.createClass({
 	getDefaultProps: function() {
 		return {
 			gifs : [],
-			//loggedinUser
+			cookies : {},
+			url : ''
 		};
 	},
 
-
 	componentWillMount: function() {
-		GifStore.setGifStorage(this.props.gifs);
+		GifStore.init({
+			gifs : this.props.gifs,
+			user : this.props.cookies['gifbin-user'],
+			url : this.props.url
+		})
 	},
 
 	render : function(){
+		console.log(GifStore.getQueryFromUrl());
 		return(
 			<div className='gifbin'>
 				<Navbar />

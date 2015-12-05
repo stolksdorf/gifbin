@@ -4,6 +4,8 @@ var request = require('superagent');
 
 var flux = require('pico-flux');
 
+var Url = require('url');
+
 var onBrowser = (typeof window !== 'undefined');
 var serversideUserId;
 
@@ -18,7 +20,11 @@ var Storage = {
 	buckets : require('./bucketData.js'),
 	gifs : {},
 	users : {},
-}
+
+
+	currentUser : null,
+	currentUrl : ''
+};
 
 
 
@@ -26,13 +32,23 @@ module.exports = flux.createStore({
 	LOGIN : function(){
 		var userName = prompt("Please enter your name","anon");
 		if(userName){
-			CookieJar.set(GIFBIN_USER_KEY, userName)
+			CookieJar.set(GIFBIN_USER_KEY, userName);
+			Storage.currentUser = userName;
 			this.emitChange();
 		}
 		return false;
 	},
 	LOGOUT : function(){
 		CookieJar.remove(GIFBIN_USER_KEY);
+		Storage.currentUser = null;
+	},
+
+	//Maybe remove
+	SET_URL : function(url){
+		if(onBrowser){
+			// use rotuer navigate?
+		}
+		Storage.currentUrl = url;
 	},
 
 	SET_PENDING : function(){
@@ -58,38 +74,48 @@ module.exports = flux.createStore({
 
 },{
 
+	init : function(initialData){
+		var setGifStorage = function(gifs){
+			var updateGifs = function(gif){
+				Storage.gifs[gif.id] = gif;
+			};
+			var updateUsers = function(gif){
+				var user = Storage.users[gif.user] || {
+					name : gif.user,
+					totalGifs : 0,
+					topGif : gif
+				}
+				user.totalGifs += 1;
+				if(user.topGif.views < gif.views){
+					user.topGif = gif
+				}
+				Storage.users[gif.user] = user;
+			};
+			var updateBuckets = function(gif){
+				_.each(gif.buckets, function(bucketId){
+					if(Storage.buckets[bucketId]) Storage.buckets[bucketId].total += 1;
+				})
+			}
+			_.each(gifs, function(gif){
+				updateGifs(gif);
+				updateUsers(gif);
+				updateBuckets(gif);
+			});
+		};
 
-	setGifStorage : function(gifs){
-		var updateGifs = function(gif){
-			Storage.gifs[gif.id] = gif;
-		};
-		var updateUsers = function(gif){
-			var user = Storage.users[gif.user] || {
-				name : gif.user,
-				totalGifs : 0,
-				topGif : gif
-			}
-			user.totalGifs += 1;
-			if(user.topGif.views < gif.views){
-				user.topGif = gif
-			}
-			Storage.users[gif.user] = user;
-		};
-		var updateBuckets = function(gif){
-			_.each(gif.buckets, function(bucketId){
-				if(Storage.buckets[bucketId]) Storage.buckets[bucketId].total += 1;
-			})
-		}
-		_.each(gifs, function(gif){
-			updateGifs(gif);
-			updateUsers(gif);
-			updateBuckets(gif);
-		});
+		setGifStorage(initialData.gifs);
+		Storage.currentUser = initialData.user;
+		Storage.currentUrl = initialData.url;
 	},
+
+/*
 	setUserServerside : function(user){
 		serversideUserId = user
 	},
-
+	setCurrentUrl : function(url){
+		Storage.currentUrl = url;
+	},
+*/
 
 
 	/** GETTERS **/
@@ -107,10 +133,14 @@ module.exports = flux.createStore({
 		return Storage.gifs[id];
 	},
 	getUser : function(){
-		return (onBrowser ? CookieJar.get(GIFBIN_USER_KEY) : serversideUserId)
+		return Storage.currentUser;
 	},
 	getUsers : function(){
 		return Storage.users;
+	},
+
+	getQueryFromUrl : function(){
+		return Url.parse(Storage.currentUrl,true).query;
 	},
 
 

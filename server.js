@@ -80,7 +80,8 @@ app.get('*', function (req, res) {
 			clearRequireCache : true,
 			initialProps: {
 				gifs : gifs,
-				url: req.originalUrl
+				url: req.originalUrl,
+				cookies : req.cookies
 			},
 		}, function (err, page) {
 			return res.send(page)

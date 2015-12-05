@@ -5,8 +5,8 @@ var GifStore = require('gifbin/gif.store.js');
 
 
 module.exports = {
-	login  : function(){
-		dispatch('LOGIN');
+	login  : function(userName){
+		dispatch('LOGIN', userName);
 	},
 	logout : function(){
 		dispatch('LOGOUT');

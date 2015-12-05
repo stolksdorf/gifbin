@@ -39,32 +39,32 @@ module.exports = {
 		var result = {
 			buckets : [],
 			users : [],
+			favs : [],
 			tags : [],
 			query : query
 		};
-
 		if(!query) return result;
 
-		var searchTerms = _.chain(query.toLowerCase().split(' '))
-			.map(function(term){
-				return term.split(',')
-			})
-			.flatten()
-			.filter(function(term){
-				return term !== "";
-			})
-			.value();
+		var searchTerms = _.chain(query.toLowerCase().split(' ')).map(function(term){
+			return term.split(',')
+		}).flatten().filter().value();
+
+		var commands = {
+			'by:' : result.users,
+			'fav:' : result.favs,
+			'in:' : result.buckets,
+		};
 
 		_.each(searchTerms, function(term){
-			if(term.indexOf('user:') === 0){
-				result.users.push(term.substring(5));
-			}else if(term.indexOf('in:') === 0){
-				result.buckets.push(term.substring(3));
+			var matchedCommand = _.find(_.keys(commands), function(cmd){
+				return term.indexOf(cmd) === 0
+			})
+			if(matchedCommand){
+				commands[matchedCommand].push(term.replace(matchedCommand, ''))
 			}else{
-				result.tags.push(term)
+				result.tags.push(term);
 			}
-		});
-
+		})
 		return result;
 	},
 

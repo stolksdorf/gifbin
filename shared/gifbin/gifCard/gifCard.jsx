@@ -31,7 +31,6 @@ var GifCard = React.createClass({
 		};
 	},
 	hover : function(){
-		clearTimeout(this.timeout);
 		if(this.state.hovered) return;
 
 		if(!this.state.webmLoaded){
@@ -45,15 +44,9 @@ var GifCard = React.createClass({
 	},
 
 	unhover : function(){
-		var self = this;
-		this.timeout = setTimeout(function(){
-			self.setState({
-				hovered : false
-			})
-			if(self.refs){
-				//$(self.refs.hitbox..find('.clipboardButton').removeClass('zeroclipboard-is-hover');
-			}
-		}, 50)
+		this.setState({
+			hovered : false
+		})
 	},
 
 	componentDidMount: function() {
@@ -84,15 +77,13 @@ var GifCard = React.createClass({
 	renderVideoElement : function(){
 		return (
 			<video className='gif' autoPlay loop muted ref='gifv' poster='http://dummyimage.com/1x1/000000/fff.png'>
-					<source type="video/webm" ref='gifvSource'/>
+				<source type="video/webm" ref='gifvSource'/>
 			</video>
 		);
 	},
 
 	renderFav : function(){
-		if(!GifStore.getUser()) return null;
-		if(!this.isFav()) return null;
-
+		if(!GifStore.getUser() || !this.isFav()) return null;
 		return <div className='fav'>
 			<i className='fa fa-heart' />
 		</div>
