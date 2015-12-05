@@ -9,7 +9,6 @@ var GroupCard = require('gifbin/groupCard/groupCard.jsx');
 var Searchbar = require('gifbin/searchBar/searchBar.jsx');
 
 var Users = React.createClass({
-
 	componentDidMount: function() {
 		document.title = 'gifbin.' + (this.props.name || 'users');
 	},
@@ -41,9 +40,9 @@ var Users = React.createClass({
 		return _.map(users, function(user){
 			return <GroupCard
 				key={user.name}
-				img={user.gif.imgLink}
+				img={user.topGif.imgLink}
 				title={user.name}
-				total={user.total}
+				total={user.totalGifs}
 				link={"/users/" + user.name}
 			/>
 		})

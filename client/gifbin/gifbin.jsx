@@ -35,8 +35,16 @@ var GifBinRouter = require('pico-router').createRouter({
 
 
 var Gifbin = React.createClass({
+	getDefaultProps: function() {
+		return {
+			gifs : [],
+			//loggedinUser
+		};
+	},
+
+
 	componentWillMount: function() {
-		GifStore.setGifs(this.props.gifs);
+		GifStore.setGifStorage(this.props.gifs);
 	},
 
 	render : function(){

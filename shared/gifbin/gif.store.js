@@ -2,12 +2,12 @@ var _ = require('lodash');
 var CookieJar = require('gifbin/cookieJar.js');
 var request = require('superagent');
 
+var flux = require('pico-flux');
 
-var Dispatcher = require('gifbin/flux.dispatcher.js');
-var Warehouse = require('gifbin/flux.warehouse.js');
+var onBrowser = (typeof window !== 'undefined');
+var serversideUserId;
 
-
-
+var GIFBIN_USER_KEY = 'gifbin-user';
 
 var Storage = {
 	status : {
@@ -15,210 +15,145 @@ var Storage = {
 		saving : false
 	},
 
-	buckets : {
-		'approve' : {
-			name : 'approve',
-			img : '/assets/gifbin/bucketSelect/img/noun_49049_cc.png',
-			total : 0
-		},
-		'mind_blown' : {
-			name : 'mind blown',
-			img : '/assets/gifbin/bucketSelect/img/noun_49050_cc.png',
-			total : 0
-		},
-		'sass' : {
-			name : 'sass',
-			img : '/assets/gifbin/bucketSelect/img/noun_49054_cc.png',
-			total : 0
-		},
-		'excited' : {
-			name : 'excited',
-			img : '/assets/gifbin/bucketSelect/img/noun_49045_cc.png',
-			total : 0
-		},
-		'disgust' : {
-			name : 'disgust',
-			img : '/assets/gifbin/bucketSelect/img/noun_49053_cc.png',
-			total : 0
-		},
-		'frustration' : {
-			name : 'frustration',
-			img : '/assets/gifbin/bucketSelect/img/noun_49048_cc.png',
-			total : 0
-		},
-		'nope' : {
-			name : 'nope',
-			img : '/assets/gifbin/bucketSelect/img/noun_49051_cc.png',
-			total : 0
-		},
-		'wat' : {
-			name : 'wat',
-			img : '/assets/gifbin/bucketSelect/img/noun_49052_cc.png',
-			total : 0
-		},
-		'aw_yis' : {
-			name : 'aw yis',
-			img : '/assets/gifbin/bucketSelect/img/noun_49047_cc.png',
-			total : 0
-		},
-		'unknown' : {
-			name : 'UNKNOWN',
-			img : '/assets/gifbin/bucketSelect/img/noun_49046_cc.png',
-			total : 0
-		}
-	},
-
+	buckets : require('./bucketData.js'),
 	gifs : {},
-
 	users : {},
-
 }
 
-var GIFBIN_USER_KEY = 'gifbin-user';
 
-var GifStore = Warehouse.createStore(Dispatcher,{
 
-	setGifs : function(gifs){
-		Storage.gifs = _.reduce(gifs, function(r, gif){
-			r[gif.id] = gif;
-			return r;
-		},{});
-
-		//Make a user list with their top viewed gif for display
-		Storage.users = _.reduce(gifs, function(r, gif){
-			if(!r[gif.user]){
-				r[gif.user] = {
-					name : gif.user,
-					total : 0,
-					gif : gif
-				}
-			}
-			r[gif.user].total++;
-			if(r[gif.user].gif.views < gif.views){
-				r[gif.user].gif = gif
-			}
-			return r;
-		}, {});
-
-		//Get totals for each bucket
-		_.each(gifs, function(gif){
-			_.each(gif.buckets, function(bucketId){
-				if(Storage.buckets[bucketId]){
-					Storage.buckets[bucketId].total++;
-				}
-			})
-		})
+module.exports = flux.createStore({
+	LOGIN : function(){
+		var userName = prompt("Please enter your name","anon");
+		if(userName){
+			CookieJar.set(GIFBIN_USER_KEY, userName)
+			this.emitChange();
+		}
+		return false;
+	},
+	LOGOUT : function(){
+		CookieJar.remove(GIFBIN_USER_KEY);
 	},
 
+	//TODO: Move ASync calls to actions
 
+	SAVE_GIF : function(gifData, callback){
+		var self = this;
 
-	actions : {
-		LOGIN : function(){
-			var userName = prompt("Please enter your name","anon");
-			if(userName){
-				CookieJar.set(GIFBIN_USER_KEY, userName)
-				this.emitChange();
-			}
-		},
-		LOGOUT : function(){
-			CookieJar.remove(GIFBIN_USER_KEY);
-			this.emitChange();
-		},
+		Storage.status.saving = true;
+		Storage.status.errors = null;
 
-
-		SAVE_GIF : function(payload){
-			var self = this;
-
-			Storage.status.saving = true;
-			Storage.status.errors = null;
-			this.emitChange();
-
-			request
-				.post('/api/gifs')
-				.send(payload.data)
-				.set('Accept', 'application/json')
-				.end(function(err, res){
-					Storage.status.saving = false;
-					if(err){
-						Storage.status.errors = res;
-						self.emitChange();
-						return;
-					}
-					if(typeof payload.callback === 'function') payload.callback(res);
-				})
-		},
-		UPDATE_GIF : function(payload){
-			var self = this;
-
-			Storage.status.saving = true;
-			Storage.status.errors = null;
-			this.emitChange();
-
-			request
-				.put('/api/gifs/' + payload.data.id)
-				.send(payload.data)
-				.set('Accept', 'application/json')
-				.end(function(err, res){
-					Storage.status.saving = false;
-					if(err){
-						Storage.status.errors = err;
-						self.emitChange();
-						return;
-					}
-					if(typeof payload.callback === 'function') payload.callback(res);
-				})
-		},
-		DELETE_GIF : function(payload){
-			var self = this;
-
-			Storage.status.saving = true;
-			Storage.status.errors = null;
-			this.emitChange();
-
-			request
-				.del('/api/gifs/' + payload.id)
-				.send(payload.data)
-				.set('Accept', 'application/json')
-				.end(function(err, res){
-					Storage.status.saving = false;
-					if(err){
-						Storage.status.errors = err;
-						self.emitChange();
-						return;
-					}
-					if(typeof payload.callback === 'function') payload.callback(res);
-				})
-		},
-
-		CHANGE_FAV_GIF : function(payload){
-			var self = this;
-			var gif = Storage.gifs[payload.id]
-
-			if(payload.fav){
-				gif.favs.push(GifStore.getUser());
-			}else{
-				gif.favs = _.without(gif.favs, GifStore.getUser());
-			}
-
-			request
-				.put('/api/gifs/' + gif.id)
-				.send(gif)
-				.set('Accept', 'application/json')
-				.end(function(err, res){
-					if(err){
-						Storage.status.errors = err;
-					}
+		request
+			.post('/api/gifs')
+			.send(gifData)
+			.set('Accept', 'application/json')
+			.end(function(err, res){
+				Storage.status.saving = false;
+				if(err){
+					Storage.status.errors = res;
 					self.emitChange();
-				})
-		},
+					return;
+				}
+				callback && callback(res);
+			})
+	},
+	UPDATE_GIF : function(gifData, callback){
+		var self = this;
 
+		Storage.status.saving = true;
+		Storage.status.errors = null;
+
+		request
+			.put('/api/gifs/' + gifData.id)
+			.send(gifData)
+			.set('Accept', 'application/json')
+			.end(function(err, res){
+				Storage.status.saving = false;
+				if(err){
+					Storage.status.errors = err;
+					self.emitChange();
+					return;
+				}
+				callacbk && callback(res);
+			})
+	},
+	DELETE_GIF : function(gifId, callback){
+		var self = this;
+
+		Storage.status.saving = true;
+		Storage.status.errors = null;
+
+		request
+			.del('/api/gifs/' + gifId)
+			.set('Accept', 'application/json')
+			.end(function(err, res){
+				Storage.status.saving = false;
+				if(err){
+					Storage.status.errors = err;
+					self.emitChange();
+					return;
+				}
+				callback && callback(res);
+			})
+	},
+	CHANGE_FAV_GIF : function(gifId, makeFav){
+		var self = this;
+		var gif = Storage.gifs[gifId]
+
+		if(makeFav){
+			gif.favs.push(GifStore.getUser());
+		}else{
+			gif.favs = _.without(gif.favs, GifStore.getUser());
+		}
+
+		request
+			.put('/api/gifs/' + gif.id)
+			.send(gif)
+			.set('Accept', 'application/json')
+			.end(function(err, res){
+				if(err){
+					Storage.status.errors = err;
+				}
+				self.emitChange();
+			})
+	}
+},{
+
+
+	setGifStorage : function(gifs){
+		var updateGifs = function(gif){
+			Storage.gifs[gif.id] = gif;
+		};
+		var updateUsers = function(gif){
+			var user = Storage.users[gif.user] || {
+				name : gif.user,
+				totalGifs : 0,
+				topGif : gif
+			}
+			user.totalGifs += 1;
+			if(user.topGif.views < gif.views){
+				user.topGif = gif
+			}
+			Storage.users[gif.user] = user;
+		};
+		var updateBuckets = function(gif){
+			_.each(gif.buckets, function(bucketId){
+				if(Storage.buckets[bucketId]) Storage.buckets[bucketId].total += 1;
+			})
+		}
+		_.each(gifs, function(gif){
+			updateGifs(gif);
+			updateUsers(gif);
+			updateBuckets(gif);
+		});
+	},
+	setUserServerside : function(user){
+		serversideUserId = user
 	},
 
 
 
-	/**
-		GETTERS
-	**/
+	/** GETTERS **/
 
 	getStatus : function(){
 		return Storage.status
@@ -233,12 +168,17 @@ var GifStore = Warehouse.createStore(Dispatcher,{
 		return Storage.gifs[id];
 	},
 	getUser : function(){
-		return CookieJar.get(GIFBIN_USER_KEY);
+		return (onBrowser ? CookieJar.get(GIFBIN_USER_KEY) : serversideUserId)
 	},
 	getUsers : function(){
 		return Storage.users;
 	},
 
+
+
+
+
+	//TODO: Needs cleanup
 	search : function(searchObj){
 		var result = {
 			all : [],
@@ -299,7 +239,6 @@ var GifStore = Warehouse.createStore(Dispatcher,{
 		return result;
 	},
 
-});
 
 
-module.exports = GifStore;
+})

@@ -3,7 +3,7 @@ var _ = require('lodash');
 var cx = require('classnames');
 var ClipboardButton = require('gifbin/clipboardButton/clipboardButton.jsx');
 
-var Link = require('gifbin/link.jsx');
+var Link = require('pico-router').Link;
 var GifStore = require('gifbin/gif.store.js');
 
 var GifCard = React.createClass({

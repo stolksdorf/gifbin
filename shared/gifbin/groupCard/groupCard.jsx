@@ -2,7 +2,7 @@
 var React = require('react');
 var _ = require('lodash');
 
-var Link = require('gifbin/link.jsx');
+var Link = require('pico-router').Link;
 
 var GroupCard = React.createClass({
 
