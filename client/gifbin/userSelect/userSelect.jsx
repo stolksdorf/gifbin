@@ -8,7 +8,7 @@ var GroupCard = require('gifbin/groupCard/groupCard.jsx');
 var UserSelect = React.createClass({
 	renderUserSelect : function(){
 		var users = _.sortBy(GifStore.getUsers(), function(user){
-			return -user.total;
+			return -user.totalGifs;
 		});
 		return _.map(users, function(user){
 			return <GroupCard

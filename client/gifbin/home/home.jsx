@@ -6,7 +6,7 @@ var GifStore = require('gifbin/gif.store.js');
 
 var Utils = require('gifbin/utils');
 var GifContainer = require('gifbin/gifContainer/gifContainer.jsx');
-var GifCard = require('gifbin/gifCard/gifCard.jsx');
+//var GifCard = require('gifbin/gifCard/gifCard.jsx');
 var Searchbar = require('gifbin/searchBar/searchBar.jsx');
 
 var Home = React.createClass({
