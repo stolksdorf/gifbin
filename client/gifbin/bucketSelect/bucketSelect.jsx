@@ -1,11 +1,12 @@
 var React = require('react');
 var _ = require('lodash');
+var cx = require('classnames');
 var GifStore = require('gifbin/gif.store.js');
 var GroupCard = require('gifbin/groupCard/groupCard.jsx');
 
-var Buckets = React.createClass({
+var BucketSelect = React.createClass({
 	componentDidMount: function() {
-		document.title = 'gifbin.' + (this.props.bucketId || 'buckets');
+		document.title = 'gifbin.buckets';
 	},
 
 	renderBucketSelect : function(){
@@ -32,4 +33,4 @@ var Buckets = React.createClass({
 	}
 });
 
-module.exports = Buckets;
+module.exports = BucketSelect;

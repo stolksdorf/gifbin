@@ -35,7 +35,7 @@ var SearchBar = React.createClass({
 	/* Used to throttled searching */
 	updateFromChange : _.debounce(function(){
 		var self = this;
-		//self.props.onSearch(utils.createSearchObject(self.state.value));
+		self.props.onSearch(utils.createSearchObject(self.state.value));
 
 
 		console.log(utils.createSearchObject(self.state.value));
@@ -78,7 +78,8 @@ var SearchBar = React.createClass({
 		var info;
 		if(this.state.showInfoBox){
 			info = <div className='infoBox' onClick={this.hideInfoBox}>
-				<p><code>user:anon</code> returns gifs for a user</p>
+				<p><code>by:anon</code> returns gifs uploaded by a user</p>
+				<p><code>fav:anon</code> returns fav gifs from a user</p>
 				<p><code>in:bucket</code> search a specifc bucket</p>
 				<p><code>!nsfw</code> exclude search terms</p>
 			</div>

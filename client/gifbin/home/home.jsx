@@ -13,12 +13,14 @@ var Home = React.createClass({
 
 	getInitialState: function() {
 		return {
-			searchObj : Utils.createSearchObject(Utils.getQuery())
+			searchObj : Utils.createSearchObject(GifStore.getQuery().q)
 		};
 	},
 
 	componentDidMount: function() {
 		document.title = 'gifbin.';
+
+		global.store = GifStore
 	},
 
 	handleSearch : function(searchObj){
@@ -31,6 +33,12 @@ var Home = React.createClass({
 	render : function(){
 		var self = this;
 
+
+		console.log('home', this.state.searchObj.query);
+
+		var content = <GifContainer title='test' gifs={GifStore.searchGifs(this.state.searchObj.query)} />
+		/*
+
 		var content;
 		if(this.state.searchObj.query){
 			content = <GifContainer searchObj={this.state.searchObj} />
@@ -42,10 +50,10 @@ var Home = React.createClass({
 			content = _.map(gifs, function(gif){
 				return <GifCard gif={gif} key={gif.id} />
 			});
-		}
+		}*/
 		return(
 			<div className='home'>
-				<Searchbar initialValue={Utils.getQuery()} onSearch={this.handleSearch} />
+				<Searchbar initialValue={this.state.searchObj.query} onSearch={this.handleSearch} />
 				{content}
 			</div>
 		);

@@ -15,7 +15,7 @@ var GifCard = React.createClass({
 				tags: "computer,kid,thumbs up,90s",
 				views: 0,
 				buckets: ["groos"],
-				favs: [ ],
+				favs: [],
 				created: "2014-01-31T17:05:13.486Z",
 				webmLink: "http://i.imgur.com/PyPM10X.webm",
 				gifvLink: "http://i.imgur.com/PyPM10X.gifv",
@@ -32,17 +32,14 @@ var GifCard = React.createClass({
 	},
 	hover : function(){
 		if(this.state.hovered) return;
-
 		if(!this.state.webmLoaded){
 			this.refs.gifvSource.setAttribute('src', this.props.gif.webmLink);
 			this.refs.gifv.load()
 		}
-
 		this.setState({
 			hovered : true
 		});
 	},
-
 	unhover : function(){
 		this.setState({
 			hovered : false
@@ -52,27 +49,15 @@ var GifCard = React.createClass({
 	componentDidMount: function() {
 		var self = this;
 		this.refs.gifv.oncanplay = function(){
-
 			self.setState({
 				webmLoaded : true
 			});
-
 			self.refs.gifv.oncanplay = null
 		}
-		this.refs.gifvSource.onerror = function(err){
-			//console.log('ERROR', this.props, err);
-		};
 	},
-
-	componentWillUnmount : function(){
-		clearTimeout(this.timeout);
-	},
-
 	isFav : function(){
 		return _.contains(this.props.gif.favs, GifStore.getUser());
 	},
-
-
 
 	renderVideoElement : function(){
 		return (
@@ -91,14 +76,10 @@ var GifCard = React.createClass({
 
 
 	render : function(){
-		var self = this;
-
 		return(
 			<div className={cx('gifCard', {'hovered' : this.state.hovered, 'isFav' : this.isFav()})}>
 				<img className="static" src={this.props.gif.imgLink} />
-
 				{this.renderVideoElement()}
-
 				<div className='hitbox' onMouseMove={this.hover} onMouseOut={this.unhover} ref='hitbox'>
 					<div className='controls'>
 						<ClipboardButton
@@ -114,8 +95,6 @@ var GifCard = React.createClass({
 							tooltip='gifv'
 							tooltipDone='hq copied!'
 							icon='fa-rocket' />
-
-
 						<Link href={'/edit/' + this.props.gif.id} className='editButton'>
 							<i className='fa fa-pencil-square-o' />
 						</Link>

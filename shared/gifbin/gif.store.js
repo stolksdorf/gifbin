@@ -104,6 +104,11 @@ module.exports = flux.createStore({
 		};
 
 		setGifStorage(initialData.gifs);
+
+		Storage.gifs = _.sortBy(Storage.gifs, function(gif){
+			return -gif.views || 0;
+		});
+
 		Storage.currentUser = initialData.user;
 		Storage.currentUrl = initialData.url;
 	},
@@ -139,75 +144,91 @@ module.exports = flux.createStore({
 		return Storage.users;
 	},
 
-	getQueryFromUrl : function(){
-		return Url.parse(Storage.currentUrl,true).query;
+	getQuery : function(){
+		return Url.parse(Storage.currentUrl,true).query || {};
 	},
 
 
 
+	searchGifs : function(query){
+		if(!query) return Storage.gifs;
 
-
-	//TODO: Needs cleanup
-	search : function(searchObj){
-		var result = {
-			all : [],
-			uploadedBy : [],
-			favouritedBy : []
+		var searchObj = createSearchObject(query);
+		var _l = function(arr){
+			return _.map(arr, function(i){ return i.toLowerCase()});
 		}
+		var passFav = function(searchObj, gif){
+			if(!searchObj.favs.length) return true;
+			return _.intersection(searchObj.favs, _l(gif.favs)).length;
+		};
+		var passBuckets = function(searchObj, gif){
+			if(!searchObj.buckets.length) return true;
+			return _.intersection(searchObj.buckets, _l(gif.buckets)).length;
+		};
+		var passUser = function(searchObj, gif){
+			if(!searchObj.users.length) return true;
+			return _.contains(searchObj.users, gif.user.toLowerCase());
+		};
+		var passTags = function(searchObj, gif){
+			if(!searchObj.tags.length) return true;
 
-		result.all = _.filter(Storage.gifs, function(gif){
-			gif.tags = gif.tags || '';
+			return _.every(searchObj.tags, function(tag){
+				var exclude = false;
+				if(tag[0] === '!'){
+					exclude = true;
+					tag = tag.substring(1);
+				}
+				var shouldReturn = gif.tags.toLowerCase().indexOf(tag) !== -1 || gif.buckets.join(' ').indexOf(tag) !== -1;
+				return (exclude ? !shouldReturn : shouldReturn);
+			});
+		};
 
-
-
-			if(searchObj.tags.length !== 0){
-				var res = _.every(searchObj.tags, function(tag){
-					var exclude = false;
-					if(tag[0] === '!'){
-						exclude = true;
-						tag = tag.substring(1);
-					}
-
-					var shouldReturn = gif.tags.toLowerCase().indexOf(tag) !== -1 || gif.buckets.join(' ').indexOf(tag) !== -1;
-
-					return (exclude ? !shouldReturn : shouldReturn);
-				});
-
-				if(!res) return false;
-			}
-
-			if(searchObj.buckets.length !== 0 && !_.intersection(searchObj.buckets, gif.buckets).length){
-				return false;
-			}
-
-
-			if(searchObj.users.length !== 0){
-				var isUploaded = _.contains(searchObj.users, gif.user.toLowerCase());
-
-				var isFav = _.some(_.map(gif.favs, function(favUser){
-					return _.contains(searchObj.users, favUser.toLowerCase());
-				}))
-
-
-				if(isUploaded) result.uploadedBy.push(gif);
-				if(isFav) result.favouritedBy.push(gif);
-
-				if(!isUploaded && !isFav) return false;
-			}
-
-
-
-			return true;
-		});
-
-		//Sort it
-		result.all = _.sortBy(result.all, function(gif){
-			return -gif.views || 0;
+		return _.filter(Storage.gifs, function(gif){
+			return passFav(searchObj, gif) &&
+				passBuckets(searchObj, gif) &&
+				passUser(searchObj, gif) &&
+				passTags(searchObj, gif);
 		})
-
-		return result;
 	},
+
 
 
 
 })
+
+
+var createSearchObject = function(query){
+		var result = {
+			buckets : [],
+			users : [],
+			favs : [],
+			tags : [],
+			query : query
+		};
+		if(!query) return result;
+
+		var searchTerms = _.chain(query.toLowerCase().split(' ')).map(function(term){
+			return term.split(',')
+		}).flatten().filter().value();
+
+		var commands = {
+			'by:' : result.users,
+			'fav:' : result.favs,
+			'in:' : result.buckets,
+		};
+
+		_.each(searchTerms, function(term){
+			var matchedCommand = _.find(_.keys(commands), function(cmd){
+				return term.indexOf(cmd) === 0
+			})
+			if(matchedCommand){
+				commands[matchedCommand].push(term.replace(matchedCommand, ''))
+			}else{
+				result.tags.push(term);
+			}
+		})
+		return result;
+	};
+
+
+global._ = _;

@@ -9,33 +9,33 @@ var GifStore = require('gifbin/gif.store.js');
 var Home = require('./home/home.jsx');
 var Edit = require('./edit/edit.jsx');
 var Add = require('./add/add.jsx');
-var Buckets = require('./buckets/buckets.jsx');
+//var Buckets = require('./buckets/buckets.jsx');
+var BucketSelect = require('./bucketSelect/bucketSelect.jsx');
 var Users = require('./users/users.jsx');
+
+var UserSelect = require('./userSelect/userSelect.jsx');
+var UserPage = require('./userPage/userPage.jsx');
+
 var Page404 = require('./page404/page404.jsx');
 
 
 /** TODO
-
 	- Make a deadicated page for individual users to simplifed a bunch of things
 	- Change the bucket's link to just a query mapping
 	- Favving is broken
-
 */
 
 var GifBinRouter = require('pico-router').createRouter({
 	'/'        : <Home />,
-	'/users'   : <Users />,
-	'/buckets' : <Buckets />,
+	'/users'   : <UserSelect />,
+	'/buckets' : <BucketSelect />,
 	'/add'     : <Add />,
 
-	'/users/:id' : function(args){
-		return <Users name={decodeURIComponent(args.id)} args={args} key={args.id}/>
+	'/users/:userName' : function(args){
+		return <UserPage userName={decodeURIComponent(args.userName)} />
 	},
-	'/buckets/:id' : function(args){
-		return <Buckets bucketId={decodeURIComponent(args.id)} args={args} key={args.id} />
-	},
-	'/edit/:id' : function(args){
-		return <Edit gif={GifStore.getGif(args.id)} />
+	'/edit/:gifId' : function(args){
+		return <Edit gif={GifStore.getGif(args.gifId)} />
 	},
 
 	'*' : <Page404 />
@@ -60,7 +60,6 @@ var Gifbin = React.createClass({
 	},
 
 	render : function(){
-		console.log(GifStore.getQueryFromUrl());
 		return(
 			<div className='gifbin'>
 				<Navbar />

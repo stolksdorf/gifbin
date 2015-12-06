@@ -66,46 +66,43 @@ var GifContainer = React.createClass({
 
 
 var GifBox = React.createClass({
-
-	renderEmptyMessage : function(gifs){
-		if(gifs.length) return;
-
-		var message = _.sample([
-			'No gifs bruh',
-			'INSSUFFICIENT RESULTS FOR MEANINGFUL SEARCH',
-			'Your gifs are in another castle',
-			"We couldn't find anything"
-		])
-
+	getDefaultProps: function() {
+		return {
+			title : null,
+			gifs : []
+		};
+	},
+	renderTitle : function(){
+		if(!this.props.title) return null;
+		return <h1>{this.props.title}</h1>
+	},
+	renderEmptyMessage : function(){
+		if(this.props.gifs.length) return null;
 		return(
 			<div className='emptyMessage'>
 				<i className='fa fa-frown-o' />
-				{message}
+				{_.sample([
+					'No gifs bruh',
+					'INSSUFFICIENT RESULTS FOR MEANINGFUL SEARCH',
+					'Your gifs are in another castle',
+					"We couldn't find anything"
+				])}
 			</div>
 		);
 	},
-
 	render : function(){
-		var self = this;
-
-		var header;
-		if(this.props.title){
-			header = <h1>{this.props.title}</h1>
-		}
-
 		var gifs = _.map(this.props.gifs, function(gif){
 			return <GifCard gif={gif} key={gif.id} />
 		});
-
 		return(
 			<div className='gifContainer'>
-				{header}
+				{this.renderTitle()}
 				{gifs}
-				{this.renderEmptyMessage(gifs)}
+				{this.renderEmptyMessage()}
 			</div>
 		);
 	}
 });
 
 
-module.exports = GifContainer;
+module.exports = GifBox;
