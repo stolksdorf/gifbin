@@ -9,13 +9,9 @@ var GifStore = require('gifbin/gif.store.js');
 var Home = require('./home/home.jsx');
 var Edit = require('./edit/edit.jsx');
 var Add = require('./add/add.jsx');
-//var Buckets = require('./buckets/buckets.jsx');
 var BucketSelect = require('./bucketSelect/bucketSelect.jsx');
-var Users = require('./users/users.jsx');
-
 var UserSelect = require('./userSelect/userSelect.jsx');
 var UserPage = require('./userPage/userPage.jsx');
-
 var Page404 = require('./page404/page404.jsx');
 
 

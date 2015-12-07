@@ -2,13 +2,39 @@ var React = require('react');
 var _ = require('lodash');
 var GifCard = require('gifbin/gifCard/gifCard.jsx');
 
+
+var INC_AMOUNT = 50;
+
 var GifContainer = React.createClass({
 	getDefaultProps: function() {
 		return {
 			title : null,
-			gifs : []
+			gifs : [],
 		};
 	},
+
+	getInitialState: function() {
+		return {
+			drawNumber : INC_AMOUNT
+		};
+	},
+
+	componentDidMount: function() {
+		window.addEventListener('scroll', this.handleScroll);
+	},
+	componentWillUnmount: function() {
+		window.removeEventListener('scroll', this.handleScroll);
+	},
+	handleScroll: function(event) {
+		var atPageBottom = (window.innerHeight + window.scrollY) >= document.getElementById('reactContainer').offsetHeight - 300;
+		if(atPageBottom && this.state.drawNumber < this.props.gifs.length){
+			this.setState({
+				drawNumber : this.state.drawNumber + INC_AMOUNT
+			})
+		}
+	},
+
+
 	renderTitle : function(){
 		if(!this.props.title) return null;
 		return <h1>{this.props.title}</h1>
@@ -28,9 +54,10 @@ var GifContainer = React.createClass({
 		);
 	},
 	render : function(){
-		var gifs = _.map(this.props.gifs, function(gif){
+		var gifs = _.map(_.slice(this.props.gifs,0, this.state.drawNumber), function(gif){
 			return <GifCard gif={gif} key={gif.id} />
 		});
+
 		return(
 			<div className='gifContainer'>
 				{this.renderTitle()}

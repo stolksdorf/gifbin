@@ -19,8 +19,6 @@ var Home = React.createClass({
 
 	componentDidMount: function() {
 		document.title = 'gifbin.';
-
-		global.store = GifStore
 	},
 
 	handleSearch : function(searchObj){
@@ -36,7 +34,7 @@ var Home = React.createClass({
 
 		console.log('home', this.state.searchObj.query);
 
-		var content = <GifContainer title='test' gifs={GifStore.searchGifs(this.state.searchObj.query)} />
+		var content = <GifContainer gifs={GifStore.searchGifs(this.state.searchObj.query)} />
 		/*
 
 		var content;
