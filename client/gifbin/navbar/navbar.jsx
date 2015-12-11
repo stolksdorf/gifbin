@@ -53,6 +53,7 @@ var Navbar = React.createClass({
 			<Link href='/buckets' className='navItem'>buckets</Link>
 			<Link href='/users' className='navItem'>users</Link>
 			<Link href='/add' className='navItem'>add</Link>
+			<Link href='/whatsnew' className='navItem'>what's new</Link>
 		</nav></header>
 	}
 });

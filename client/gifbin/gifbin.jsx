@@ -12,6 +12,8 @@ var Add = require('./add/add.jsx');
 var BucketSelect = require('./bucketSelect/bucketSelect.jsx');
 var UserSelect = require('./userSelect/userSelect.jsx');
 var UserPage = require('./userPage/userPage.jsx');
+var ChangelogPage = require('./changelogPage/changelogPage.jsx');
+
 var Page404 = require('./page404/page404.jsx');
 
 
@@ -26,6 +28,7 @@ var GifBinRouter = require('pico-router').createRouter({
 	'/users'   : <UserSelect />,
 	'/buckets' : <BucketSelect />,
 	'/add'     : <Add />,
+	'/whatsnew': <ChangelogPage />,
 
 	'/users/:userName' : function(args){
 		return <UserPage userName={decodeURIComponent(args.userName)} />
