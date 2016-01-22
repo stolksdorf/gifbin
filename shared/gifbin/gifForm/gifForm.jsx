@@ -29,7 +29,7 @@ var GifForm = React.createClass({
 
 	getDefaultProps: function() {
 		return {
-			placeholder : _.sample([
+			placeholder : _.sampleSize([
 				"tacos",
 				"thumbs up",
 				"you got to be kidding me",

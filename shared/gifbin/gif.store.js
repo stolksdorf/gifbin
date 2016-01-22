@@ -18,7 +18,7 @@ var Storage = {
 	},
 
 	buckets : require('./bucketData.js'),
-	gifs : {},
+	gifs : [],
 	users : {},
 
 
@@ -66,46 +66,37 @@ module.exports = flux.createStore({
 	},
 
 	UPDATE_GIF : function(gifData){
-		Storage.gifs[gifData.id] = gifData;
+		var index = _.findIndex(Storage.gif, {id : gifData.id});
+		Storage.gifs[index] = gifData;
 	},
 	REMOVE_GIF : function(gifId){
-		delete Storage.gifs[gifData.id];
+		Storage.gifs = _.reject(Storage.gifs, {id : gifId});
 	},
 
 },{
 
 	init : function(initialData){
-		var setGifStorage = function(gifs){
-			var updateGifs = function(gif){
-				Storage.gifs[gif.id] = gif;
-			};
-			var updateUsers = function(gif){
-				var user = Storage.users[gif.user] || {
-					name : gif.user,
-					totalGifs : 0,
-					topGif : gif
-				}
-				user.totalGifs += 1;
-				if(user.topGif.views < gif.views){
-					user.topGif = gif
-				}
-				Storage.users[gif.user] = user;
-			};
-			var updateBuckets = function(gif){
-				_.each(gif.buckets, function(bucketId){
-					if(Storage.buckets[bucketId]) Storage.buckets[bucketId].total += 1;
-				})
+		var updateUsers = function(gif){
+			var user = Storage.users[gif.user] || {
+				name : gif.user,
+				totalGifs : 0,
+				topGif : gif
 			}
-			_.each(gifs, function(gif){
-				updateGifs(gif);
-				updateUsers(gif);
-				updateBuckets(gif);
-			});
+			user.totalGifs += 1;
+			if(user.topGif.views < gif.views){
+				user.topGif = gif
+			}
+			Storage.users[gif.user] = user;
 		};
+		var updateBuckets = function(gif){
+			_.each(gif.buckets, function(bucketId){
+				if(Storage.buckets[bucketId]) Storage.buckets[bucketId].total += 1;
+			})
+		}
 
-		setGifStorage(initialData.gifs);
-
-		Storage.gifs = _.sortBy(Storage.gifs, function(gif){
+		Storage.gifs = _.sortBy(initialData.gifs, function(gif){
+			updateUsers(gif);
+			updateBuckets(gif);
 			return -gif.views || 0;
 		});
 
@@ -113,14 +104,14 @@ module.exports = flux.createStore({
 		Storage.currentUrl = initialData.url;
 	},
 
-/*
-	setUserServerside : function(user){
-		serversideUserId = user
-	},
+
 	setCurrentUrl : function(url){
 		Storage.currentUrl = url;
+		if(typeof window !== 'undefined'){
+			window.history.replaceState(null,null,url);
+		}
 	},
-*/
+
 
 
 	/** GETTERS **/
@@ -135,7 +126,7 @@ module.exports = flux.createStore({
 		return Storage.gifs;
 	},
 	getGif : function(id){
-		return Storage.gifs[id];
+		return _.find(Storage.gifs, {id : id})
 	},
 	getUser : function(){
 		return Storage.currentUser;
@@ -151,6 +142,9 @@ module.exports = flux.createStore({
 
 
 	searchGifs : function(query){
+
+console.log(query, Storage.gifs);
+
 		if(!query) return Storage.gifs;
 
 		var searchObj = createSearchObject(query);
@@ -195,6 +189,10 @@ module.exports = flux.createStore({
 
 
 })
+
+
+
+
 
 
 var createSearchObject = function(query){

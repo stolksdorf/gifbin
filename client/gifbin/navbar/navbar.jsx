@@ -49,7 +49,7 @@ var Navbar = React.createClass({
 				{this.state.user ? this.renderLogout() : this.renderLogin()}
 			</div>
 
-			<Link href='/' className='logo navItem'>gifbin.</Link>
+			<Link href='/' forceReload={true} className='logo navItem'>gifbin.</Link>
 			<Link href='/buckets' className='navItem'>buckets</Link>
 			<Link href='/users' className='navItem'>users</Link>
 			<Link href='/add' className='navItem'>add</Link>

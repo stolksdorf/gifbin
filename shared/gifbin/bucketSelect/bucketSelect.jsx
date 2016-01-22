@@ -31,7 +31,7 @@ var BucketSelect = React.createClass({
 
 		var buckets = _.map(this.props.buckets, function(bucket, id){
 
-			var isSelected = _.contains(self.props.selectedBuckets, id);
+			var isSelected = _.includes(self.props.selectedBuckets, id);
 			var onclick, checkmark;
 			if(isSelected){
 				onclick = self.unselectBucket.bind(self, id)

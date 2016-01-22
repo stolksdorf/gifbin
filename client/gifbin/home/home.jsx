@@ -29,10 +29,9 @@ var Home = React.createClass({
 	},
 
 	render : function(){
-		var self = this;
 
 
-		console.log('home', this.state.searchObj.query);
+		//console.log('home', this.state.searchObj.query);
 
 		var content = <GifContainer gifs={GifStore.searchGifs(this.state.searchObj.query)} />
 		/*
@@ -49,12 +48,10 @@ var Home = React.createClass({
 				return <GifCard gif={gif} key={gif.id} />
 			});
 		}*/
-		return(
-			<div className='home'>
-				<Searchbar initialValue={this.state.searchObj.query} onSearch={this.handleSearch} />
-				{content}
-			</div>
-		);
+		return <div className='home'>
+			<Searchbar initialValue={this.state.searchObj.query} onSearch={this.handleSearch} />
+			{content}
+		</div>
 	}
 });
 

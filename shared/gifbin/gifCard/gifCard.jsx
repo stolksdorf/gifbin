@@ -56,7 +56,7 @@ var GifCard = React.createClass({
 		}
 	},
 	isFav : function(){
-		return _.contains(this.props.gif.favs, GifStore.getUser());
+		return _.includes(this.props.gif.favs, GifStore.getUser());
 	},
 
 	renderVideoElement : function(){

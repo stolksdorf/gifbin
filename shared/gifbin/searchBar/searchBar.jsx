@@ -3,6 +3,8 @@ var React = require('react');
 var _ = require('lodash');
 var cx = require('classnames');
 
+var GifStore = require('gifbin/gif.store.js');
+
 var utils = require('gifbin/utils.js');
 
 var queryVal;
@@ -37,10 +39,6 @@ var SearchBar = React.createClass({
 		var self = this;
 		self.props.onSearch(utils.createSearchObject(self.state.value));
 
-
-		console.log(utils.createSearchObject(self.state.value));
-
-
 		queryVal = self.state.value;
 		self.updateUrl();
 		self.setState({ waiting : false });
@@ -68,7 +66,7 @@ var SearchBar = React.createClass({
 		if(queryVal){
 			newUrl +="?q=" + queryVal;
 		}
-		window.history.replaceState(null,null,newUrl);
+		GifStore.setCurrentUrl(newUrl)
 	}, 500),
 
 	render : function(){
