@@ -5,7 +5,7 @@ var cx = require('classnames');
 var GifStore = require('gifbin/gif.store.js');
 var GroupCard = require('gifbin/groupCard/groupCard.jsx');
 
-var UserSelect = React.createClass({
+var Users = React.createClass({
 	renderUserSelect : function(){
 		var users = _.sortBy(GifStore.getUsers(), function(user){
 			return -user.totalGifs;
@@ -23,7 +23,7 @@ var UserSelect = React.createClass({
 
 	render : function(){
 		var self = this;
-		return <div className='userSelect'>
+		return <div className='users'>
 			<div className='content'>
 				<h1>users</h1>
 				{this.renderUserSelect()}
@@ -32,4 +32,4 @@ var UserSelect = React.createClass({
 	}
 });
 
-module.exports = UserSelect;
+module.exports = Users;

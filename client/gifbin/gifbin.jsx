@@ -9,8 +9,8 @@ var GifStore = require('gifbin/gif.store.js');
 var Home = require('./home/home.jsx');
 var Edit = require('./edit/edit.jsx');
 var Add = require('./add/add.jsx');
-var BucketSelect = require('./bucketSelect/bucketSelect.jsx');
-var UserSelect = require('./userSelect/userSelect.jsx');
+var BucketsPage = require('./buckets/buckets.jsx');
+var UsersPage = require('./users/users.jsx');
 var UserPage = require('./userPage/userPage.jsx');
 var ChangelogPage = require('./changelogPage/changelogPage.jsx');
 
@@ -25,8 +25,8 @@ var Page404 = require('./page404/page404.jsx');
 
 var GifBinRouter = require('pico-router').createRouter({
 	'/'        : <Home />,
-	'/users'   : <UserSelect />,
-	'/buckets' : <BucketSelect />,
+	'/users'   : <UsersPage />,
+	'/buckets' : <BucketsPage />,
 	'/add'     : <Add />,
 	'/whatsnew': <ChangelogPage />,
 
