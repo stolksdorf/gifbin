@@ -6,6 +6,11 @@ var GifActions = require('gifbin/gif.actions.js');
 var GifStore = require('gifbin/gif.store.js');
 var randomBucketImg = _.sample(GifStore.getBuckets()).img;
 
+
+var getExt = function(path){
+	return path.substr(path.lastIndexOf('.')+1)
+}
+
 var GifPreview = React.createClass({
 	getDefaultProps: function() {
 		return {
@@ -20,6 +25,14 @@ var GifPreview = React.createClass({
 
 	isFav : function(){
 		return _.includes(this.props.originalFavs, GifStore.getUser());
+	},
+
+
+	//Returns whatever path should be used to the gif, starting with webm
+	getGifPath : function(){
+		if(this.props.gif.webmLink) return this.props.gif.webmLink;
+		if(this.props.gif.gifLink) return this.props.gif.gifLink;
+		return this.props.gif.originalLink;
 	},
 
 	handleFavClick : function(){
