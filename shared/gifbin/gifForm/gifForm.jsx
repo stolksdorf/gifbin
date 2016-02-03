@@ -8,7 +8,7 @@ var Utils = require('gifbin/utils');
 
 
 var ClipboardButton = require('gifbin/clipboardButton/clipboardButton.jsx');
-var BucketSelect = require('gifbin/bucketSelect/bucketSelect.jsx');
+var BucketSelect = require('gifbin/form/bucketSelect/bucketSelect.jsx');
 
 var GifActions = require('gifbin/gif.actions.js');
 var GifStore = require('gifbin/gif.store.js');

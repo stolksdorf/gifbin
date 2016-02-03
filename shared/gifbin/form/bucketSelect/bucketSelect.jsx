@@ -1,4 +1,3 @@
-
 var React = require('react');
 var _ = require('lodash');
 var cx = require('classnames');
@@ -6,38 +5,36 @@ var cx = require('classnames');
 var GifStore = require('gifbin/gif.store.js');
 
 var BucketSelect = React.createClass({
-
 	getDefaultProps: function() {
 		return {
 			buckets : GifStore.getBuckets(),
-			selectedBuckets : [],
+			gif : {},
 			onChange : function(){}
 		};
 	},
 
-
 	selectBucket : function(bucketId){
-		this.props.selectedBuckets.push(bucketId);
-		this.props.onChange(this.props.selectedBuckets);
+		this.props.onChange({
+			...this.props.gif,
+			buckets : _.concat(this.props.gif.buckets, bucketId)
+		});
 	},
-
 	unselectBucket : function(bucketId){
-		this.props.onChange(_.without(this.props.selectedBuckets, bucketId))
+		this.props.onChange({
+			...this.props.gif,
+			buckets : _.without(this.props.gif.buckets, bucketId)
+		});
 	},
 
-	render : function(){
-		var self = this;
-
-
-		var buckets = _.map(this.props.buckets, function(bucket, id){
-
-			var isSelected = _.includes(self.props.selectedBuckets, id);
+	renderBuckets : function(){
+		return _.map(this.props.buckets, (bucket, id) => {
+			var isSelected = _.includes(this.props.gif.buckets, id);
 			var onclick, checkmark;
 			if(isSelected){
-				onclick = self.unselectBucket.bind(self, id)
+				onclick = this.unselectBucket.bind(this, id)
 				checkmark = <i className='checkmark fa fa-check-circle-o' />
 			}else{
-				onclick = self.selectBucket.bind(self, id)
+				onclick = this.selectBucket.bind(this, id)
 			}
 
 			return <div className={cx('bucketItem', {'selected' : isSelected})} onClick={onclick} key={id}>
@@ -46,14 +43,12 @@ var BucketSelect = React.createClass({
 				{checkmark}
 			</div>
 		})
+	},
 
-		return(
-			<div className='bucketSelect'>
-				{buckets}
-
-
-			</div>
-		);
+	render : function(){
+		return <div className='bucketSelect'>
+			{this.renderBuckets()}
+		</div>
 	}
 });
 

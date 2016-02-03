@@ -12,10 +12,24 @@ var getExt = function(path){
 }
 
 var GifPreview = React.createClass({
+	mixins : [GifStore.mixin()],
+	onStoreChange  : function(){
+		console.log('UPDATING FROM STORE', GifStore.getGif(this.props.gif.id).favs);
+		this.setState({
+			originalFavs : GifStore.getGif(this.props.gif.id).favs
+		});
+	},
+
 	getDefaultProps: function() {
 		return {
 			gif : {},
-			originalFavs : [],
+			isInvalidLink : false,
+		};
+	},
+
+	getInitialState: function() {
+		return {
+			originalFavs: GifStore.getGif(this.props.gif.id).favs,
 		};
 	},
 
@@ -24,15 +38,10 @@ var GifPreview = React.createClass({
 	},
 
 	isFav : function(){
-		return _.includes(this.props.originalFavs, GifStore.getUser());
-	},
 
+		console.log('FAVS', this.state.originalFavs);
 
-	//Returns whatever path should be used to the gif, starting with webm
-	getGifPath : function(){
-		if(this.props.gif.webmLink) return this.props.gif.webmLink;
-		if(this.props.gif.gifLink) return this.props.gif.gifLink;
-		return this.props.gif.originalLink;
+		return _.includes(this.state.originalFavs, GifStore.getUser());
 	},
 
 	handleFavClick : function(){
@@ -44,6 +53,14 @@ var GifPreview = React.createClass({
 	},
 
 
+	//Returns whatever path should be used to the gif, starting with webm
+	getGifPath : function(){
+		if(this.props.gif.webmLink) return this.props.gif.webmLink;
+		if(this.props.gif.gifLink) return this.props.gif.gifLink;
+		return this.props.gif.originalLink;
+	},
+
+
 	renderFavButton : function(){
 		if(!this.props.gif.id || !GifStore.getUser()) return null;
 
@@ -51,10 +68,8 @@ var GifPreview = React.createClass({
 			<i className={cx('fa', (this.isFav() ? 'fa-heart' : 'fa-heart-o'))} />
 		</div>
 	},
-
 	renderGif : function(){
 		var hasGif = this.props.gif.gifLink || this.props.gif.webmLink
-
 		var webm = null;
 		var backgroundImage = randomBucketImg;
 
@@ -63,8 +78,7 @@ var GifPreview = React.createClass({
 			webm = <video className='gifv' autoPlay loop muted ref='gifv' poster='http://dummyimage.com/1x1/000000/fff.png'>
 				<source type="video/webm" src={this.props.gif.webmLink}/>
 			</video>
-
-			backgroundImage= ''
+			backgroundImage= '';
 
 		//Fallback to gif
 		}else if(this.props.gif.gifLink){

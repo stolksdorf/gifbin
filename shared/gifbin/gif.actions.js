@@ -58,25 +58,31 @@ module.exports = {
 	},
 
 	favGif : function(gif){
-		gif.favs.push(GifStore.getUser());
-		dispatch('UPDATE_GIF', gif);
+		var newGif = { ...gif,
+			favs : _.uniq(_.concat(gif.favs, GifStore.getUser()))
+		}
+
+		console.log(newGif.favs);
+		dispatch('UPDATE_GIF', newGif);
 		request
-			.put('/api/gifs/' + gif.id)
-			.send(gif)
+			.put('/api/gifs/' + newGif.id)
+			.send(newGif)
 			.set('Accept', 'application/json')
 			.end(function(err, res){
-				dispatch('UPDATE_GIF', res);
+				//dispatch('UPDATE_GIF', res.body);
 			})
 	},
 	unfavGif : function(gif){
-		gif.favs = _.without(gif.favs, GifStore.getUser());
-		dispatch('UPDATE_GIF', gif);
+		var newGif = { ...gif,
+			favs : _.without(gif.favs, GifStore.getUser())
+		}
+		dispatch('UPDATE_GIF', newGif);
 		request
-			.put('/api/gifs/' + gif.id)
-			.send(gif)
+			.put('/api/gifs/' + newGif.id)
+			.send(newGif)
 			.set('Accept', 'application/json')
 			.end(function(err, res){
-				dispatch('UPDATE_GIF', res);
+				//dispatch('UPDATE_GIF', res.body);
 			})
 
 	},

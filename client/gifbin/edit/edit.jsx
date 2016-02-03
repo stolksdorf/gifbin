@@ -1,18 +1,44 @@
 var React = require('react');
 var _ = require('lodash');
 
+
+
+var GifForm = require('gifbin/form/form.jsx');
+
+
+
 var GifStore = require('gifbin/gif.store.js');
 
 
-var GifPreview = require('gifbin/form/gifPreview/gifPreview.jsx');
-var BucketSelect = require('gifbin/bucketSelect/bucketSelect.jsx');
+
 
 
 var deep_clone = function(obj){
 	return JSON.parse(JSON.stringify(obj));
 }
 
+var getGifDisplayPath = function(gif){
+	if(gif.webmLink) return gif.webmLink;
+	if(gif.gifLink) return gif.gifLink;
+	return gif.originalLink;
+}
+
+var getGifExt = function(gif){
+	var path = getGifDisplayPath();
+	return path.substr(path.lastIndexOf('.')+1);
+}
+
+
 var Edit = React.createClass({
+
+
+
+	componentDidMount: function() {
+		document.title = 'gifbin.edit';
+	},
+
+/*
+
 	mixins : [GifStore.mixin()],
 	onStoreChange  : function(){
 		this.setState({
@@ -31,41 +57,21 @@ var Edit = React.createClass({
 			gif : deep_clone(this.props.gif)
 		};
 	},
+*/
 
 
-	componentDidMount: function() {
-		document.title = 'gifbin.edit';
-	},
-
-
-
+	//TODO : Move Bucket select into the form
 	render : function(){
 
-		console.log(this.props.gif);
 
 		return <div className='edit'>
 
 
+			<GifForm gif={this.props.gif} />
 
-			<div className='left'>
-
-				<GifPreview gif={this.state.gif} originalFavs={this.state.originalFavs} />
-
-			</div>
-
-
-
-			<div className='right'>
-				{this.state.gif.gifLink}
-
-				<div className='bucket formItem' key='bucket'>
-					<label>bucket</label>
-					<BucketSelect selectedBuckets={this.state.gif.buckets} onChange={this.handleBucketChange} />
-				</div>
-
-			</div>
 		</div>
 	}
 });
 
 module.exports = Edit;
+

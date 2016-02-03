@@ -93,7 +93,7 @@ var GifCard = React.createClass({
 							className='gifvButton'
 							link={this.props.gif.gifvLink}
 							tooltip='gifv'
-							tooltipDone='hq copied!'
+							tooltipDone='copied!'
 							icon='fa-rocket' />
 						<Link href={'/edit/' + this.props.gif.id} className='editButton'>
 							<i className='fa fa-pencil-square-o' />
