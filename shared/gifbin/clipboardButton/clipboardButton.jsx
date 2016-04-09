@@ -25,7 +25,7 @@ var ClipboardButton = React.createClass({
 	},
 
 	onClick : function(){
-		this.refs.copyVal.getDOMNode().select();
+		this.refs.copyVal.select();
 		var result = document.execCommand("Copy", false, null);
 		if(!result){
 			alert('Your browser does not support copying to clipboard');

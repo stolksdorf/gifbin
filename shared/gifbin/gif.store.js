@@ -143,9 +143,6 @@ module.exports = flux.createStore({
 
 
 	searchGifs : function(query){
-
-console.log(query, Storage.gifs);
-
 		if(!query) return Storage.gifs;
 
 		var searchObj = createSearchObject(query);
@@ -162,7 +159,7 @@ console.log(query, Storage.gifs);
 		};
 		var passUser = function(searchObj, gif){
 			if(!searchObj.users.length) return true;
-			return _.contains(searchObj.users, gif.user.toLowerCase());
+			return _.includes(searchObj.users, gif.user.toLowerCase());
 		};
 		var passTags = function(searchObj, gif){
 			if(!searchObj.tags.length) return true;

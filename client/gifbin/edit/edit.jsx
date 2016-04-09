@@ -6,7 +6,7 @@ var _ = require('lodash');
 var GifForm = require('gifbin/form/form.jsx');
 
 
-
+/*
 var GifStore = require('gifbin/gif.store.js');
 
 
@@ -27,10 +27,9 @@ var getGifExt = function(gif){
 	var path = getGifDisplayPath();
 	return path.substr(path.lastIndexOf('.')+1);
 }
-
+*/
 
 var Edit = React.createClass({
-
 
 
 	componentDidMount: function() {

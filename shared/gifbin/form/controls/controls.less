@@ -1,3 +1,75 @@
+
 .controls{
 
+	//min-height : 200px;
+
+
+
+	.formItem.user{
+		.userLink{
+			.animate(color);
+			vertical-align : middle;
+			margin-top     : 7px;
+			font-size      : 1.4em;
+			font-weight    : 600;
+			&:hover{
+				color : @tealLight;
+				i{
+					.fadeInLeft();
+				}
+			}
+			i{
+				.fadeOutLeft();
+				.keep();
+				margin-left : 6px;
+				font-size   : 0.8em;
+			}
+		}
+	}
+
+	.bottom{
+		position : relative;
+		text-align: right;
+		.deleteButton{
+			.animateAll(0.8s);
+			position : absolute;
+			bottom   : 10px;
+			left     : 0px;
+			cursor   : pointer;
+			opacity  : 0.5;
+			&:hover{
+				.swing();
+				opacity : 1;
+				color   : @red;
+			}
+		}
+		.errors{
+			display: inline-block;
+			vertical-align: bottom;
+			text-transform: uppercase;
+			color : @red;
+			font-size: 1em;
+			font-weight: 800;
+			cursor: pointer;
+			border-bottom : 2px solid transparent;
+			margin-right: 40px;
+			&:hover{
+				border-bottom : 2px solid @red;
+			}
+		}
+		button.save{
+			vertical-align: bottom;
+			display    : inline-block;
+			margin-top : 20px;
+			font-size  : 1.5em;
+			i{
+				margin-right : 5px;
+				font-size    : 0.8em;
+			}
+			&.update{
+				.button(@purple);
+				font-size  : 1.5em;
+			}
+		}
+	}
 }

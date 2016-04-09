@@ -16,7 +16,7 @@ var GifPreview = React.createClass({
 	onStoreChange  : function(){
 		console.log('UPDATING FROM STORE', GifStore.getGif(this.props.gif.id).favs);
 		this.setState({
-			originalFavs : GifStore.getGif(this.props.gif.id).favs
+			originalFavs : this.getFavs()
 		});
 	},
 
@@ -29,8 +29,17 @@ var GifPreview = React.createClass({
 
 	getInitialState: function() {
 		return {
-			originalFavs: GifStore.getGif(this.props.gif.id).favs,
+			originalFavs : this.getFavs()
 		};
+	},
+
+	isEditMode : function(){
+		return !!(this.props.gif && this.props.gif.id);
+	},
+	getFavs : function(){
+		if(!this.isEditMode) return [];
+		var gif = GifStore.getGif(this.props.gif.id);
+		return (gif ? gif.favs : [])
 	},
 
 	componentDidMount: function() {

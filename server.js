@@ -2,8 +2,8 @@ require('app-module-path').addPath('./shared');
 
 var vitreumRender = require('vitreum/render')
 var express = require("express");
-var bodyParser = require('body-parser')
-var cookieParser = require('cookie-parser')
+var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
 var app = express();
 app.use(express.static(__dirname + '/build'));
 app.use(bodyParser.json());
@@ -47,7 +47,7 @@ app.get('/admin', function(req, res){
 	Gif.model.find({}, function(err, gifs){
 		vitreumRender({
 			page: './build/admin/bundle.dot',
-			prerenderWith : './client/admin/admin.jsx',
+			//prerenderWith : './client/admin/admin.jsx',
 			clearRequireCache : true,
 			initialProps: {
 				url: req.originalUrl,
@@ -75,7 +75,7 @@ app.get('*', function (req, res) {
 
 		vitreumRender({
 			page: './build/gifbin/bundle.dot',
-		//	prerenderWith : './client/gifbin/gifbin.jsx',
+			prerenderWith : './client/gifbin/gifbin.jsx',
 			clearRequireCache : true,
 			initialProps: {
 				gifs : gifs,

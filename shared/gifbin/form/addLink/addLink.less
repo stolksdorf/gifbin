@@ -1,33 +1,36 @@
+
 .addLink{
-
-	width          : 100%;
-
+	width : 100%;
+	padding-right: 65px;
 	div.link{
+		position    : relative;
 		display     : inline-block;
 		width       : 100%;
 		margin-top  : 5px;
 		font-size   : 1.3em;
 		font-weight : 800;
 		color       : @steel;
-	}
-	.clipboardButton{
-		display : inline-block;
-		width   : 18px;
-	}
 
-	.gifButton{
-		display : block;
 	}
-	.gifvButton{
-		display : block;
-		background-color: @steel;
+	.buttons{
+		position : absolute;
+		top      : 2px;
+		right    : 0px;
+		.clipboardButton{
+			display: inline-block;
+			&.gifButton{
+			}
+			&.gifvButton{
+				background-color : @steel;
+			}
+		}
 	}
-
 	input{
 		display        : inline-block;
 		vertical-align : middle;
 		box-sizing     : border-box;
 		box-sizing     : border-box;
 		width          : 100%;
+
 	}
 }

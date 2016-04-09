@@ -26,21 +26,24 @@ var AddLink = React.createClass({
 		return [
 			<div className='link' key='link'>{this.props.gif.originalLink}</div>,
 
-			<ClipboardButton
-				key='gif'
-				className='gifButton'
-				icon='fa-link'
-				tooltip='gif'
-				tooltipDone='copied!'
-				link={this.props.gif.gifLink} />,
-
-			<ClipboardButton
-				key='gifv'
-				className='gifvButton'
-				icon='fa-rocket'
-				link={this.props.gif.gifvLink}
-				tooltip='gifv'
-				tooltipDone='copied!' />
+			<div className='buttons' key='buttons'>
+				<ClipboardButton
+					key='gif'
+					className='gifButton'
+					icon='fa-link'
+					tooltip='gif'
+					tooltipDone='copied!'
+					tooltipDirection='bottom'
+					link={this.props.gif.gifLink} />
+				<ClipboardButton
+					key='gifv'
+					className='gifvButton'
+					icon='fa-rocket'
+					link={this.props.gif.gifvLink}
+					tooltip='gifv'
+					tooltipDirection='bottom'
+					tooltipDone='copied!' />
+			</div>
 		];
 	},
 	renderLink : function(){

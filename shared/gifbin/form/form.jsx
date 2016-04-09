@@ -1,42 +1,37 @@
 var React = require('react');
 var _ = require('lodash');
 var cx = require('classnames');
-var moment = require('moment');
-
-var Utils = require('gifbin/utils');
-
-
-//var ClipboardButton = require('gifbin/clipboardButton/clipboardButton.jsx');
 
 var GifActions = require('gifbin/gif.actions.js');
 var GifStore = require('gifbin/gif.store.js');
 
-
-
-
-
+//Components
 var GifPreview = require('./gifPreview/gifPreview.jsx');
 var AddLink = require('./addLink/addLink.jsx');
-
 var BucketSelect = require('./bucketSelect/bucketSelect.jsx');
 var Tags = require('./tags/tags.jsx');
-
-
-
+var Controls = require('./controls/controls.jsx');
 
 var deep_clone = function(obj){
 	return JSON.parse(JSON.stringify(obj));
 }
 
 
-
 var Form = React.createClass({
-
 	mixins : [GifStore.mixin()],
+	getInitialState: function() {
+		return {
+			originalFavs: this.props.gif.favs,
+			gif : deep_clone(this.props.gif),
+			user : GifStore.getUser(),
+			saveStatus : GifStore.getStatus()
+		};
+	},
 	onStoreChange  : function(){
 		this.setState({
 		//	originalFavs : GifStore.getGif(this.props.gif.id).favs,
-			status : GifStore.getStatus()
+			saveStatus : GifStore.getStatus(),
+			user : GifStore.getUser(),
 		});
 	},
 	getDefaultProps: function() {
@@ -44,29 +39,46 @@ var Form = React.createClass({
 			gif : {}
 		};
 	},
-	getInitialState: function() {
-		return {
-			originalFavs: this.props.gif.favs,
-			gif : deep_clone(this.props.gif)
-		};
+
+	isValid : function(){
+		if(_.isEqual(this.state.gif, this.props.gif)){
+			return false; //no changes
+		}
+		var gif = this.state.gif;
+		var hasLink = !!gif.originalLink;
+		var hasUser = !!(gif.user || this.state.user);
+		var hasDescriptors = !!(gif.tags || gif.buckets.length);
+
+		return hasLink && hasUser && hasDescriptors;
 	},
 
-
 	handleGifUpdate : function(newGif){
-console.log(newGif);
-
 		this.setState({ gif : newGif });
 	},
 
+	handleSave : function(){
+		if(!this.state.gif.user) this.state.gif.user = this.state.user;
+
+		var isEditMode = !!this.state.gif.id;
+		if(isEditMode){
+			GifActions.updateGif(this.state.gif, function(res){
+				window.location = '/edit/' + res.body.id;
+			});
+		}else{
+			GifActions.saveGif(this.state.gif, function(res){
+				window.location = '/edit/' + res.body.id;
+			});
+		}
+	},
+
+
 	render : function(){
-		return <div className='gifForm'>
+		return <div className='form'>
 			<div className='left'>
 				<GifPreview gif={this.state.gif} />
 			</div>
 
 			<div className='right'>
-				{this.state.gif.gifLink}
-
 				<FormItem label='link'>
 					<AddLink gif={this.state.gif} onChange={this.handleGifUpdate} />
 				</FormItem>
@@ -79,6 +91,13 @@ console.log(newGif);
 					<Tags gif={this.state.gif} onChange={this.handleGifUpdate} />
 				</FormItem>
 
+				<Controls
+					gif={this.state.gif}
+					saveStatus={this.state.saveStatus}
+					loggedInUser={this.state.user}
+					onSave={this.handleSave}
+					isValid={this.isValid()}
+					/>
 			</div>
 		</div>
 	}

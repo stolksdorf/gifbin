@@ -30,24 +30,8 @@ var Home = React.createClass({
 
 	render : function(){
 
-
-		//console.log('home', this.state.searchObj.query);
-
 		var content = <GifContainer gifs={GifStore.searchGifs(this.state.searchObj.query)} />
-		/*
 
-		var content;
-		if(this.state.searchObj.query){
-			content = <GifContainer searchObj={this.state.searchObj} />
-		}else{
-
-			var gifs = _.sortBy(GifStore.getGifs(), function(gif){
-				return -gif.views || 0;
-			});
-			content = _.map(gifs, function(gif){
-				return <GifCard gif={gif} key={gif.id} />
-			});
-		}*/
 		return <div className='home'>
 			<Searchbar initialValue={this.state.searchObj.query} onSearch={this.handleSearch} />
 			{content}

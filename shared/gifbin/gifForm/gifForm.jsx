@@ -82,7 +82,7 @@ var GifForm = React.createClass({
 	isFav : function(){
 		return this.state.originalGif &&
 			this.state.originalGif.favs &&
-			_.contains(this.state.originalGif.favs, this.state.loggedinUser);
+			_.includes(this.state.originalGif.favs, this.state.loggedinUser);
 	},
 
 

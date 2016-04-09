@@ -1,25 +1,18 @@
 
 .clipboardButton{
 	.iconButton(@blue);
-	position: relative;
-
+	position : relative;
 	&.zeroclipboard-is-hover{
 		&:after, &:before{
-			//.transform(translateY(@arrowSize + 2));
 			.transform(translateX(@arrowSize + 2));
 			visibility : visible;
 			opacity    : 1;
 		}
 	}
-	//Tooltip
-	&:after{
-		content : attr(data-tooltip-right);
-	}
-
 	input{
 		position : absolute;
-		opacity : 0;
-		z-index : -1;
-		top : 300px;
+		top      : 300px;
+		z-index  : -1;
+		opacity  : 0;
 	}
 }

@@ -9,7 +9,9 @@ var GroupCard = React.createClass({
 	getDefaultProps: function() {
 		return {
 			img : "",
-			title : "Test"
+			title : "Test",
+			total : '',
+			link  : ''
 		};
 	},
 

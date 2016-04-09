@@ -8,12 +8,6 @@
 - Show errors when you can't save/upload!
 
 
-- MAke it so you can handle webm uploads
-- Modify the elements to handle not having the gif field always filled out
-- 
-
-
-
 is imgur, is gif? Done
 is imgur, not gif? Strip the gifv -> gif done
 not imgur, not gif? Upload it as a webm only
