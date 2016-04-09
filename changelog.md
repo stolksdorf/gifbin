@@ -1,6 +1,14 @@
 # Changelog
 
-### 3.0.0 - Tuesday, 19/01/2016
+### 3.0.0 - Saturday, 09/04/2016
+- Finished the new gif form, way more modular now
+- Added a close button to the infobox on the searchbar
+- Added an error pop out window
+- Fixed the css on the bucket select
+
+
+
+### 3.0.0dev - Tuesday, 19/01/2016
 - Added a What's new page
 - Updated to use Vitreum3
 - Switched over to using pico-router and pico-flux

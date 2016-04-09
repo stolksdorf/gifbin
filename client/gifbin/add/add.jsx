@@ -2,7 +2,7 @@ var React = require('react');
 var _ = require('lodash');
 
 var GifForm = require('gifbin/form/form.jsx');
-//var GifForm = require('gifbin/gifForm/gifForm.jsx');
+var GifStore = require('gifbin/gif.store.js');
 
 var Add = React.createClass({
 	componentDidMount: function() {
@@ -10,8 +10,14 @@ var Add = React.createClass({
 	},
 
 	render : function(){
-		return<div className='addPage'>
-			<GifForm queryLink={this.props.queryLink}/>
+		var query = GifStore.getQuery();
+		var queryLink = null;
+		if(query && query.i){
+			queryLink = query.i;
+		}
+
+		return <div className='addPage'>
+			<GifForm queryLink={queryLink}/>
 		</div>
 	}
 });

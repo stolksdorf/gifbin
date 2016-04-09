@@ -19,10 +19,25 @@ var deep_clone = function(obj){
 
 var Form = React.createClass({
 	mixins : [GifStore.mixin()],
-	getInitialState: function() {
+	getDefaultProps: function() {
+		return {
+			gif : {},
+			queryLink : null
+		};
+	},
+
+
+	getInitialState: function(){
+		var gif = _.assign({}, deep_clone(this.props.gif), {
+			buckets : [],
+			originalLink : this.props.queryLink
+		});
+
+		console.log(this.props.queryLink, gif);
+
 		return {
 			originalFavs: this.props.gif.favs,
-			gif : deep_clone(this.props.gif),
+			gif : gif,
 			user : GifStore.getUser(),
 			saveStatus : GifStore.getStatus()
 		};
@@ -34,11 +49,7 @@ var Form = React.createClass({
 			user : GifStore.getUser(),
 		});
 	},
-	getDefaultProps: function() {
-		return {
-			gif : {}
-		};
-	},
+
 
 	isValid : function(){
 		if(_.isEqual(this.state.gif, this.props.gif)){
