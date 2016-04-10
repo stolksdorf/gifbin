@@ -21,7 +21,8 @@ var AddLink = React.createClass({
 
 	hasValidURLExt : function(){
 		var link = this.props.gif.originalLink
-		return !(_.endsWith(link, '.webm') || _.endsWith(link, '.gifv'))
+		return _.endsWith(link, '.gif');
+		//return !(_.endsWith(link, '.webm') || _.endsWith(link, '.gifv'))
 	},
 
 

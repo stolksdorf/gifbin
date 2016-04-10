@@ -58,8 +58,9 @@ var Form = React.createClass({
 		var hasLink = !!gif.originalLink;
 		var hasUser = !!(gif.user || this.state.user);
 		var hasDescriptors = !!(gif.tags || gif.buckets.length);
+		var isGif = _.endsWith(gif.originalLink, '.gif')
 
-		return hasLink && hasUser && hasDescriptors;
+		return hasLink && hasUser && hasDescriptors && isGif;
 	},
 
 	handleGifUpdate : function(newGif){

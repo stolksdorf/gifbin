@@ -74,21 +74,23 @@ var GifPreview = React.createClass({
 			<i className={cx('fa', (this.isFav() ? 'fa-heart' : 'fa-heart-o'))} />
 		</div>
 	},
-	renderGif : function(){
-		var hasGif = this.props.gif.gifLink || this.props.gif.webmLink
+	renderGif : function(link){
+		var hasGif = true;
 		var webm = null;
 		var backgroundImage = randomBucketImg;
 
 		//Load HTML5 video first
-		if(this.props.gif.webmLink){
+		if(_.endsWith(link, '.webm')){
 			webm = <video className='gifv' autoPlay loop muted ref='gifv' poster='http://dummyimage.com/1x1/000000/fff.png'>
-				<source type="video/webm" src={this.props.gif.webmLink}/>
+				<source type="video/webm" src={link}/>
 			</video>
 			backgroundImage= '';
 
 		//Fallback to gif
-		}else if(this.props.gif.gifLink){
-			backgroundImage = this.props.gif.gifLink
+		}else if(_.endsWith(link, '.gif')){
+			backgroundImage = link
+		}else{
+			hasGif = false;
 		}
 
 		return <div className={cx('imageContainer', {filler : !hasGif})}
@@ -100,7 +102,7 @@ var GifPreview = React.createClass({
 	render : function(){
 		return <div className='gifPreview'>
 			{this.renderFavButton()}
-			{this.renderGif()}
+			{this.renderGif(this.getGifPath())}
 		</div>
 	}
 });
