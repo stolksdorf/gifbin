@@ -7,7 +7,7 @@
 - Fixed the css on the bucket select
 - Adding in links will now show errors if invalid, instead of changing the url on you
 - Fixed Searchbar not always pulling the right query params and vice versa updating the url
-- Greatly Simplified how I interact with cookies, also making the cookies non-sessioned now. No more logging in!
+- Greatly Simplified how the site interacts with cookies, also making the cookies non-sessioned now. No more logging in everytime you close your browser!
 
 
 ### 3.0.0dev - Tuesday, 19/01/2016
@@ -16,7 +16,7 @@
 - Switched over to using pico-router and pico-flux
 - Improved searching, with fav searhcing now!
 - Greatly simplified the code for the user page and the gifContainer object
-- Large lists of gifs will now incrementally load
+- Large lists of gifs will now incrementally load, greatly decreasing page loads
 - Query params with pre-render on the server now, for zippier searches from the url bar
 
 
