@@ -62,7 +62,6 @@ module.exports = {
 			favs : _.uniq(_.concat(gif.favs, GifStore.getUser()))
 		}
 
-		console.log(newGif.favs);
 		dispatch('UPDATE_GIF', newGif);
 		request
 			.put('/api/gifs/' + newGif.id)

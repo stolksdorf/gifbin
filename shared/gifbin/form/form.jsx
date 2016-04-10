@@ -22,18 +22,17 @@ var Form = React.createClass({
 	getDefaultProps: function() {
 		return {
 			gif : {},
-			queryLink : null
+			queryLink : undefined
 		};
 	},
 
 
 	getInitialState: function(){
-		var gif = _.assign({}, deep_clone(this.props.gif), {
+		var gif = _.assign({}, {
 			buckets : [],
 			originalLink : this.props.queryLink
-		});
+		}, deep_clone(this.props.gif));
 
-		console.log(this.props.queryLink, gif);
 
 		return {
 			originalFavs: this.props.gif.favs,

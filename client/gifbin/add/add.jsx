@@ -11,7 +11,7 @@ var Add = React.createClass({
 
 	render : function(){
 		var query = GifStore.getQuery();
-		var queryLink = null;
+		var queryLink;
 		if(query && query.i){
 			queryLink = query.i;
 		}

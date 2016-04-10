@@ -62,6 +62,8 @@ var Edit = React.createClass({
 	//TODO : Move Bucket select into the form
 	render : function(){
 
+		console.log('EDIT', this.props.gif);
+
 
 		return <div className='edit'>
 

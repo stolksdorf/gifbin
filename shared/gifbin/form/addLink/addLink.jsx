@@ -19,12 +19,19 @@ var AddLink = React.createClass({
 		})
 	},
 
+	hasValidURLExt : function(){
+		var link = this.props.gif.originalLink
+		return !(_.endsWith(link, '.webm') || _.endsWith(link, '.gifv'))
+	},
 
-	renderField : function(){
+
+	renderLink : function(){
 		if(!this.props.gif.id) return null;
 
 		return [
-			<div className='link' key='link'>{this.props.gif.originalLink}</div>,
+			<div className='link' key='link'>
+				{this.props.gif.originalLink}
+			</div>,
 
 			<div className='buttons' key='buttons'>
 				<ClipboardButton
@@ -46,10 +53,10 @@ var AddLink = React.createClass({
 			</div>
 		];
 	},
-	renderLink : function(){
+	renderInputField : function(){
 		if(this.props.gif.id) return null;
 
-		return <input className='link' type='text'
+		return <input className={cx('link', {'invalid' : !this.hasValidURLExt()})} type='text'
 			value={this.props.gif.originalLink}
 			onChange={this.handleLinkChange}
 		/>
@@ -57,9 +64,17 @@ var AddLink = React.createClass({
 
 
 	render : function(){
-		return <div className='addLink'>
+		console.log('ADD LINK', this.props.gif);
+
+
+		var tooltip = {};
+		if(!this.hasValidURLExt() && !this.props.gif.id){
+			tooltip['data-tooltip'] = "Can only upload gifs! Try changing the extension?";
+		}
+
+		return <div className='addLink' {...tooltip}>
+			{this.renderInputField()}
 			{this.renderLink()}
-			{this.renderField()}
 		</div>
 	}
 });

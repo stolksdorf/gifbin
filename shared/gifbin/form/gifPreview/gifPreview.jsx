@@ -47,9 +47,6 @@ var GifPreview = React.createClass({
 	},
 
 	isFav : function(){
-
-		console.log('FAVS', this.state.originalFavs);
-
 		return _.includes(this.state.originalFavs, GifStore.getUser());
 	},
 
