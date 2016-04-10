@@ -5,6 +5,7 @@ var ClipboardButton = require('gifbin/clipboardButton/clipboardButton.jsx');
 
 var Link = require('pico-router').Link;
 var GifStore = require('gifbin/gif.store.js');
+var GifActions = require('gifbin/gif.actions.js');
 
 var GifCard = React.createClass({
 	getDefaultProps: function() {
@@ -46,6 +47,14 @@ var GifCard = React.createClass({
 		})
 	},
 
+	handleFavClick : function(){
+		if(this.isFav()){
+			GifActions.unfavGif(this.props.gif);
+		}else{
+			GifActions.favGif(this.props.gif);
+		}
+	},
+
 	componentDidMount: function() {
 		var self = this;
 		this.refs.gifv.oncanplay = function(){
@@ -71,6 +80,19 @@ var GifCard = React.createClass({
 		if(!GifStore.getUser() || !this.isFav()) return null;
 		return <div className='fav'>
 			<i className='fa fa-heart' />
+		</div>
+	},
+
+	renderFavButton : function(){
+		if(!GifStore.getUser()) return null;
+		return <div className={cx({
+				favButton : this.isFav(),
+				unfavButton :!this.isFav()
+			})} onClick={this.handleFavClick}>
+			<i className={cx('fa', {
+				'fa-heart' : this.isFav(),
+				'fa-heart-o' :!this.isFav()
+			})}  />
 		</div>
 	},
 

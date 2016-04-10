@@ -75,7 +75,7 @@ app.get('*', function (req, res) {
 
 		vitreumRender({
 			page: './build/gifbin/bundle.dot',
-			prerenderWith : './client/gifbin/gifbin.jsx',
+			//prerenderWith : './client/gifbin/gifbin.jsx',
 			clearRequireCache : true,
 			initialProps: {
 				gifs : gifs,

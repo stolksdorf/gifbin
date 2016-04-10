@@ -64,10 +64,8 @@ module.exports = flux.createStore({
 		Storage.status.errors = false;
 		return false;
 	},
-
 	UPDATE_GIF : function(gifData){
-		console.log('UPDATING STORE', gifData.favs);
-		//var index = _.findIndex(Storage.gif, {id : gifData.id});
+		var index = _.findIndex(Storage.gifs, {id : gifData.id});
 		Storage.gifs[index] = gifData;
 	},
 	REMOVE_GIF : function(gifId){
