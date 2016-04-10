@@ -67,7 +67,7 @@ module.exports = flux.createStore({
 
 	UPDATE_GIF : function(gifData){
 		console.log('UPDATING STORE', gifData.favs);
-		var index = _.findIndex(Storage.gif, {id : gifData.id});
+		//var index = _.findIndex(Storage.gif, {id : gifData.id});
 		Storage.gifs[index] = gifData;
 	},
 	REMOVE_GIF : function(gifId){
@@ -146,16 +146,16 @@ module.exports = flux.createStore({
 		if(!query) return Storage.gifs;
 
 		var searchObj = createSearchObject(query);
-		var _l = function(arr){
+		var _lowercase = function(arr){
 			return _.map(arr, function(i){ return i.toLowerCase()});
 		}
 		var passFav = function(searchObj, gif){
 			if(!searchObj.favs.length) return true;
-			return _.intersection(searchObj.favs, _l(gif.favs)).length;
+			return _.intersection(searchObj.favs, _lowercase(gif.favs)).length;
 		};
 		var passBuckets = function(searchObj, gif){
 			if(!searchObj.buckets.length) return true;
-			return _.intersection(searchObj.buckets, _l(gif.buckets)).length;
+			return _.intersection(searchObj.buckets, _lowercase(gif.buckets)).length;
 		};
 		var passUser = function(searchObj, gif){
 			if(!searchObj.users.length) return true;
@@ -170,6 +170,10 @@ module.exports = flux.createStore({
 					exclude = true;
 					tag = tag.substring(1);
 				}
+				gif.tags = gif.tags || '';
+				gif.buckets = gif.buckets || [];
+
+
 				var shouldReturn = gif.tags.toLowerCase().indexOf(tag) !== -1 || gif.buckets.join(' ').indexOf(tag) !== -1;
 				return (exclude ? !shouldReturn : shouldReturn);
 			});

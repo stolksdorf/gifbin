@@ -14,7 +14,6 @@ var getExt = function(path){
 var GifPreview = React.createClass({
 	mixins : [GifStore.mixin()],
 	onStoreChange  : function(){
-		//console.log('UPDATING FROM STORE', GifStore.getGif(this.props.gif.id).favs);
 		this.setState({
 			originalFavs : this.getFavs()
 		});

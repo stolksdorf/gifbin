@@ -5,7 +5,8 @@
 - Added a close button to the infobox on the searchbar
 - Added an error pop out window
 - Fixed the css on the bucket select
-
+- Adding in links will now show errors if invalid, instead of changing the url on you
+- Fixed Searchbar not always pulling the right query params and vice versa updating the url
 
 
 ### 3.0.0dev - Tuesday, 19/01/2016

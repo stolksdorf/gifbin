@@ -32,13 +32,15 @@ var SearchBar = React.createClass({
 		}, this.updateFromChange)
 	},
 
-	/* Used to throttled searching */
-	updateFromChange : _.debounce(()=>{
-		this.props.onSearch(utils.createSearchObject(this.state.value));
-		queryVal = this.state.value;
-		this.updateUrl();
-		this.setState({ waiting : false });
-	}, 500),
+	componentDidMount: function() {
+		/* Used to throttled searching */
+		this.updateFromChange = _.debounce(()=>{
+			this.props.onSearch(utils.createSearchObject(this.state.value));
+			queryVal = this.state.value;
+			this.updateUrl();
+			this.setState({ waiting : false });
+		}, 500)
+	},
 
 	setFocus : function(val){
 		this.setState({
