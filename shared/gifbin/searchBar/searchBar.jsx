@@ -39,7 +39,8 @@ var SearchBar = React.createClass({
 			queryVal = this.state.value;
 			this.updateUrl();
 			this.setState({ waiting : false });
-		}, 500)
+		}, 500);
+		this.refs.searchbar.focus();
 	},
 
 	setFocus : function(val){
@@ -81,6 +82,7 @@ var SearchBar = React.createClass({
 		return <div className={cx('searchBar', {'focused' : this.state.focused})}>
 			<i className={cx('fa', {'fa-search' : !this.state.waiting, 'fa-clock-o' : this.state.waiting})} />
 			<input type='text'
+				ref='searchbar'
 				value={this.state.value}
 				onChange={this.handleChange}
 				onFocus={this.setFocus.bind(this, true)}
