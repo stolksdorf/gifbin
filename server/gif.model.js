@@ -32,6 +32,8 @@ GifSchema.pre('save', function(next){
 		return next();
 	}
 
+	console.log(this);
+
 	//Sanity Check
 	if(!this.originalLink) return next();
 

@@ -1,0 +1,14 @@
+## TODO - Tuesday, 19/01/2016
+- The edit and add forms are jacked up
+- They'll need a complete overhaul before we can deploy
+- Probably split them up into two separate components
+
+- Also the weird stuff you do with the URl on add has to go
+
+- Show errors when you can't save/upload!
+
+
+is imgur, is gif? Done
+is imgur, not gif? Strip the gifv -> gif done
+not imgur, not gif? Upload it as a webm only
+not imgur, is gif? Upload to Imgur

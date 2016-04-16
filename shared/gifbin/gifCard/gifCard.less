@@ -1,0 +1,105 @@
+
+.gifCard{
+	position       : relative;
+	display        : inline-block;
+	vertical-align : top;
+	height         : 100px;
+	width          : 90px;
+	padding        : 8px;
+	//text-align     : center;
+
+	&.isFav{
+		//background-color: fade(@red, 25%);
+	}
+
+	&.hovered{
+		.hitbox .controls{
+			visibility : visible;
+		}
+		video.gif{
+			visibility : visible;
+		}
+	}
+	img.static{
+		max-height : 90px;
+		max-width : 90px;
+	}
+	img.gif{
+		position : absolute;
+		top      : 0px;
+		left     : 30px;
+		z-index  : 500;
+
+		max-width : 300px;
+		max-height : 300px;
+	}
+
+	video.gif{
+		position : absolute;
+		top      : 8px;
+		left     : 8px;
+		z-index  : 500;
+
+		max-width : 300px;
+		max-height : 300px;
+		visibility: hidden;
+	}
+
+	.info{
+		.fav{
+			float     : left;
+			font-size : 0.6em;
+			color     : @red;
+		}
+		.views{
+			float     : right;
+			font-size : 0.6em;
+		}
+	}
+	.hitbox{
+		position : absolute;
+		top      : 0px;
+		left     : 0px;
+		z-index  : 510;
+		height   : 100%;
+		width    : 100%;
+		.controls{
+			position   : absolute;
+			top        : 8px;
+			left       : 8px;
+			visibility : hidden;
+			.gifButton{
+				display : block;
+			}
+			.gifvButton{
+				display : block;
+				background-color: @steel;
+			}
+			.editButton{
+				display : block;
+				.iconButton(@green);
+				.tooltipRight('edit');
+			}
+			.favButton{
+				display : block;
+				.iconButton(@red);
+				.tooltipRight('fav it');
+			}
+			.unfavButton{
+				display : block;
+				.iconButton(@red);
+				.tooltipRight('unfav it');
+			}
+		}
+	}
+}
+
+/*
+.expandGif(@duration : @defaultDuration, @easing : @defaultEasing){
+	.createAnimation(expandGif; @duration; @easing);
+	.createFrames(expandGif,
+		{ max-height : 90px;  min-width : 90px; },
+		{ max-height : 300px; min-width : 300px;}
+	);
+}
+*/

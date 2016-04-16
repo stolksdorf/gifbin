@@ -16,7 +16,7 @@
 
 */
 var async = require('async');
-var _ = require('underscore');
+var _ = require('lodash');
 var mongoose = require('mongoose');
 var mongoUri = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/gifbin';
 mongoose.connect(mongoUri);

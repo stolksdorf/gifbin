@@ -1,14 +1,17 @@
 
-@import 'palette/reset.less';
-@import 'palette/elements.less';
-@import 'palette/animations.less';
-@import 'palette/colors.less';
-@import 'palette/tooltip.less';
-@import 'palette/grid.less';
-body,html{
-	overflow-x       : hidden;
+@import 'gifbin/styles/reset.less';
+@import 'gifbin/styles/elements.less';
+@import 'gifbin/styles/animations.less';
+@import 'gifbin/styles/colors.less';
+@import 'gifbin/styles/tooltip.less';
+@import 'gifbin/styles/grid.less';
+html {
+	background-color : white;
+}
+body{
 	background-color : white;
 	font-family      : "Lato", Helvetica, Arial, sans-serif;
+	overflow-x: hidden;
 }
 .gifbin{
 }
@@ -51,13 +54,14 @@ button{
 	}
 }
 .iconButton(@backgroundColor : @green){
-	padding          : 0.6em;
+	padding          : 0.5em;
 	cursor           : pointer;
 	background-color : @backgroundColor;
-	font-size        : 14px;
+	font-size        : 13px;
 	color            : white;
 	text-align       : center;
 }
 .page{
 	min-height : 100vh;
+	//padding-bottom : 80px;
 }
