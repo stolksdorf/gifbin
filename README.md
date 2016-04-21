@@ -1,11 +1,9 @@
 # gifbin
 
+A no frills gif-finding website. Check it out [here](http://www.gifbin.biz)
 
 
 
+### changelog
 
-# Changelog
-
-### 3.0.0 - Thursday, 03/12/2015
-* Upgrading to Vitreum v3
-* SWitching
+You can check out the changelog [here](https://github.com/stolksdorf/gifbin/blob/master/changelog.md)
