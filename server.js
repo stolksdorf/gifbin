@@ -24,7 +24,7 @@ process.env.ADMIN_KEY  = process.env.ADMIN_KEY  || 'admin';
 
 //Mongoose
 var mongoose = require('mongoose');
-var mongoUri = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/gifbin';
+var mongoUri = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || process.env.MONGODB_URI || 'mongodb://localhost/gifbin';
 mongoose.connect(mongoUri);
 mongoose.connection.on('error', function(){
 	console.log(">>>ERROR: Run Mongodb.exe ya goof!");
